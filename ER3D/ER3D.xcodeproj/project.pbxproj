@@ -14,6 +14,7 @@
 		8A45101228E65D48009BD378 /* ER3DTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45101128E65D48009BD378 /* ER3DTests.swift */; };
 		8A45101C28E65D48009BD378 /* ER3DUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45101B28E65D48009BD378 /* ER3DUITests.swift */; };
 		8A45101E28E65D48009BD378 /* ER3DUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45101D28E65D48009BD378 /* ER3DUITestsLaunchTests.swift */; };
+		8A45102B28E65DCA009BD378 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45102A28E65DCA009BD378 /* ContentViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		8A45101728E65D48009BD378 /* ER3DUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ER3DUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A45101B28E65D48009BD378 /* ER3DUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DUITests.swift; sourceTree = "<group>"; };
 		8A45101D28E65D48009BD378 /* ER3DUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		8A45102A28E65DCA009BD378 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				8A45100028E65D46009BD378 /* ER3DApp.swift */,
 				8A45100228E65D46009BD378 /* ContentView.swift */,
+				8A45102A28E65DCA009BD378 /* ContentViewController.swift */,
 				8A45100428E65D48009BD378 /* Assets.xcassets */,
 				8A45100628E65D48009BD378 /* Preview Content */,
 			);
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A45100328E65D46009BD378 /* ContentView.swift in Sources */,
+				8A45102B28E65DCA009BD378 /* ContentViewController.swift in Sources */,
 				8A45100128E65D46009BD378 /* ER3DApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

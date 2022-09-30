@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct ER3DApp: App {
+    let viewController = ContentViewController()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewController: viewController)
         }
     }
 }
