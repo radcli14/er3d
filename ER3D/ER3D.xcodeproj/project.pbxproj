@@ -15,6 +15,9 @@
 		8A45101C28E65D48009BD378 /* ER3DUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45101B28E65D48009BD378 /* ER3DUITests.swift */; };
 		8A45101E28E65D48009BD378 /* ER3DUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45101D28E65D48009BD378 /* ER3DUITestsLaunchTests.swift */; };
 		8A45102B28E65DCA009BD378 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45102A28E65DCA009BD378 /* ContentViewController.swift */; };
+		8A45102D28E67674009BD378 /* ArrowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45102C28E67674009BD378 /* ArrowNode.swift */; };
+		8A45102F28E67680009BD378 /* FrameNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45102E28E67680009BD378 /* FrameNode.swift */; };
+		8A4510AB28E6788C009BD378 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A4510AA28E6788B009BD378 /* art.scnassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,9 @@
 		8A45101B28E65D48009BD378 /* ER3DUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DUITests.swift; sourceTree = "<group>"; };
 		8A45101D28E65D48009BD378 /* ER3DUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		8A45102A28E65DCA009BD378 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		8A45102C28E67674009BD378 /* ArrowNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowNode.swift; sourceTree = "<group>"; };
+		8A45102E28E67680009BD378 /* FrameNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameNode.swift; sourceTree = "<group>"; };
+		8A4510AA28E6788B009BD378 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +106,10 @@
 				8A45100228E65D46009BD378 /* ContentView.swift */,
 				8A45102A28E65DCA009BD378 /* ContentViewController.swift */,
 				8A45100428E65D48009BD378 /* Assets.xcassets */,
+				8A4510AA28E6788B009BD378 /* art.scnassets */,
 				8A45100628E65D48009BD378 /* Preview Content */,
+				8A45102C28E67674009BD378 /* ArrowNode.swift */,
+				8A45102E28E67680009BD378 /* FrameNode.swift */,
 			);
 			path = ER3D;
 			sourceTree = "<group>";
@@ -235,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A45100828E65D48009BD378 /* Preview Assets.xcassets in Resources */,
+				8A4510AB28E6788C009BD378 /* art.scnassets in Resources */,
 				8A45100528E65D48009BD378 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,8 +270,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A45102D28E67674009BD378 /* ArrowNode.swift in Sources */,
 				8A45100328E65D46009BD378 /* ContentView.swift in Sources */,
 				8A45102B28E65DCA009BD378 /* ContentViewController.swift in Sources */,
+				8A45102F28E67680009BD378 /* FrameNode.swift in Sources */,
 				8A45100128E65D46009BD378 /* ER3DApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

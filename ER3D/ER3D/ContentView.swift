@@ -19,9 +19,6 @@ struct ContentView: View {
                 pointOfView: viewController.cameraNode,
                 options: [.autoenablesDefaultLighting, .allowsCameraControl]
             )
-
-            Text("This is me")
-                .foregroundColor(Color.green)
         }
     }
 }
