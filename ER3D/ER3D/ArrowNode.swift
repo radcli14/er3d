@@ -9,15 +9,15 @@ import Foundation
 import SceneKit
 
 /**
- Creates an arrow that points in the +Y direction, with length equal to the provided scale.
+ Creates an arrow that points in the +_X_ direction, with length equal to the provided scale.
  */
 class ArrowNode: SCNNode {
 
     // Geometry constants
     private let tailHeightScale = 0.8
-    private let tailWidthScale = 0.075
+    private let tailWidthScale = 0.02
     private let headHeightScale = 0.2
-    private let headWidthScale = 0.15
+    private let headWidthScale = 0.03
     
     init(
         scale: Double = 1.0,
@@ -27,10 +27,10 @@ class ArrowNode: SCNNode {
         super.init()
         
         // Create the geoemetry for the tail of the arrow, and set its color
-        let tailGeometry = SCNPyramid(
-                width: tailWidthScale*scale,
-                height: tailHeightScale*scale,
-                length: tailWidthScale*scale
+        let tailGeometry = SCNCone(
+            topRadius: 0,
+            bottomRadius: tailWidthScale*scale,
+            height: tailHeightScale
         )
         tailGeometry.materials.first?.diffuse.contents = color
         
@@ -51,13 +51,13 @@ class ArrowNode: SCNNode {
         )
         
         // Shift the origin in the +X direction
-        tailNode.position.x = Float(tailHeightScale*scale)
+        tailNode.position.x = Float(0.5 * tailHeightScale)
         
         // Create the geoemetry for the head of the arrow, and set its color
-        let headGeometry = SCNPyramid(
-                width: headWidthScale*scale,
-                height: headHeightScale*scale,
-                length: headWidthScale*scale
+        let headGeometry = SCNCone(
+            topRadius: 0,
+            bottomRadius: headWidthScale*scale,
+            height: headHeightScale
         )
         headGeometry.materials.first?.diffuse.contents = color
         
@@ -77,7 +77,7 @@ class ArrowNode: SCNNode {
         )
         
         // Shift the origin upwards
-        headNode.position.x = Float(tailHeightScale*scale)
+        headNode.position.x = Float(tailHeightScale + (0.5)*headHeightScale)
         
         // Add the nodes to the root node
         addChildNode(tailNode)
