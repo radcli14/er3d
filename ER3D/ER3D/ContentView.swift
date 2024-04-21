@@ -28,30 +28,17 @@ struct ContentView: View {
     
     private var angleControls: some View {
         VStack(spacing: Constants.sliderSpacing) {
-            AngleSlider(angle: $viewController.yaw, update: viewController.update)
-            AngleSlider(angle: $viewController.pitch, update: viewController.update)
-            AngleSlider(angle: $viewController.roll, update: viewController.update)
+            Slider(value: $viewController.yaw, in: Constants.angleRange)
+            Slider(value: $viewController.pitch, in: Constants.angleRange)
+            Slider(value: $viewController.roll, in: Constants.angleRange)
         }
         .padding(Constants.sliderPadding)
     }
     
     private struct Constants {
+        static let angleRange = 0...2*Float.pi
         static let sliderSpacing = CGFloat(12)
         static let sliderPadding = CGFloat(24)
-    }
-}
-
-struct AngleSlider: View {
-    @Binding var angle: Float
-    let update: () -> Void
-    
-    private let angleRange = 0...2*Float.pi
-    
-    var body: some View {
-        Slider(value: $angle, in: angleRange)
-            .onChange(of: angle) { _ in
-                update()
-            }
     }
 }
 
