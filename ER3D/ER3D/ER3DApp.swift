@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct ER3DApp: App {
-    let viewController = ContentViewController()
+    @StateObject var viewController = ContentViewController()
     
     var body: some Scene {
         WindowGroup {

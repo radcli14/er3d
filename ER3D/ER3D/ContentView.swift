@@ -9,11 +9,8 @@ import SwiftUI
 import SceneKit
 
 struct ContentView: View {
-    var viewController: ContentViewController
-    @State var yaw: Float = 0
-    @State var pitch: Float = 0
-    @State var roll: Float = 0
-    
+    @ObservedObject var viewController: ContentViewController
+
     var body: some View {
         ZStack(alignment: .bottom) {
             // Add the 3D rendering view
@@ -25,16 +22,16 @@ struct ContentView: View {
             
             // Add the controls
             VStack(spacing: 12) {
-                Slider(value: $yaw, in: 0...2*Float.pi)
-                    .onChange(of: yaw) { _ in
+                Slider(value: $viewController.yaw, in: 0...2*Float.pi)
+                    .onChange(of: viewController.yaw) { _ in
                         update()
                     }
-                Slider(value: $pitch, in: 0...2*Float.pi)
-                    .onChange(of: pitch) { _ in
+                Slider(value: $viewController.pitch, in: 0...2*Float.pi)
+                    .onChange(of: viewController.pitch) { _ in
                         update()
                     }
-                Slider(value: $roll, in: 0...2*Float.pi)
-                    .onChange(of: roll) { _ in
+                Slider(value: $viewController.roll, in: 0...2*Float.pi)
+                    .onChange(of: viewController.roll) { _ in
                         update()
                     }
             }
@@ -42,11 +39,13 @@ struct ContentView: View {
         }
     }
     
+    private 
+    
     /**
      Update orientation of the ship based on the current Euler angle states
      */
     func update() {
-        viewController.update(yaw, pitch, roll)
+        viewController.update()
     }
 }
 

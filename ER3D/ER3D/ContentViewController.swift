@@ -11,12 +11,12 @@ import SceneKit
 /**
  Controls the content of the `SceneKit` 3D components
  */
-class ContentViewController {
+class ContentViewController: ObservableObject {
     var scene: SCNScene!
     var cameraNode: SCNNode!
-    var yaw: Float = 0
-    var pitch: Float = 0
-    var roll: Float = 0
+    @Published var yaw: Float = 0
+    @Published var pitch: Float = 0
+    @Published var roll: Float = 0
     let frame1 = FrameNode(scale: 0.975, color: .systemBlue)
     let frame2 = FrameNode(scale: 0.95, color: .systemGreen)
     let frame3 = FrameNode(scale: 0.925, color: .systemRed)
@@ -88,7 +88,7 @@ class ContentViewController {
        - pitch: angle in radians about the _Y'_, or "right wing" axis
        - roll: angle in radians about the _X''_, or "forward" axis
      */
-    func update(_ yaw: Float, _ pitch: Float, _ roll: Float) {
+    func update() {
         frame1.rotation = SCNVector4(x: 0, y: 0, z: 1, w: yaw)
         frame2.rotation = SCNVector4(x: 0, y: 1, z: 0, w: pitch)
         frame3.rotation = SCNVector4(x: 1, y: 0, z: 0, w: roll)
