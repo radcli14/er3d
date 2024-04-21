@@ -14,6 +14,7 @@ import SceneKit
 class ContentViewController: ObservableObject {
     var scene: SCNScene!
     var cameraNode: SCNNode!
+    
     @Published var yaw: Float = 0
     @Published var pitch: Float = 0
     @Published var roll: Float = 0

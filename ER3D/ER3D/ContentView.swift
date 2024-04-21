@@ -13,39 +13,45 @@ struct ContentView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            // Add the 3D rendering view
-            SceneView(
-                scene: viewController.scene,
-                pointOfView: viewController.cameraNode,
-                options: [.autoenablesDefaultLighting]
-            )
-            
-            // Add the controls
-            VStack(spacing: 12) {
-                Slider(value: $viewController.yaw, in: 0...2*Float.pi)
-                    .onChange(of: viewController.yaw) { _ in
-                        update()
-                    }
-                Slider(value: $viewController.pitch, in: 0...2*Float.pi)
-                    .onChange(of: viewController.pitch) { _ in
-                        update()
-                    }
-                Slider(value: $viewController.roll, in: 0...2*Float.pi)
-                    .onChange(of: viewController.roll) { _ in
-                        update()
-                    }
-            }
-            .padding(24)
+            renderedView
+            angleControls
         }
     }
     
-    private 
+    private var renderedView: some View {
+        SceneView(
+            scene: viewController.scene,
+            pointOfView: viewController.cameraNode,
+            options: [.autoenablesDefaultLighting]
+        )
+    }
     
-    /**
-     Update orientation of the ship based on the current Euler angle states
-     */
-    func update() {
-        viewController.update()
+    private var angleControls: some View {
+        VStack(spacing: Constants.sliderSpacing) {
+            AngleSlider(angle: $viewController.yaw, update: viewController.update)
+            AngleSlider(angle: $viewController.pitch, update: viewController.update)
+            AngleSlider(angle: $viewController.roll, update: viewController.update)
+        }
+        .padding(Constants.sliderPadding)
+    }
+    
+    private struct Constants {
+        static let sliderSpacing = CGFloat(12)
+        static let sliderPadding = CGFloat(24)
+    }
+}
+
+struct AngleSlider: View {
+    @Binding var angle: Float
+    let update: () -> Void
+    
+    private let angleRange = 0...2*Float.pi
+    
+    var body: some View {
+        Slider(value: $angle, in: angleRange)
+            .onChange(of: angle) { _ in
+                update()
+            }
     }
 }
 
