@@ -21,12 +21,32 @@ struct ER3DSceneModel {
         setupCamera()
     }
     
+    // MARK: - Angles
+    
+    var yaw: Float = 0.0 {
+        didSet {
+            frame1.rotation = SCNVector4(x: 0, y: 0, z: 1, w: yaw)
+        }
+    }
+    
+    var pitch: Float = 0.0 {
+        didSet {
+            frame2.rotation = SCNVector4(x: 0, y: 1, z: 0, w: pitch)
+        }
+    }
+    
+    var roll: Float = 0.0 {
+        didSet {
+            frame3.rotation = SCNVector4(x: 1, y: 0, z: 0, w: roll)
+        }
+    }
+    
     // MARK: - Setup
     
     /**
      Creates the `SCNScene` object
      */
-    mutating func setupScene() {
+    private mutating func setupScene() {
         // Initiate the basic scene
         scene = SCNScene()
         
@@ -61,7 +81,7 @@ struct ER3DSceneModel {
     /**
      Creates a `SCNNode` with a `SCNCamera` attached
      */
-    mutating func setupCamera() {
+    private mutating func setupCamera() {
         // Initialize the camera and add it to the scene
         cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()

@@ -13,21 +13,8 @@ import SceneKit
  */
 class ER3DViewModel: ObservableObject {
     @Published private var model = ER3DSceneModel()
-
-    var yaw: Float {
-        get { model.frame1.rotation.w }
-        set { model.frame1.rotation = SCNVector4(x: 0, y: 0, z: 1, w: newValue) }
-    }
     
-    var pitch: Float {
-        get { model.frame2.rotation.w }
-        set { model.frame2.rotation = SCNVector4(x: 0, y: 1, z: 0, w: newValue) }
-    }
-    
-    var roll: Float {
-        get { model.frame3.rotation.w }
-        set { model.frame3.rotation = SCNVector4(x: 1, y: 0, z: 0, w: newValue) }
-    }
+    // MARK: - Scene
     
     var scene: SCNScene {
         model.scene
@@ -35,5 +22,22 @@ class ER3DViewModel: ObservableObject {
     
     var camera: SCNNode {
         model.cameraNode
+    }
+    
+    // MARK: - Angles
+    
+    var yaw: Float {
+        get { model.yaw }
+        set { model.yaw = newValue }
+    }
+    
+    var pitch: Float {
+        get { model.pitch }
+        set { model.pitch = newValue }
+    }
+    
+    var roll: Float {
+        get { model.roll }
+        set { model.roll = newValue }
     }
 }
