@@ -1,17 +1,14 @@
 //
-//  ContentViewController.swift
+//  ER3DRotations.swift
 //  ER3D
 //
-//  Created by Eliott Radcliffe on 9/29/22.
+//  Created by Eliott Radcliffe on 5/30/24.
 //
 
 import Foundation
 import SceneKit
 
-/**
- Controls the content of the `SceneKit` 3D components
- */
-class ContentViewController: ObservableObject {
+struct ER3DSceneModel {
     var scene: SCNScene!
     var cameraNode: SCNNode!
     
@@ -19,30 +16,17 @@ class ContentViewController: ObservableObject {
     let frame2 = FrameNode(scale: 0.95, color: .systemGreen)
     let frame3 = FrameNode(scale: 0.925, color: .systemRed)
     
-    var yaw: Float {
-        get { frame1.rotation.w }
-        set { frame1.rotation = SCNVector4(x: 0, y: 0, z: 1, w: newValue) }
-    }
-    
-    var pitch: Float {
-        get { frame2.rotation.w }
-        set { frame2.rotation = SCNVector4(x: 0, y: 1, z: 0, w: newValue) }
-    }
-    
-    var roll: Float {
-        get { frame3.rotation.w }
-        set { frame3.rotation = SCNVector4(x: 1, y: 0, z: 0, w: newValue) }
-    }
-    
     init() {
         setupScene()
         setupCamera()
     }
     
+    // MARK: - Setup
+    
     /**
      Creates the `SCNScene` object
      */
-    func setupScene() {
+    mutating func setupScene() {
         // Initiate the basic scene
         scene = SCNScene()
         
@@ -77,7 +61,7 @@ class ContentViewController: ObservableObject {
     /**
      Creates a `SCNNode` with a `SCNCamera` attached
      */
-    func setupCamera() {
+    mutating func setupCamera() {
         // Initialize the camera and add it to the scene
         cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
@@ -91,6 +75,6 @@ class ContentViewController: ObservableObject {
             up: SCNVector3(0, 0, -1),
             localFront: SCNVector3(0, 0, -1)
         )
-        
     }
 }
+

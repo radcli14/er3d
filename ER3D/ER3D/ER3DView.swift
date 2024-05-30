@@ -8,8 +8,8 @@
 import SwiftUI
 import SceneKit
 
-struct ContentView: View {
-    @ObservedObject var viewController: ContentViewController
+struct ER3DView: View {
+    @ObservedObject var viewModel: ER3DViewModel
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -20,17 +20,17 @@ struct ContentView: View {
     
     private var renderedView: some View {
         SceneView(
-            scene: viewController.scene,
-            pointOfView: viewController.cameraNode,
+            scene: viewModel.scene,
+            pointOfView: viewModel.camera,
             options: [.autoenablesDefaultLighting]
         )
     }
     
     private var angleControls: some View {
         VStack(spacing: Constants.sliderSpacing) {
-            Slider(value: $viewController.yaw, in: Constants.angleRange)
-            Slider(value: $viewController.pitch, in: Constants.angleRange)
-            Slider(value: $viewController.roll, in: Constants.angleRange)
+            Slider(value: $viewModel.yaw, in: Constants.angleRange)
+            Slider(value: $viewModel.pitch, in: Constants.angleRange)
+            Slider(value: $viewModel.roll, in: Constants.angleRange)
         }
         .padding(Constants.sliderPadding)
     }
@@ -44,6 +44,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewController: ContentViewController())
+        ER3DView(viewModel: ER3DViewModel())
     }
 }

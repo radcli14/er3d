@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct ER3DApp: App {
-    @StateObject var viewController = ContentViewController()
+    @StateObject var viewController = ER3DViewModel()
     
     var body: some Scene {
         WindowGroup {
-            ContentView(viewController: viewController)
+            ER3DView(viewModel: viewController)
         }
     }
 }
