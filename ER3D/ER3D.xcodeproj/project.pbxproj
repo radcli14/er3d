@@ -21,6 +21,7 @@
 		8A66F7D72C08CD98001DFB0B /* YawPitchRollSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7D62C08CD98001DFB0B /* YawPitchRollSceneModel.swift */; };
 		8A66F7D92C09E641001DFB0B /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7D82C09E641001DFB0B /* View+Extensions.swift */; };
 		8A66F7DB2C0A1893001DFB0B /* ER3DSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7DA2C0A1893001DFB0B /* ER3DSceneModel.swift */; };
+		8A66F7DD2C0A1B45001DFB0B /* SceneKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7DC2C0A1B45001DFB0B /* SceneKit+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		8A66F7D62C08CD98001DFB0B /* YawPitchRollSceneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YawPitchRollSceneModel.swift; sourceTree = "<group>"; };
 		8A66F7D82C09E641001DFB0B /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		8A66F7DA2C0A1893001DFB0B /* ER3DSceneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DSceneModel.swift; sourceTree = "<group>"; };
+		8A66F7DC2C0A1B45001DFB0B /* SceneKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneKit+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				8A45102A28E65DCA009BD378 /* ER3DViewModel.swift */,
 				8A66F7D62C08CD98001DFB0B /* YawPitchRollSceneModel.swift */,
 				8A66F7DA2C0A1893001DFB0B /* ER3DSceneModel.swift */,
+				8A66F7DC2C0A1B45001DFB0B /* SceneKit+Extensions.swift */,
 				8A66F7D82C09E641001DFB0B /* View+Extensions.swift */,
 				8A45100428E65D48009BD378 /* Assets.xcassets */,
 				8A4510AA28E6788B009BD378 /* art.scnassets */,
@@ -281,6 +284,7 @@
 			files = (
 				8A45102D28E67674009BD378 /* ArrowNode.swift in Sources */,
 				8A45100328E65D46009BD378 /* ER3DView.swift in Sources */,
+				8A66F7DD2C0A1B45001DFB0B /* SceneKit+Extensions.swift in Sources */,
 				8A45102B28E65DCA009BD378 /* ER3DViewModel.swift in Sources */,
 				8A66F7D92C09E641001DFB0B /* View+Extensions.swift in Sources */,
 				8A66F7DB2C0A1893001DFB0B /* ER3DSceneModel.swift in Sources */,

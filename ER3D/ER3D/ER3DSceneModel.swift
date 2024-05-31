@@ -19,29 +19,25 @@ protocol ER3DSceneModel {
 extension ER3DSceneModel {
     // MARK: - Setup
     
-    /**
-     Creates the `SCNScene` object
-     */
-    mutating func setupScene() {
-        // Add the ship to the scene
-        let shipScene = SCNScene(named: "art.scnassets/ship.scn")!
+    /// Get the `SCNNode` from the ship scene with specified file name, and translates and rotates it to intended position
+    func getShip(named assetName: String = "art.scnassets/ship.scn") -> SCNNode {
+        let shipScene = SCNScene(named: assetName)!
         let ship = shipScene.rootNode
 
         // Move the ship forward so that it is centered at the origin
         ship.localTranslate(by: SCNVector3(0, 0, 0.6))
         
-        // Rotate so the nose points to the +X
-        ship.rotate(
-            by: SCNQuaternion(x: 0, y: sin(0.25*Float.pi), z: 0, w: cos(0.25*Float.pi)),
-            aroundTarget: SCNVector3(0, 0, 0)
-        )
-        
-        // Rotate so the Z axis is down
-        ship.rotate(
-            by: SCNQuaternion(x: -sin(0.25*Float.pi), y: 0, z: 0, w: cos(0.25*Float.pi)),
-            aroundTarget: SCNVector3(0, 0, 0)
-        )
-        
+        // Rotate so the nose points to the +X and the Z axis is down
+        ship.rotate(by: .ninetyDegAboutY, aroundTarget: .zero)
+        ship.rotate(by: .ninetyDegAboutMinusZ, aroundTarget: .zero)
+        return ship
+    }
+    
+    /// Creates the `SCNScene` object containing the frames and ship
+    mutating func setupScene(for assetName: String = "art.scnassets/ship.scn") {
+        // Add the ship to the scene
+        let ship = getShip(named: assetName)
+
         // Add the frames to the scene
         let frame0 = FrameNode(scale: 1.0, color: .black)
         scene.rootNode.addChildNode(frame0)
@@ -51,9 +47,7 @@ extension ER3DSceneModel {
         frame3.addChildNode(ship)
     }
     
-    /**
-     Creates a `SCNNode` with a `SCNCamera` attached
-     */
+    /// Creates a `SCNNode` with a `SCNCamera` attached
     mutating func setupCamera() {
         // Initialize the camera and add it to the scene
         cameraNode.camera = SCNCamera()
@@ -63,10 +57,9 @@ extension ER3DSceneModel {
         // then get moved away from its intended vector
         cameraNode.position = SCNVector3(x: -2.0, y: 2.0, z: -2.0)
         cameraNode.look(
-            at: SCNVector3(0, 0, 0),
+            at: .zero,
             up: SCNVector3(0, 0, -1),
             localFront: SCNVector3(0, 0, -1)
         )
     }
 }
-
