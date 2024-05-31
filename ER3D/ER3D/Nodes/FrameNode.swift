@@ -1,5 +1,5 @@
 //
-//  FrameView.swift
+//  FrameNode.swift
 //  ER3D
 //
 //  Created by Eliott Radcliffe on 9/29/22.
