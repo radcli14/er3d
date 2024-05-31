@@ -24,6 +24,20 @@ extension ER3DSceneModel {
         // Create the background skybox
         scene.background.contents = backgroundImages
         
+        // Define an Earth in the background
+        let earthRadius = 10.0
+        let earth = Planet(
+            radius: earthRadius,
+            x: 0,
+            y: 0,
+            z: 1.0 + earthRadius,
+            xAngle: 4.0,
+            yAngle: 0.0,
+            image: "8081_earthmap10k",
+            specular: "8081_earthspec10k"
+        )
+        scene.rootNode.addChildNode(earth.node)
+        
         // Add the ship to the scene
         let ship = getShip(named: assetName)
 

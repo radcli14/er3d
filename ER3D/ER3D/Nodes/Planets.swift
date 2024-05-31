@@ -96,8 +96,7 @@ struct Planet {
         geometry.segmentCount = segmentCount ?? 128
         geometry.materials.first?.diffuse.contents = _image
         geometry.materials.first?.specular.contents = _specular
-        geometry.materials.first?.shininess = shininess ?? 0.0
-        
+
         // Create the node that gets added to the scene
         node = SCNNode(geometry: geometry)
         node.position = SCNVector3(x, y, z)
