@@ -12,7 +12,7 @@ import SceneKit
  Controls the content of the `SceneKit` 3D components
  */
 class ER3DViewModel: ObservableObject {
-    @Published private var model = ER3DSceneModel()
+    @Published private var model = YawPitchRollSceneModel()
     
     // MARK: - Scene
     

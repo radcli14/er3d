@@ -8,13 +8,21 @@
 import Foundation
 import SceneKit
 
-struct ER3DSceneModel {
-    var scene: SCNScene!
-    var cameraNode: SCNNode!
+protocol ER3DSceneModel {
+    var scene: SCNScene { get set }
+    var cameraNode: SCNNode { get set }
+    var frame1: FrameNode { get set }
+    var frame2: FrameNode { get set }
+    var frame3: FrameNode { get set }
+}
+
+struct YawPitchRollSceneModel: ER3DSceneModel {
+    var scene = SCNScene()
+    var cameraNode = SCNNode()
     
-    let frame1 = FrameNode(scale: 0.975, color: .systemBlue)
-    let frame2 = FrameNode(scale: 0.95, color: .systemGreen)
-    let frame3 = FrameNode(scale: 0.925, color: .systemRed)
+    var frame1 = FrameNode(scale: 0.975, color: .systemBlue)
+    var frame2 = FrameNode(scale: 0.95, color: .systemGreen)
+    var frame3 = FrameNode(scale: 0.925, color: .systemRed)
     
     init() {
         setupScene()
@@ -40,16 +48,15 @@ struct ER3DSceneModel {
             frame3.rotation = SCNVector4(x: 1, y: 0, z: 0, w: roll)
         }
     }
-    
+}
+
+extension ER3DSceneModel {
     // MARK: - Setup
     
     /**
      Creates the `SCNScene` object
      */
-    private mutating func setupScene() {
-        // Initiate the basic scene
-        scene = SCNScene()
-        
+    mutating func setupScene() {
         // Add the ship to the scene
         let shipScene = SCNScene(named: "art.scnassets/ship.scn")!
         let ship = shipScene.rootNode
@@ -81,9 +88,8 @@ struct ER3DSceneModel {
     /**
      Creates a `SCNNode` with a `SCNCamera` attached
      */
-    private mutating func setupCamera() {
+    mutating func setupCamera() {
         // Initialize the camera and add it to the scene
-        cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
         scene.rootNode.addChildNode(cameraNode)
         
