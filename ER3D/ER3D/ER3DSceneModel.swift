@@ -29,7 +29,7 @@ extension ER3DSceneModel {
         
         // Rotate so the nose points to the +X and the Z axis is down
         ship.rotate(by: .ninetyDegAboutY, aroundTarget: .zero)
-        ship.rotate(by: .ninetyDegAboutMinusZ, aroundTarget: .zero)
+        ship.rotate(by: .ninetyDegAboutMinusX, aroundTarget: .zero)
         return ship
     }
     

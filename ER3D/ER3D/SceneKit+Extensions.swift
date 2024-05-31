@@ -12,6 +12,16 @@ extension SCNVector3 {
 }
 
 extension SCNQuaternion {
-    static let ninetyDegAboutY = SCNQuaternion(x: 0, y: sin(0.25*Float.pi), z: 0, w: cos(0.25*Float.pi))
-    static let ninetyDegAboutMinusZ = SCNQuaternion(x: -sin(0.25*Float.pi), y: 0, z: 0, w: cos(0.25*Float.pi))
+    static let fortyFiveDegAboutX = SCNQuaternion(x: .halfSinFortyFiveDeg, y: 0, z: 0, w: .halfCosFortyFiveDeg)
+    static let ninetyDegAboutMinusX = SCNQuaternion(x: .halfSinNinetyDeg, y: 0, z: 0, w: -.halfCosNinetyDeg)
+    static let ninetyDegAboutY = SCNQuaternion(x: 0, y: .halfSinNinetyDeg, z: 0, w: .halfCosNinetyDeg)
+    static let ninetyDegAboutZ = SCNQuaternion(x: 0, y: 0, z: .halfSinNinetyDeg, w: .halfCosNinetyDeg)
+    static let ninetyDegAboutMinusZ = SCNQuaternion(x: 0, y: 0, z: .halfSinNinetyDeg, w: -.halfCosNinetyDeg)
+}
+
+extension Float {
+    static let halfSinFortyFiveDeg = sin(0.125 * Float.pi)
+    static let halfCosFortyFiveDeg = cos(0.125 * Float.pi)
+    static let halfSinNinetyDeg = sin(0.25 * Float.pi)
+    static let halfCosNinetyDeg = cos(0.25 * Float.pi)
 }
