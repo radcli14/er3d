@@ -66,6 +66,7 @@ struct Planet {
     // Image that gets super-imposed on the planet, argument provides as a string file name
     private var _image: UIImage? = nil
     private var _specular: UIImage? = nil
+    private var _normal: UIImage? = nil
     
     var isGeodesic = false
     var segmentCount: Int? = nil
@@ -77,17 +78,20 @@ struct Planet {
     init(radius: Double = 31.4,
          x: Double = 0.0, y: Double = 0.0, z: Double = 0.0,
          xAngle: Double = 0.0, yAngle: Double = 0.0,
-         image: String? = nil, specular: String? = nil,
+         image: String? = nil, specular: String? = nil, normal: String? = nil,
          isGeodesic: Bool = false, segmentCount: Int? = nil, shininess: Double? = nil
     ) {
         // Unpack the arguments
         _xAngle = xAngle
         _yAngle = yAngle
-        if image != nil {
-            _image = UIImage(named: image!)
+        if let image {
+            _image = UIImage(named: image)
         }
-        if specular != nil {
-            _specular = UIImage(named: specular!)
+        if let specular {
+            _specular = UIImage(named: specular)
+        }
+        if let normal {
+            _normal = UIImage(named: normal)
         }
         
         // Create the spherical geometry, with optional image that gets wrapped around it, and shininess
@@ -96,6 +100,7 @@ struct Planet {
         geometry.segmentCount = segmentCount ?? 128
         geometry.materials.first?.diffuse.contents = _image
         geometry.materials.first?.specular.contents = _specular
+        geometry.materials.first?.normal.contents = _normal
 
         // Create the node that gets added to the scene
         node = SCNNode(geometry: geometry)
