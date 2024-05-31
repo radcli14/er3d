@@ -15,6 +15,7 @@ extension SCNQuaternion {
     static let fortyFiveDegAboutX = SCNQuaternion(x: .halfSinFortyFiveDeg, y: 0, z: 0, w: .halfCosFortyFiveDeg)
     static let ninetyDegAboutMinusX = SCNQuaternion(x: .halfSinNinetyDeg, y: 0, z: 0, w: -.halfCosNinetyDeg)
     static let ninetyDegAboutY = SCNQuaternion(x: 0, y: .halfSinNinetyDeg, z: 0, w: .halfCosNinetyDeg)
+    static let ninetyDegAboutMinusY = SCNQuaternion(x: 0, y: .halfSinNinetyDeg, z: 0, w: -.halfCosNinetyDeg)
     static let ninetyDegAboutZ = SCNQuaternion(x: 0, y: 0, z: .halfSinNinetyDeg, w: .halfCosNinetyDeg)
     static let ninetyDegAboutMinusZ = SCNQuaternion(x: 0, y: 0, z: .halfSinNinetyDeg, w: -.halfCosNinetyDeg)
 }
