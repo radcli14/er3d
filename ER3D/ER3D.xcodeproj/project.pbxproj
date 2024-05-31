@@ -22,6 +22,7 @@
 		8A66F7E72C0A2B5D001DFB0B /* SceneKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E02C0A2B49001DFB0B /* SceneKit+Extensions.swift */; };
 		8A66F7E82C0A2B62001DFB0B /* FrameNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E42C0A2B49001DFB0B /* FrameNode.swift */; };
 		8A66F7E92C0A2B62001DFB0B /* ArrowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E32C0A2B49001DFB0B /* ArrowNode.swift */; };
+		8A66F7EB2C0A313D001DFB0B /* Planets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7EA2C0A313D001DFB0B /* Planets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		8A66F7E12C0A2B49001DFB0B /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		8A66F7E32C0A2B49001DFB0B /* ArrowNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowNode.swift; sourceTree = "<group>"; };
 		8A66F7E42C0A2B49001DFB0B /* FrameNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameNode.swift; sourceTree = "<group>"; };
+		8A66F7EA2C0A313D001DFB0B /* Planets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				8A66F7E32C0A2B49001DFB0B /* ArrowNode.swift */,
+				8A66F7EA2C0A313D001DFB0B /* Planets.swift */,
 				8A66F7E42C0A2B49001DFB0B /* FrameNode.swift */,
 			);
 			path = Nodes;
@@ -299,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A66F7E72C0A2B5D001DFB0B /* SceneKit+Extensions.swift in Sources */,
+				8A66F7EB2C0A313D001DFB0B /* Planets.swift in Sources */,
 				8A45100328E65D46009BD378 /* ER3DView.swift in Sources */,
 				8A45102B28E65DCA009BD378 /* ER3DViewModel.swift in Sources */,
 				8A66F7E82C0A2B62001DFB0B /* FrameNode.swift in Sources */,
