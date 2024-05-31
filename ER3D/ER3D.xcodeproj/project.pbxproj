@@ -19,6 +19,7 @@
 		8A45102F28E67680009BD378 /* FrameNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45102E28E67680009BD378 /* FrameNode.swift */; };
 		8A4510AB28E6788C009BD378 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A4510AA28E6788B009BD378 /* art.scnassets */; };
 		8A66F7D72C08CD98001DFB0B /* ER3DSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7D62C08CD98001DFB0B /* ER3DSceneModel.swift */; };
+		8A66F7D92C09E641001DFB0B /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7D82C09E641001DFB0B /* View+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		8A45102E28E67680009BD378 /* FrameNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameNode.swift; sourceTree = "<group>"; };
 		8A4510AA28E6788B009BD378 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		8A66F7D62C08CD98001DFB0B /* ER3DSceneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DSceneModel.swift; sourceTree = "<group>"; };
+		8A66F7D82C09E641001DFB0B /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				8A45100228E65D46009BD378 /* ER3DView.swift */,
 				8A45102A28E65DCA009BD378 /* ER3DViewModel.swift */,
 				8A66F7D62C08CD98001DFB0B /* ER3DSceneModel.swift */,
+				8A66F7D82C09E641001DFB0B /* View+Extensions.swift */,
 				8A45100428E65D48009BD378 /* Assets.xcassets */,
 				8A4510AA28E6788B009BD378 /* art.scnassets */,
 				8A45100628E65D48009BD378 /* Preview Content */,
@@ -276,6 +279,7 @@
 				8A45102D28E67674009BD378 /* ArrowNode.swift in Sources */,
 				8A45100328E65D46009BD378 /* ER3DView.swift in Sources */,
 				8A45102B28E65DCA009BD378 /* ER3DViewModel.swift in Sources */,
+				8A66F7D92C09E641001DFB0B /* View+Extensions.swift in Sources */,
 				8A66F7D72C08CD98001DFB0B /* ER3DSceneModel.swift in Sources */,
 				8A45102F28E67680009BD378 /* FrameNode.swift in Sources */,
 				8A45100128E65D46009BD378 /* ER3DApp.swift in Sources */,

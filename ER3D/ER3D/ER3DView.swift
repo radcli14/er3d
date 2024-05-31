@@ -10,11 +10,15 @@ import SceneKit
 
 struct ER3DView: View {
     @ObservedObject var viewModel: ER3DViewModel
+    @State private var isLandscape = false
 
     var body: some View {
-        ZStack(alignment: .bottom) {
+        VStack {
             renderedView
             angleControls
+        }
+        .onRotate { newOrientation in
+            isLandscape = newOrientation == .landscapeLeft || newOrientation == .landscapeRight
         }
     }
     
@@ -32,13 +36,24 @@ struct ER3DView: View {
     // MARK: - Angle Controls
     
     /// The stack of three sliders representing the yaw, pitch, and roll angles
+    @ViewBuilder
     private var angleControls: some View {
-        VStack(spacing: Constants.sliderSpacing) {
-            angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
-            angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
-            angleSlider(for: $viewModel.roll, name: "Roll", symbol: "φ")
+        if isLandscape {
+            HStack {
+                angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
+                angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
+                angleSlider(for: $viewModel.roll, name: "Roll", symbol: "φ")
+            }
+            .padding(.bottom, Constants.sliderPadding)
+        } else {
+            VStack(spacing: Constants.sliderSpacing) {
+                angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
+                angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
+                angleSlider(for: $viewModel.roll, name: "Roll", symbol: "φ")
+            }
+            .padding(Constants.sliderPadding)
         }
-        .padding(Constants.sliderPadding)
+        
     }
     
     /// A custom slider using specified angle limits, steps, and labels
@@ -48,8 +63,8 @@ struct ER3DView: View {
             in: Constants.angleRange,
             step: Constants.sliderStep,
             label: { Text(name) },
-            minimumValueLabel: { Text(minValueString) },
-            maximumValueLabel: { Text(maxValueString) }
+            minimumValueLabel: { Text(isLandscape ? "" : minValueString) },
+            maximumValueLabel: { Text(isLandscape ? "" : maxValueString) }
         )
         .background {
             Text("\(symbol) = \(Int(angle.wrappedValue * 180 / Float.pi)) deg")
