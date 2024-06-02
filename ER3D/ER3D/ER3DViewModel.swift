@@ -14,6 +14,16 @@ import SceneKit
 class ER3DViewModel: ObservableObject {
     @Published private var model = YawPitchRollSceneModel()
     
+    // MARK: - State Variables
+    
+    @Published var isLandscape = false
+    @Published var angleControlsVisible = true
+    @Published var latLongControlsVisible = false
+    
+    func rotateDevice(to newOrientation: UIDeviceOrientation) {
+        isLandscape = newOrientation == .landscapeLeft || newOrientation == .landscapeRight
+    }
+    
     // MARK: - Scene
     
     var scene: SCNScene {

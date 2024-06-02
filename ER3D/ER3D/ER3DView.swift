@@ -10,15 +10,18 @@ import SceneKit
 
 struct ER3DView: View {
     @ObservedObject var viewModel: ER3DViewModel
-    @State private var isLandscape = false
 
     var body: some View {
         VStack {
             renderedView
-            angleControls
+            controls
         }
         .onRotate { newOrientation in
-            isLandscape = newOrientation == .landscapeLeft || newOrientation == .landscapeRight
+            viewModel.rotateDevice(to: newOrientation)
+        }
+        .sheet(isPresented: $viewModel.angleControlsVisible) {
+            angleControls
+                .presentationDetents([.height(angleControlsHeight)])
         }
     }
     
@@ -33,12 +36,27 @@ struct ER3DView: View {
         )
     }
     
+    // MARK: - Controls
+    
+    /// Buttons at the bottom to open controls for angles
+    private var controls: some View {
+        HStack(spacing: Constants.sliderSpacing) {
+            Button(action: { viewModel.angleControlsVisible.toggle() }) {
+                Image(systemName: "rotate.3d.circle")
+            }
+            Button(action: { viewModel.latLongControlsVisible.toggle() }) {
+                Image(systemName: "globe")
+            }
+        }
+        .font(.largeTitle)
+    }
+    
     // MARK: - Angle Controls
     
     /// The stack of three sliders representing the yaw, pitch, and roll angles
     @ViewBuilder
     private var angleControls: some View {
-        if isLandscape {
+        if viewModel.isLandscape {
             HStack {
                 angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
                 angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
@@ -63,8 +81,8 @@ struct ER3DView: View {
             in: Constants.angleRange,
             step: Constants.sliderStep,
             label: { Text(name) },
-            minimumValueLabel: { Text(isLandscape ? "" : minValueString) },
-            maximumValueLabel: { Text(isLandscape ? "" : maxValueString) }
+            minimumValueLabel: { Text(viewModel.isLandscape ? "" : minValueString) },
+            maximumValueLabel: { Text(viewModel.isLandscape ? "" : maxValueString) }
         )
         .background {
             Text("\(symbol) = \(Int(angle.wrappedValue * 180 / Float.pi)) deg")
@@ -76,12 +94,16 @@ struct ER3DView: View {
     
     /// The lower bound for the slider
     private var minValueString: String {
-        String(Int(Constants.angleRange.lowerBound * 180 / Float.pi))
+        String(Int(Constants.angleRange.lowerBound * Constants.rad2deg))
     }
     
     /// The upper bound for a slider
     private var maxValueString: String {
-        String(Int(Constants.angleRange.upperBound * 180 / Float.pi))
+        String(Int(Constants.angleRange.upperBound * Constants.rad2deg))
+    }
+    
+    private var angleControlsHeight: CGFloat {
+        viewModel.isLandscape ? 64 : 180
     }
     
     // MARK: - Constants
@@ -92,6 +114,7 @@ struct ER3DView: View {
         static let sliderSpacing = CGFloat(24)
         static let sliderPadding = CGFloat(24)
         static let sliderLabelOffset = CGSize(width: 0, height: 24)
+        static let rad2deg = 180.0 / Float.pi
     }
 }
 
