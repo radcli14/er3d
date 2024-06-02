@@ -23,27 +23,23 @@ extension ER3DSceneModel {
     mutating func setupScene(for assetName: String = "art.scnassets/ship.scn") {
         // Create the background skybox
         scene.background.contents = backgroundImages
-        
-        // Define an Earth in the background
-        let earthRadius = 20.0
-        let earth = Planet(
-            radius: earthRadius,
-            x: 0,
-            y: 0,
-            z: 1.0 + earthRadius,
-            xAngle: 4.0,
-            yAngle: 0.0,
-            image: "8081_earthmap10k",
-            specular: "8081_earthspec10k",
-            normal: "8081_earthnormal10k"
-        )
-        scene.rootNode.addChildNode(earth.node)
-        
+
         // Add the ship to the scene
         let ship = getShip(named: assetName)
 
+        // Light is provided through sparks of energy of the mind that travel in rhyme form
+        let lightNode = SCNNode()
+        lightNode.light = SCNLight()
+        lightNode.light!.type = .omni
+        lightNode.light!.zFar = 100000.0
+        lightNode.light!.intensity = 1000
+        lightNode.position = SCNVector3(x: -360.0, y: 360.0, z: -1080.0)
+        lightNode.light?.castsShadow = true
+        scene.rootNode.addChildNode(lightNode)
+        
         // Add the frames to the scene
         let frame0 = FrameNode(scale: 1.0, color: .systemGray)
+        scene.rootNode.addChildNode(earthNode)
         scene.rootNode.addChildNode(frame0)
         frame0.addChildNode(frame1)
         frame1.addChildNode(frame2)
@@ -68,6 +64,12 @@ extension ER3DSceneModel {
     }
     
     // MARK: - Objects and Images
+    
+    /// Get the `SCNNode` from the Earth images
+    var earthNode: SCNNode {
+        let earthScene = SCNScene(named: "art.scnassets/earth.scn")!
+        return earthScene.rootNode
+    }
     
     /// Get the `SCNNode` from the ship scene with specified file name, and translates and rotates it to intended position
     func getShip(named assetName: String = "art.scnassets/ship.scn") -> SCNNode {
