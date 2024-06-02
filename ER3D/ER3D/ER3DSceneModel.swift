@@ -24,9 +24,12 @@ extension ER3DSceneModel {
         // Create the background skybox
         scene.background.contents = backgroundImages
 
-        // Add the ship to the scene
+        // Add the ship and Earth to the scene
         let ship = getShip(named: assetName)
-
+        if let earth = getEarth(lat: 42.7325, long: 84.555) {
+            scene.rootNode.addChildNode(earth)
+        }
+        
         // Light is provided through sparks of energy of the mind that travel in rhyme form
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
@@ -39,7 +42,6 @@ extension ER3DSceneModel {
         
         // Add the frames to the scene
         let frame0 = FrameNode(scale: 1.0, color: .systemGray)
-        scene.rootNode.addChildNode(earthNode)
         scene.rootNode.addChildNode(frame0)
         frame0.addChildNode(frame1)
         frame1.addChildNode(frame2)
@@ -65,10 +67,21 @@ extension ER3DSceneModel {
     
     // MARK: - Objects and Images
     
-    /// Get the `SCNNode` from the Earth images
-    var earthNode: SCNNode {
-        let earthScene = SCNScene(named: "art.scnassets/earth.scn")!
-        return earthScene.rootNode
+    /// Get the `SCNNode` from the Earth .scn file
+    func getEarth(named assetName: String = "art.scnassets/earth.scn", lat: Float = 0.0, long: Float = 0.0) -> SCNNode? {
+        let earthScene = SCNScene(named: assetName)
+        let earthNode = earthScene?.rootNode
+        if let earthNode {
+            earthNode.rotate(
+                by: SCNQuaternion.forRollAngleInDegrees(long),
+                aroundTarget: earthNode.childNodes.last?.position ?? .zero
+            )
+            earthNode.rotate(
+                by: SCNQuaternion.forPitchAngleInDegrees(lat),
+                aroundTarget: earthNode.childNodes.last?.position ?? .zero
+            )
+        }
+        return earthNode
     }
     
     /// Get the `SCNNode` from the ship scene with specified file name, and translates and rotates it to intended position
