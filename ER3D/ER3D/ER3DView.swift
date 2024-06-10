@@ -20,7 +20,11 @@ struct ER3DView: View {
             viewModel.rotateDevice(to: newOrientation)
         }
         .sheet(isPresented: $viewModel.angleControlsVisible) {
-            angleControls
+            eulerAngleControls
+                .presentationDetents([.height(angleControlsHeight)])
+        }
+        .sheet(isPresented: $viewModel.latLongControlsVisible) {
+            latLongAngleControls
                 .presentationDetents([.height(angleControlsHeight)])
         }
     }
@@ -55,23 +59,47 @@ struct ER3DView: View {
     
     /// The stack of three sliders representing the yaw, pitch, and roll angles
     @ViewBuilder
-    private var angleControls: some View {
+    private var eulerAngleControls: some View {
         if viewModel.isLandscape {
             HStack {
-                angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
-                angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
-                angleSlider(for: $viewModel.roll, name: "Roll", symbol: "φ")
+                eulerAngleControlsInStack
             }
             .padding(.bottom, Constants.sliderPadding)
         } else {
             VStack(spacing: Constants.sliderSpacing) {
-                angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
-                angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
-                angleSlider(for: $viewModel.roll, name: "Roll", symbol: "φ")
+                eulerAngleControlsInStack
             }
             .padding(Constants.sliderPadding)
         }
-        
+    }
+    
+    @ViewBuilder
+    private var eulerAngleControlsInStack: some View {
+        angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
+        angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
+        angleSlider(for: $viewModel.roll, name: "Roll", symbol: "φ")
+    }
+    
+    /// The stack of two sliders representing the latitude and longitude angles
+    @ViewBuilder
+    private var latLongAngleControls: some View {
+        if viewModel.isLandscape {
+            HStack {
+                latLongAngleControlsInStack
+            }
+            .padding(.bottom, Constants.sliderPadding)
+        } else {
+            VStack(spacing: Constants.sliderSpacing) {
+                latLongAngleControlsInStack
+            }
+            .padding(Constants.sliderPadding)
+        }
+    }
+    
+    @ViewBuilder
+    private var latLongAngleControlsInStack: some View {
+        angleSlider(for: $viewModel.long, name: "Longitude", symbol: "Long.")
+        angleSlider(for: $viewModel.lat, name: "Latitude", symbol: "Lat.")
     }
     
     /// A custom slider using specified angle limits, steps, and labels

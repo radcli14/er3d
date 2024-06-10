@@ -43,4 +43,16 @@ struct YawPitchRollSceneModel: ER3DSceneModel {
             frame3.rotation = SCNVector4(x: 1, y: 0, z: 0, w: roll)
         }
     }
+
+    var lat: Float = 42.7325 {
+        didSet {
+            rotateEarth(lat: lat, long: long)
+        }
+    }
+    
+    var long: Float = 84.555 {
+        didSet {
+            rotateEarth(lat: lat, long: long)
+        }
+    }
 }

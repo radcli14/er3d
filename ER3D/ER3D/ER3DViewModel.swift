@@ -50,4 +50,14 @@ class ER3DViewModel: ObservableObject {
         get { model.roll }
         set { model.roll = newValue }
     }
+    
+    var lat: Float {
+        get { model.lat * Float.pi / 180.0 }
+        set { model.lat = newValue * 180.0 / Float.pi }
+    }
+    
+    var long: Float {
+        get { model.long * Float.pi / 180.0 }
+        set { model.long = newValue * 180.0 / Float.pi }
+    }
 }
