@@ -44,6 +44,8 @@ class ArrowNode: SCNNode {
             height: Constants.tailHeightScale
         )
         tailGeometry.materials.first?.diffuse.contents = color
+        tailGeometry.materials.first?.emission.contents = color
+        tailGeometry.materials.first?.emission.intensity = Constants.emissionIntensity
         
         return tailGeometry
     }
@@ -56,7 +58,8 @@ class ArrowNode: SCNNode {
             height: Constants.headHeightScale
         )
         headGeometry.materials.first?.diffuse.contents = color
-        
+        headGeometry.materials.first?.emission.contents = color
+        headGeometry.materials.first?.emission.intensity = Constants.emissionIntensity
         return headGeometry
     }
     
@@ -91,6 +94,7 @@ class ArrowNode: SCNNode {
         static let tailWidthScale = 0.02
         static let headHeightScale = 0.2
         static let headWidthScale = 0.03
+        static let emissionIntensity = CGFloat(0.5)
     }
     
     // MARK: - Protocol Requirements

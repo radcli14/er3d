@@ -47,10 +47,15 @@ extension SCNQuaternion {
         let rollQuat = self.forRollAngleInDegrees(roll).asQuat
         let pitchQuat = self.forPitchAngleInDegrees(pitch).asQuat
         let yawQuat = self.forYawAngleInDegrees(yaw).asQuat
-        print("rollQuat = \(rollQuat)")
         let quat = rollQuat * pitchQuat * yawQuat
-        print("quat = \(quat)")
-        return SCNQuaternion(x: Float(quat.axis.x), y: Float(quat.axis.y), z: Float(quat.axis.z), w: Float(quat.angle))
+        return SCNQuaternion(x: Float(quat.imag.x), y: Float(quat.imag.y), z: Float(quat.imag.z), w: Float(quat.real))
+    }
+    
+    static func forLongLatSequenceInDegrees(long: Float, lat: Float) -> SCNQuaternion {
+        let longQuat = self.forRollAngleInDegrees(long).asQuat
+        let latQuat = self.forPitchAngleInDegrees(lat).asQuat
+        let quat = latQuat * longQuat
+        return SCNQuaternion(x: Float(quat.imag.x), y: Float(quat.imag.y), z: Float(quat.imag.z), w: Float(quat.real))
     }
 }
 

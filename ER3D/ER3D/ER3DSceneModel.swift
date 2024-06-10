@@ -14,6 +14,8 @@ protocol ER3DSceneModel {
     var frame1: FrameNode { get set }
     var frame2: FrameNode { get set }
     var frame3: FrameNode { get set }
+    var earthNode: SCNNode? { get set }
+    var earthInitialRotation: SCNVector4? { get set }
 }
 
 extension ER3DSceneModel {
@@ -26,19 +28,11 @@ extension ER3DSceneModel {
 
         // Add the ship and Earth to the scene
         let ship = getShip(named: assetName)
-        if let earth = getEarth(lat: 42.7325, long: 84.555) {
+        if let earth = getEarth() {
             scene.rootNode.addChildNode(earth)
+            earthNode = earth
+            rotateEarth(lat: 42.7325, long: 84.555)
         }
-        
-        // Light is provided through sparks of energy of the mind that travel in rhyme form
-        let lightNode = SCNNode()
-        lightNode.light = SCNLight()
-        lightNode.light!.type = .omni
-        lightNode.light!.zFar = 100000.0
-        lightNode.light!.intensity = 1000
-        lightNode.position = SCNVector3(x: -360.0, y: 360.0, z: -1080.0)
-        lightNode.light?.castsShadow = true
-        scene.rootNode.addChildNode(lightNode)
         
         // Add the frames to the scene
         let frame0 = FrameNode(scale: 1.0, color: .systemGray)
@@ -68,20 +62,29 @@ extension ER3DSceneModel {
     // MARK: - Objects and Images
     
     /// Get the `SCNNode` from the Earth .scn file
-    func getEarth(named assetName: String = "art.scnassets/earth.scn", lat: Float = 0.0, long: Float = 0.0) -> SCNNode? {
+    mutating func getEarth(named assetName: String = "art.scnassets/earth.scn") -> SCNNode? {
         let earthScene = SCNScene(named: assetName)
         let earthNode = earthScene?.rootNode
-        if let earthNode {
-            earthNode.rotate(
-                by: SCNQuaternion.forRollAngleInDegrees(long),
-                aroundTarget: earthNode.childNodes.last?.position ?? .zero
-            )
-            earthNode.rotate(
-                by: SCNQuaternion.forPitchAngleInDegrees(lat),
-                aroundTarget: earthNode.childNodes.last?.position ?? .zero
-            )
+        if let earthChild = earthNode?.childNode(withName: "earth", recursively: true) {
+            earthInitialRotation = earthChild.rotation
         }
         return earthNode
+    }
+    
+    /// Rotate the earth by a specified latitude (`lat`) and longitude (`long`) in degrees
+    func rotateEarth(lat: Float = 0.0, long: Float = 0.0) {
+        if let earthChild = earthNode?.childNode(withName: "earth", recursively: true) {
+            // Temporarily set to its initial orientation
+            if let earthInitialRotation {
+                earthChild.rotation = earthInitialRotation
+            }
+            
+            // Rotate the earth
+            earthChild.rotate(
+                by: .forLongLatSequenceInDegrees(long: long, lat: lat),
+                aroundTarget: earthChild.position
+            )
+        }
     }
     
     /// Get the `SCNNode` from the ship scene with specified file name, and translates and rotates it to intended position

@@ -31,8 +31,8 @@ struct ER3DView: View {
     private var renderedView: some View {
         SceneView(
             scene: viewModel.scene,
-            pointOfView: viewModel.camera,
-            options: [.autoenablesDefaultLighting]
+            pointOfView: viewModel.camera//,
+            //options: [.autoenablesDefaultLighting]
         )
     }
     

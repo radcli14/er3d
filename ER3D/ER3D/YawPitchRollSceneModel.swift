@@ -16,6 +16,9 @@ struct YawPitchRollSceneModel: ER3DSceneModel {
     var frame2 = FrameNode(scale: 0.95, color: .systemGreen)
     var frame3 = FrameNode(scale: 0.925, color: .systemRed)
     
+    var earthNode: SCNNode?
+    var earthInitialRotation: SCNVector4?
+    
     init() {
         setupScene()
         setupCamera()
