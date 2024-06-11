@@ -52,12 +52,17 @@ class ER3DViewModel: ObservableObject {
     }
     
     var lat: Float {
-        get { model.lat * Float.pi / 180.0 }
-        set { model.lat = newValue * 180.0 / Float.pi }
+        get { model.lat }
+        set { model.lat = newValue }
     }
     
     var long: Float {
-        get { model.long * Float.pi / 180.0 }
-        set { model.long = newValue * 180.0 / Float.pi }
+        get { model.long }
+        set { model.long = newValue }
+    }
+    
+    func setLatLong(lat: Float, long: Float) {
+        model.lat = lat
+        model.long = long
     }
 }

@@ -55,7 +55,7 @@ struct ER3DView: View {
         .font(.largeTitle)
     }
     
-    // MARK: - Angle Controls
+    // MARK: - Euler Angle Controls
     
     /// The stack of three sliders representing the yaw, pitch, and roll angles
     @ViewBuilder
@@ -78,28 +78,6 @@ struct ER3DView: View {
         angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
         angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
         angleSlider(for: $viewModel.roll, name: "Roll", symbol: "φ")
-    }
-    
-    /// The stack of two sliders representing the latitude and longitude angles
-    @ViewBuilder
-    private var latLongAngleControls: some View {
-        if viewModel.isLandscape {
-            HStack {
-                latLongAngleControlsInStack
-            }
-            .padding(.bottom, Constants.sliderPadding)
-        } else {
-            VStack(spacing: Constants.sliderSpacing) {
-                latLongAngleControlsInStack
-            }
-            .padding(Constants.sliderPadding)
-        }
-    }
-    
-    @ViewBuilder
-    private var latLongAngleControlsInStack: some View {
-        angleSlider(for: $viewModel.long, name: "Longitude", symbol: "Long.")
-        angleSlider(for: $viewModel.lat, name: "Latitude", symbol: "Lat.")
     }
     
     /// A custom slider using specified angle limits, steps, and labels
@@ -134,6 +112,85 @@ struct ER3DView: View {
         viewModel.isLandscape ? 64 : 180
     }
     
+    // MARK: - Latitude/Longitude Angle Controls
+    
+    @GestureState private var gestureLatLong = GestureLatLongState()
+    
+    private struct GestureLatLongState {
+        var lat: Float = 0.0
+        var long: Float = 0.0
+        var x: CGFloat = 0.0
+        var y: CGFloat = 0.0
+        var isFirstUpdate = true
+        
+        mutating func setInitial(lat: Float, long: Float) {
+            self.long = long
+            self.lat = lat
+            isFirstUpdate = false
+        }
+        
+        mutating func update(for translation: CGSize, in geometry: GeometryProxy) -> GestureLatLongState {
+            x = max(min(translation.width, 0.5 * geometry.size.width), -0.5 * geometry.size.width)
+            y = max(min(translation.height, 0.5 * geometry.size.height), -0.5 * geometry.size.height)
+            return GestureLatLongState(
+                lat: max(min(lat + 0.05 * Float(y), 90), -90),
+                long: long + 0.05 * Float(x)
+            )
+        }
+    }
+
+    /// The controls for varying the latitude and longitude angles
+    private var latLongAngleControls: some View {
+        GeometryReader { geometry in
+            latLongPad(in: geometry)
+        }
+        .padding(Constants.sliderPadding)
+    }
+    
+    /// The drag pad for controlling the latitude and longitude angles
+    private func latLongPad(in geometry: GeometryProxy) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: Constants.sliderPadding)
+                .foregroundColor(.gray)
+            crosshairLine(in: geometry, isVertical: true)
+            crosshairLine(in: geometry, isVertical: false)
+        }
+        .gesture(latLongGesture(in: geometry))
+    }
+    
+    /// Either a vertical or horizontal line depicting the position of the users drag gesture
+    private func crosshairLine(in geometry: GeometryProxy, isVertical: Bool) -> some View {
+        Rectangle()
+            .frame(
+                width: isVertical ? Constants.crosshairWidth : geometry.size.width,
+                height: isVertical ? geometry.size.height : Constants.crosshairWidth
+            )
+            .offset(
+                x: isVertical ? CGFloat(gestureLatLong.x) : .zero,
+                y: isVertical ? .zero : CGFloat(gestureLatLong.y)
+            )
+    }
+    
+    private func latLongGesture(in geometry: GeometryProxy) -> some Gesture {
+        DragGesture()
+            .updating($gestureLatLong) { inMotionDragGestureValue, gestureLatLong, _ in
+                if gestureLatLong.isFirstUpdate {
+                    gestureLatLong.setInitial(lat: viewModel.lat, long: viewModel.long)
+                }
+                let update = gestureLatLong.update(for: inMotionDragGestureValue.translation, in: geometry)
+                DispatchQueue.main.async {
+                    viewModel.setLatLong(lat: update.lat, long: update.long)
+                }
+            }
+    }
+    
+    
+    @ViewBuilder
+    private var latLongAngleControlsInStack: some View {
+        angleSlider(for: $viewModel.long, name: "Longitude", symbol: "Long.")
+        angleSlider(for: $viewModel.lat, name: "Latitude", symbol: "Lat.")
+    }
+    
     // MARK: - Constants
     
     private struct Constants {
@@ -143,6 +200,7 @@ struct ER3DView: View {
         static let sliderPadding = CGFloat(24)
         static let sliderLabelOffset = CGSize(width: 0, height: 24)
         static let rad2deg = 180.0 / Float.pi
+        static let crosshairWidth = CGFloat(2)
     }
 }
 
