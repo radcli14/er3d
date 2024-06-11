@@ -23,6 +23,7 @@
 		8A66F7E82C0A2B62001DFB0B /* FrameNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E42C0A2B49001DFB0B /* FrameNode.swift */; };
 		8A66F7E92C0A2B62001DFB0B /* ArrowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E32C0A2B49001DFB0B /* ArrowNode.swift */; };
 		8A66F7EB2C0A313D001DFB0B /* Planets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7EA2C0A313D001DFB0B /* Planets.swift */; };
+		8AD2ECCB2C18A98000491255 /* VariableDescriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD2ECCA2C18A98000491255 /* VariableDescriptions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		8A66F7E32C0A2B49001DFB0B /* ArrowNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowNode.swift; sourceTree = "<group>"; };
 		8A66F7E42C0A2B49001DFB0B /* FrameNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameNode.swift; sourceTree = "<group>"; };
 		8A66F7EA2C0A313D001DFB0B /* Planets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
+		8AD2ECCA2C18A98000491255 /* VariableDescriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableDescriptions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 		8A450FFF28E65D46009BD378 /* ER3D */ = {
 			isa = PBXGroup;
 			children = (
+				8AD2ECC92C18A96C00491255 /* Data */,
 				8A45100028E65D46009BD378 /* ER3DApp.swift */,
 				8A45100228E65D46009BD378 /* ER3DView.swift */,
 				8A45102A28E65DCA009BD378 /* ER3DViewModel.swift */,
@@ -168,6 +171,14 @@
 				8A66F7E42C0A2B49001DFB0B /* FrameNode.swift */,
 			);
 			path = Nodes;
+			sourceTree = "<group>";
+		};
+		8AD2ECC92C18A96C00491255 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8AD2ECCA2C18A98000491255 /* VariableDescriptions.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AD2ECCB2C18A98000491255 /* VariableDescriptions.swift in Sources */,
 				8A66F7E72C0A2B5D001DFB0B /* SceneKit+Extensions.swift in Sources */,
 				8A66F7EB2C0A313D001DFB0B /* Planets.swift in Sources */,
 				8A45100328E65D46009BD378 /* ER3DView.swift in Sources */,

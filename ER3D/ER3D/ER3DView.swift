@@ -75,6 +75,7 @@ struct ER3DView: View {
     
     @ViewBuilder
     private var eulerAngleControlsInStack: some View {
+        Text("Yaw → Pitch → Roll Sequence").font(.headline)
         angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
         angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
         angleSlider(for: $viewModel.roll, name: "Roll", symbol: "φ")
@@ -82,20 +83,23 @@ struct ER3DView: View {
     
     /// A custom slider using specified angle limits, steps, and labels
     private func angleSlider(for angle: Binding<Float>, name: String = "", symbol: String = "") -> some View {
-        Slider(
-            value: angle,
-            in: Constants.angleRange,
-            step: Constants.sliderStep,
-            label: { Text(name) },
-            minimumValueLabel: { Text(viewModel.isLandscape ? "" : minValueString) },
-            maximumValueLabel: { Text(viewModel.isLandscape ? "" : maxValueString) }
-        )
-        .background {
-            Text("\(symbol) = \(Int(angle.wrappedValue * 180 / Float.pi)) deg")
+        ZStack {
+            Text("\(symbol) = \(Int(angle.wrappedValue * Constants.rad2deg)) deg")
                 .font(.callout)
                 .foregroundColor(.secondary)
                 .offset(Constants.sliderLabelOffset)
+            Slider(
+                value: angle,
+                in: Constants.angleRange,
+                step: Constants.sliderStep,
+                label: { Text(name) },
+                minimumValueLabel: { Text(viewModel.isLandscape ? "" : minValueString) },
+                maximumValueLabel: { Text(viewModel.isLandscape ? "" : maxValueString) }
+            )
+            .offset(Constants.sliderOffset)
         }
+        .frame(height: Constants.sliderHeight)
+        .angleSliderContextMenu(name, onResetAction: { angle.wrappedValue = 0 })
     }
     
     /// The lower bound for the slider
@@ -108,14 +112,16 @@ struct ER3DView: View {
         String(Int(Constants.angleRange.upperBound * Constants.rad2deg))
     }
     
+    /// Dimension of the sheet that pops up from the bottom
     private var angleControlsHeight: CGFloat {
-        viewModel.isLandscape ? 64 : 180
+        viewModel.isLandscape ? 64 : 212
     }
     
     // MARK: - Latitude/Longitude Angle Controls
     
     @GestureState private var gestureLatLong = GestureLatLongState()
     
+    /// Stores the initial latitude and longitude prior to the gesture, the x/y coordinates of the gesture, and provides offset for the center of the crosshair
     private struct GestureLatLongState {
         var lat: Float = 0.0
         var long: Float = 0.0
@@ -134,15 +140,22 @@ struct ER3DView: View {
             y = max(min(translation.height, 0.5 * geometry.size.height), -0.5 * geometry.size.height)
             return GestureLatLongState(
                 lat: max(min(lat + 0.05 * Float(y), 90), -90),
-                long: long + 0.05 * Float(x)
+                long: 0.05 * Float(x)
             )
+        }
+        
+        var offset: CGSize {
+            CGSize(width: CGFloat(x), height: CGFloat(y))
         }
     }
 
     /// The controls for varying the latitude and longitude angles
     private var latLongAngleControls: some View {
-        GeometryReader { geometry in
-            latLongPad(in: geometry)
+        VStack {
+            Text("Latitude and Longitude").font(.headline)
+            GeometryReader { geometry in
+                latLongPad(in: geometry)
+            }
         }
         .padding(Constants.sliderPadding)
     }
@@ -150,12 +163,25 @@ struct ER3DView: View {
     /// The drag pad for controlling the latitude and longitude angles
     private func latLongPad(in geometry: GeometryProxy) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: Constants.sliderPadding)
-                .foregroundColor(.gray)
+            crosshairCenterIndicator
             crosshairLine(in: geometry, isVertical: true)
             crosshairLine(in: geometry, isVertical: false)
         }
+        .background(Color.gray)
+        .cornerRadius(Constants.sliderPadding)
         .gesture(latLongGesture(in: geometry))
+    }
+    
+    /// Draws a circle with gradient fill at the center of the crosshairs, when the pad is touched
+    private var crosshairCenterIndicator: some View {
+        RadialGradient(
+            gradient: Gradient(colors: [.accentColor, .gray]),
+            center: .center,
+            startRadius: 0, endRadius: Constants.crosshairCenterRadius
+        )
+        .accentColor(gestureLatLong.isFirstUpdate ? .gray : .primary)
+        .frame(width: Constants.crosshairCenterSize, height: Constants.crosshairCenterSize)
+        .offset(gestureLatLong.offset)
     }
     
     /// Either a vertical or horizontal line depicting the position of the users drag gesture
@@ -184,23 +210,20 @@ struct ER3DView: View {
             }
     }
     
-    
-    @ViewBuilder
-    private var latLongAngleControlsInStack: some View {
-        angleSlider(for: $viewModel.long, name: "Longitude", symbol: "Long.")
-        angleSlider(for: $viewModel.lat, name: "Latitude", symbol: "Lat.")
-    }
-    
     // MARK: - Constants
     
     private struct Constants {
         static let angleRange = -Float.pi...Float.pi
         static let sliderStep = Float.pi / 180
-        static let sliderSpacing = CGFloat(24)
+        static let sliderSpacing = CGFloat(8)
         static let sliderPadding = CGFloat(24)
-        static let sliderLabelOffset = CGSize(width: 0, height: 24)
+        static let sliderHeight = CGFloat(48)
+        static let sliderOffset = CGSize(width: 0, height: -10)
+        static let sliderLabelOffset = CGSize(width: 0, height: 14)
         static let rad2deg = 180.0 / Float.pi
         static let crosshairWidth = CGFloat(2)
+        static let crosshairCenterSize = CGFloat(48)
+        static let crosshairCenterRadius = CGFloat(24)
     }
 }
 
