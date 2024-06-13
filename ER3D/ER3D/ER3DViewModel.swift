@@ -61,6 +61,10 @@ class ER3DViewModel: ObservableObject {
         set { model.long = newValue }
     }
     
+    var cameraAngle: CGFloat {
+        model.cameraAngle
+    }
+    
     func setLatLong(lat: Float, long: Float) {
         model.lat = lat
         model.long = long

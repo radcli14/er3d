@@ -26,6 +26,7 @@ struct ER3DView: View {
         .sheet(isPresented: $viewModel.latLongControlsVisible) {
             latLongAngleControls
                 .presentationDetents([.height(angleControlsHeight)])
+                .gesture(latLongGesture)
         }
     }
     
@@ -135,12 +136,12 @@ struct ER3DView: View {
             isFirstUpdate = false
         }
         
-        mutating func update(for translation: CGSize, in geometry: GeometryProxy) -> GestureLatLongState {
-            x = max(min(translation.width, 0.5 * geometry.size.width), -0.5 * geometry.size.width)
-            y = max(min(translation.height, 0.5 * geometry.size.height), -0.5 * geometry.size.height)
+        mutating func update(for translation: CGSize, rotatedBy angle: CGFloat = 0) -> GestureLatLongState {
+            x = translation.width * cos(angle) - translation.height * sin(angle)
+            y = translation.width * sin(angle) + translation.height * cos(angle)
             return GestureLatLongState(
                 lat: max(min(lat + 0.05 * Float(y), 90), -90),
-                long: 0.05 * Float(x)
+                long: long + 0.05 * Float(x)
             )
         }
         
@@ -149,63 +150,29 @@ struct ER3DView: View {
         }
     }
 
-    /// The controls for varying the latitude and longitude angles
+    /// The indicators for the latitude and longitude angles
     private var latLongAngleControls: some View {
         VStack {
             Text("Latitude and Longitude").font(.headline)
-            GeometryReader { geometry in
-                latLongPad(in: geometry)
-            }
+            Text("Drag to update").font(.caption)
+            Divider()
+            Text("Latitude = \(viewModel.lat) deg")
+            Text("Longitude = \(viewModel.long) deg")
         }
         .padding(Constants.sliderPadding)
     }
     
-    /// The drag pad for controlling the latitude and longitude angles
-    private func latLongPad(in geometry: GeometryProxy) -> some View {
-        ZStack {
-            crosshairCenterIndicator
-            crosshairLine(in: geometry, isVertical: true)
-            crosshairLine(in: geometry, isVertical: false)
-        }
-        .background(Color.gray)
-        .cornerRadius(Constants.sliderPadding)
-        .gesture(latLongGesture(in: geometry))
-    }
-    
-    /// Draws a circle with gradient fill at the center of the crosshairs, when the pad is touched
-    private var crosshairCenterIndicator: some View {
-        RadialGradient(
-            gradient: Gradient(colors: [.accentColor, .gray]),
-            center: .center,
-            startRadius: 0, endRadius: Constants.crosshairCenterRadius
-        )
-        .accentColor(gestureLatLong.isFirstUpdate ? .gray : .primary)
-        .frame(width: Constants.crosshairCenterSize, height: Constants.crosshairCenterSize)
-        .offset(gestureLatLong.offset)
-    }
-    
-    /// Either a vertical or horizontal line depicting the position of the users drag gesture
-    private func crosshairLine(in geometry: GeometryProxy, isVertical: Bool) -> some View {
-        Rectangle()
-            .frame(
-                width: isVertical ? Constants.crosshairWidth : geometry.size.width,
-                height: isVertical ? geometry.size.height : Constants.crosshairWidth
-            )
-            .offset(
-                x: isVertical ? CGFloat(gestureLatLong.x) : .zero,
-                y: isVertical ? .zero : CGFloat(gestureLatLong.y)
-            )
-    }
-    
-    private func latLongGesture(in geometry: GeometryProxy) -> some Gesture {
+    private var latLongGesture: some Gesture {
         DragGesture()
             .updating($gestureLatLong) { inMotionDragGestureValue, gestureLatLong, _ in
                 if gestureLatLong.isFirstUpdate {
                     gestureLatLong.setInitial(lat: viewModel.lat, long: viewModel.long)
                 }
-                let update = gestureLatLong.update(for: inMotionDragGestureValue.translation, in: geometry)
-                DispatchQueue.main.async {
-                    viewModel.setLatLong(lat: update.lat, long: update.long)
+                if viewModel.latLongControlsVisible {
+                    let update = gestureLatLong.update(for: inMotionDragGestureValue.translation, rotatedBy: viewModel.cameraAngle)
+                    DispatchQueue.main.async {
+                        viewModel.setLatLong(lat: update.lat, long: update.long)
+                    }
                 }
             }
     }
