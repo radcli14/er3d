@@ -96,6 +96,7 @@ struct ER3DView: View {
     @ViewBuilder
     private var eulerAngleControlsInStack: some View {
         Text("Yaw → Pitch → Roll Sequence").font(.headline)
+            .angleSliderContextMenu("Yaw → Pitch → Roll", onResetAction: { viewModel.resetYawPitchRollAngles() })
         angleSlider(for: $viewModel.yaw, name: "Yaw", symbol: "ψ")
         angleSlider(for: $viewModel.pitch, name: "Pitch", symbol: "𝜃")
         angleSlider(for: $viewModel.roll, name: "Roll", symbol: "φ")
@@ -160,7 +161,7 @@ struct ER3DView: View {
             y = translation.width * sin(angle) + translation.height * cos(angle)
             return GestureLatLongState(
                 lat: max(min(lat + 0.05 * Float(y), 90), -90),
-                long: long + 0.05 * Float(x)
+                long: long - 0.05 * Float(x)
             )
         }
         
@@ -221,7 +222,6 @@ struct ER3DView: View {
             Spacer()
         }
         .frame(maxWidth: 0.5 * Constants.latLongMenuWidthInLandscape)
-        //.fixedSize()
     }
     
     

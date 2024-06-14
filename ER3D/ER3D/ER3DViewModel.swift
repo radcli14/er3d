@@ -69,6 +69,14 @@ class ER3DViewModel: ObservableObject {
         model.cameraAngle
     }
     
+    // MARK: - Intents
+    
+    func resetYawPitchRollAngles() {
+        yaw = 0
+        pitch = 0
+        roll = 0
+    }
+    
     func setLatLong(lat: Float, long: Float) {
         model.lat = lat
         model.long = long

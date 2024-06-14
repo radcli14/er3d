@@ -50,7 +50,7 @@ struct YawPitchRollSceneModel: ER3DSceneModel {
         }
     }
     
-    var long: Float = 84.555 {
+    var long: Float = -84.555 {
         didSet {
             rotateEarth(lat: lat, long: long)
         }

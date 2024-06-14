@@ -52,7 +52,7 @@ extension SCNQuaternion {
     }
     
     static func forLongLatSequenceInDegrees(long: Float, lat: Float) -> SCNQuaternion {
-        let longQuat = self.forRollAngleInDegrees(long).asQuat
+        let longQuat = self.forRollAngleInDegrees(-long).asQuat
         let latQuat = self.forPitchAngleInDegrees(lat).asQuat
         let quat = latQuat * longQuat
         return SCNQuaternion(x: Float(quat.imag.x), y: Float(quat.imag.y), z: Float(quat.imag.z), w: Float(quat.real))

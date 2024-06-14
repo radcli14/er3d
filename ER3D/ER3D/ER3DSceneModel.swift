@@ -31,7 +31,7 @@ extension ER3DSceneModel {
         if let earth = getEarth() {
             scene.rootNode.addChildNode(earth)
             earthNode = earth
-            rotateEarth(lat: 42.7325, long: 84.555)
+            rotateEarth(lat: 42.7325, long: -84.555)
         }
         
         // Add the frames to the scene
