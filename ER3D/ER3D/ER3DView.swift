@@ -16,6 +16,7 @@ struct ER3DView: View {
             renderedView
             controls
         }
+        .ignoresSafeArea()
         .onRotate { newOrientation in
             viewModel.rotateDevice(to: newOrientation)
         }
@@ -50,7 +51,7 @@ struct ER3DView: View {
         }
         .background(.background)
         .cornerRadius(Constants.controlOverlayRadius)
-        .padding(Constants.controlOverlayPadding)
+        .padding(Constants.controlOverlayRadius)
     }
     
     private var bottomButtons: some View {
@@ -167,6 +168,22 @@ struct ER3DView: View {
             CGSize(width: CGFloat(x), height: CGFloat(y))
         }
     }
+    
+    /// Handles a drag gesture when the latitude and longitude control is visible
+    private var latLongGesture: some Gesture {
+        DragGesture()
+            .updating($gestureLatLong) { inMotionDragGestureValue, gestureLatLong, _ in
+                if gestureLatLong.isFirstUpdate {
+                    gestureLatLong.setInitial(lat: viewModel.lat, long: viewModel.long)
+                }
+                if viewModel.controlVisibility == .latLongControls {
+                    let update = gestureLatLong.update(for: inMotionDragGestureValue.translation, rotatedBy: viewModel.cameraAngle)
+                    DispatchQueue.main.async {
+                        viewModel.setLatLong(lat: update.lat, long: update.long)
+                    }
+                }
+            }
+    }
 
     /// The indicators for the latitude and longitude angles
     @ViewBuilder
@@ -188,41 +205,32 @@ struct ER3DView: View {
     /// Displays fixed text labeling that you have the latitude/longitude control open
     private var latLongMessage: some View {
         VStack {
-            Text("Latitude and Longitude").font(.headline)
+            Text("Latitude & Longitude").font(.headline)
             Text("Drag on globe to update").font(.caption)
         }
     }
     
     /// Displays current numerical values for the latitude and longitude
     private var latLongState: some View {
-        VStack(alignment: .leading) {
-            Text("Latitude = \(String(format: "%.3f", viewModel.lat)) deg")
-            Text("Longitude = \(String(format: "%.3f", viewModel.long)) deg")
+        HStack {
+            VStack(alignment: .leading) {
+                let format = "%.2f"
+                Text("Latitude = \(String(format: format, viewModel.lat)) deg")
+                Text("Longitude = \(String(format: format, viewModel.long)) deg")
+            }
+            Spacer()
         }
-        .frame(width: 0.5 * Constants.latLongMenuWidthInLandscape)
-        .fixedSize()
+        .frame(maxWidth: 0.5 * Constants.latLongMenuWidthInLandscape)
+        //.fixedSize()
     }
     
+    
+    /// Displays the `latLongMessage` and `latLongState` when the latitude and longitude control is visible
     @ViewBuilder
     private var latLongContent: some View {
         latLongMessage
         Divider()
         latLongState
-    }
-    
-    private var latLongGesture: some Gesture {
-        DragGesture()
-            .updating($gestureLatLong) { inMotionDragGestureValue, gestureLatLong, _ in
-                if gestureLatLong.isFirstUpdate {
-                    gestureLatLong.setInitial(lat: viewModel.lat, long: viewModel.long)
-                }
-                if viewModel.controlVisibility == .latLongControls {
-                    let update = gestureLatLong.update(for: inMotionDragGestureValue.translation, rotatedBy: viewModel.cameraAngle)
-                    DispatchQueue.main.async {
-                        viewModel.setLatLong(lat: update.lat, long: update.long)
-                    }
-                }
-            }
     }
     
     // MARK: - Constants
@@ -235,7 +243,7 @@ struct ER3DView: View {
         static let sliderPadding = CGFloat(12)
         static let controlOverlayRadius = CGFloat(24)
         static let sliderHeight = CGFloat(48)
-        static let latLongMenuWidthInLandscape = CGFloat(512)
+        static let latLongMenuWidthInLandscape = CGFloat(444)
         static let latLongMenuHeightInLandscape = CGFloat(64)
         static let sliderOffset = CGSize(width: 0, height: -10)
         static let sliderLabelOffset = CGSize(width: 0, height: 14)

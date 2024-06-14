@@ -51,12 +51,18 @@ extension ER3DSceneModel {
         
         // Position should be set prior to lookAt, otherwise you will look at the target,
         // then get moved away from its intended vector
-        cameraNode.position = SCNVector3(x: -2.0, y: 1.0, z: -2.0)
+        cameraNode.position = SCNVector3(x: -2.75, y: 1.25, z: -2)
         cameraNode.look(
-            at: .zero,
+            at: SCNVector3(0.15*cameraNode.position.x, 0.15*cameraNode.position.y, 0),
             up: SCNVector3(0, 0, -1),
             localFront: SCNVector3(0, 0, -1)
         )
+        //cameraNode.camera?.focalLength = 18
+        //cameraNode.camera?.sensorHeight = 50
+        cameraNode.camera?.fieldOfView = 65
+        cameraNode.camera?.wantsDepthOfField = true
+        cameraNode.camera?.focusDistance = 3.6
+        cameraNode.camera?.fStop = 0.25
     }
     
     var cameraAngle: CGFloat {
