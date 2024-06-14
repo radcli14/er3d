@@ -49,7 +49,7 @@ private struct AngleSliderContextMenu: ViewModifier {
                 Text("Reset to Zero")
             }
         }
-        .popover(isPresented: $showInfo, content: { Text(info) })
+        .popover(isPresented: $showInfo, content: { Text(info).padding() })
     }
 }
 

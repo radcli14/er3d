@@ -180,9 +180,23 @@ struct ER3DView: View {
                 if viewModel.controlVisibility == .latLongControls {
                     let update = gestureLatLong.update(for: inMotionDragGestureValue.translation, rotatedBy: viewModel.cameraAngle)
                     DispatchQueue.main.async {
-                        viewModel.setLatLong(lat: update.lat, long: update.long)
+                        withAnimation {
+                            viewModel.setLatLong(lat: update.lat, long: update.long)
+                        }
                     }
                 }
+            }
+            .onEnded { finalDragGestureValue in
+                /*if viewModel.controlVisibility == .latLongControls {
+                    var gesture = gestureLatLong
+                    gesture.setInitial(lat: viewModel.lat, long: viewModel.long)
+                    let update = gesture.update(for: finalDragGestureValue.velocity, rotatedBy: viewModel.cameraAngle)
+                    DispatchQueue.main.async {
+                        withAnimation {
+                            viewModel.setLatLong(lat: update.lat, long: update.long)
+                        }
+                    }
+                }*/
             }
     }
 
