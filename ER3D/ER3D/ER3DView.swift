@@ -217,7 +217,9 @@ struct ER3DView: View {
             VStack(alignment: .leading) {
                 let format = "%.2f"
                 Text("Latitude = \(String(format: format, viewModel.lat)) deg")
+                    .angleSliderContextMenu("Latitude", onResetAction: { viewModel.lat = 0 })
                 Text("Longitude = \(String(format: format, viewModel.long)) deg")
+                    .angleSliderContextMenu("Longitude", onResetAction: { viewModel.long = 0 })
             }
             Spacer()
         }
@@ -229,6 +231,7 @@ struct ER3DView: View {
     @ViewBuilder
     private var latLongContent: some View {
         latLongMessage
+            .angleSliderContextMenu("Latitude & Longitude", onResetAction: {viewModel.setLatLong(lat: 0, long: 0)})
         Divider()
         latLongState
     }
