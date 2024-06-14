@@ -12,21 +12,12 @@ struct ER3DView: View {
     @ObservedObject var viewModel: ER3DViewModel
 
     var body: some View {
-        VStack {
+        ZStack(alignment: .bottom) {
             renderedView
             controls
         }
         .onRotate { newOrientation in
             viewModel.rotateDevice(to: newOrientation)
-        }
-        .sheet(isPresented: $viewModel.angleControlsVisible) {
-            eulerAngleControls
-                .presentationDetents([.height(angleControlsHeight)])
-        }
-        .sheet(isPresented: $viewModel.latLongControlsVisible) {
-            latLongAngleControls
-                .presentationDetents([.height(angleControlsHeight)])
-                .gesture(latLongGesture)
         }
     }
     
@@ -36,24 +27,51 @@ struct ER3DView: View {
     private var renderedView: some View {
         SceneView(
             scene: viewModel.scene,
-            pointOfView: viewModel.camera//,
-            //options: [.autoenablesDefaultLighting]
+            pointOfView: viewModel.camera
         )
+        .gesture(latLongGesture)
+        .onTapGesture {
+            withAnimation {
+                viewModel.controlVisibility = .bottomButtons
+            }
+        }
     }
     
     // MARK: - Controls
     
     /// Buttons at the bottom to open controls for angles
     private var controls: some View {
-        HStack(spacing: Constants.sliderSpacing) {
-            Button(action: { viewModel.angleControlsVisible.toggle() }) {
+        VStack(spacing: 0) {
+            switch viewModel.controlVisibility {
+            case .angleControls: eulerAngleControls
+            case .latLongControls: latLongAngleControls
+            case .bottomButtons: bottomButtons
+            }
+        }
+        .background(.background)
+        .cornerRadius(Constants.controlOverlayRadius)
+        .padding(Constants.controlOverlayPadding)
+    }
+    
+    private var bottomButtons: some View {
+        HStack(spacing: Constants.sliderPadding) {
+            Button(action: {
+                withAnimation {
+                    viewModel.controlVisibility = .angleControls
+                }
+            }) {
                 Image(systemName: "rotate.3d.circle")
             }
-            Button(action: { viewModel.latLongControlsVisible.toggle() }) {
+            Button(action: {
+                withAnimation {
+                    viewModel.controlVisibility = .latLongControls
+                }
+            }) {
                 Image(systemName: "globe")
             }
         }
         .font(.largeTitle)
+        .padding(Constants.controlOverlayPadding)
     }
     
     // MARK: - Euler Angle Controls
@@ -151,15 +169,45 @@ struct ER3DView: View {
     }
 
     /// The indicators for the latitude and longitude angles
+    @ViewBuilder
     private var latLongAngleControls: some View {
+        if viewModel.isLandscape {
+            HStack {
+                latLongContent
+            }
+            .padding(Constants.sliderPadding)
+            .frame(width: Constants.latLongMenuWidthInLandscape, height: Constants.latLongMenuHeightInLandscape)
+        } else {
+            VStack {
+                latLongContent
+            }
+            .padding(Constants.sliderPadding)
+        }
+    }
+    
+    /// Displays fixed text labeling that you have the latitude/longitude control open
+    private var latLongMessage: some View {
         VStack {
             Text("Latitude and Longitude").font(.headline)
-            Text("Drag to update").font(.caption)
-            Divider()
-            Text("Latitude = \(viewModel.lat) deg")
-            Text("Longitude = \(viewModel.long) deg")
+            Text("Drag on globe to update").font(.caption)
         }
-        .padding(Constants.sliderPadding)
+    }
+    
+    /// Displays current numerical values for the latitude and longitude
+    private var latLongState: some View {
+        VStack(alignment: .leading) {
+            Text("Latitude = \(String(format: "%.3f", viewModel.lat)) deg")
+            Text("Longitude = \(String(format: "%.3f", viewModel.long)) deg")
+        }
+        .frame(width: 0.5 * Constants.latLongMenuWidthInLandscape)
+        .fixedSize()
+    }
+    
+    @ViewBuilder
+    private var latLongContent: some View {
+        latLongMessage
+        Divider()
+        latLongState
     }
     
     private var latLongGesture: some Gesture {
@@ -168,7 +216,7 @@ struct ER3DView: View {
                 if gestureLatLong.isFirstUpdate {
                     gestureLatLong.setInitial(lat: viewModel.lat, long: viewModel.long)
                 }
-                if viewModel.latLongControlsVisible {
+                if viewModel.controlVisibility == .latLongControls {
                     let update = gestureLatLong.update(for: inMotionDragGestureValue.translation, rotatedBy: viewModel.cameraAngle)
                     DispatchQueue.main.async {
                         viewModel.setLatLong(lat: update.lat, long: update.long)
@@ -182,15 +230,16 @@ struct ER3DView: View {
     private struct Constants {
         static let angleRange = -Float.pi...Float.pi
         static let sliderStep = Float.pi / 180
-        static let sliderSpacing = CGFloat(8)
-        static let sliderPadding = CGFloat(24)
+        static let sliderSpacing = CGFloat(0)
+        static let controlOverlayPadding = CGFloat(4)
+        static let sliderPadding = CGFloat(12)
+        static let controlOverlayRadius = CGFloat(24)
         static let sliderHeight = CGFloat(48)
+        static let latLongMenuWidthInLandscape = CGFloat(512)
+        static let latLongMenuHeightInLandscape = CGFloat(64)
         static let sliderOffset = CGSize(width: 0, height: -10)
         static let sliderLabelOffset = CGSize(width: 0, height: 14)
         static let rad2deg = 180.0 / Float.pi
-        static let crosshairWidth = CGFloat(2)
-        static let crosshairCenterSize = CGFloat(48)
-        static let crosshairCenterRadius = CGFloat(24)
     }
 }
 

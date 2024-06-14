@@ -17,12 +17,16 @@ class ER3DViewModel: ObservableObject {
     // MARK: - State Variables
     
     @Published var isLandscape = false
-    @Published var angleControlsVisible = true
-    @Published var latLongControlsVisible = false
-    
+
     func rotateDevice(to newOrientation: UIDeviceOrientation) {
         isLandscape = newOrientation == .landscapeLeft || newOrientation == .landscapeRight
     }
+    
+    enum ControlVisibility {
+        case bottomButtons, angleControls, latLongControls
+    }
+    
+    @Published var controlVisibility = ControlVisibility.angleControls
     
     // MARK: - Scene
     
