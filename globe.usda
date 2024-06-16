@@ -1,0 +1,1211 @@
+#usda 1.0
+(
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["Globe", "GlobalX", "GlobalY", "GlobalZ", "BaseFrame"]
+    def Xform "BaseFrame" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0, 3.1415927, 0)
+        }
+    )
+    {
+        reorder nameChildren = ["YawFrame", "YawFrame_1", "xArrow", "yArrow", "zArrow"]
+        quatf xformOp:orient = (-4.371139e-8, 0, 1, 0)
+        float3 xformOp:translate = (0, 0, 0.35)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Xform "xArrow" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (0, 0, -1.5707964)
+            }
+        )
+        {
+            reorder nameChildren = ["Tail", "Tip"]
+            quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Cone "Tail" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 3.1415927)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.02
+                rel material:binding = </Root/BaseFrame/xArrow/Tail/DefaultMaterial>
+                double radius = 0.001
+                quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, 0.01, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Material "DefaultMaterial"
+                {
+                    token outputs:mtlx:surface
+                    token outputs:realitykit:vertex
+                    token outputs:surface.connect = </Root/BaseFrame/xArrow/Tail/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                    def Shader "DefaultSurfaceShader"
+                    {
+                        uniform token info:id = "UsdPreviewSurface"
+                        color3f inputs:diffuseColor = (0.59607846, 0.59607846, 0.6156863) (
+                            colorSpace = "srgb_texture"
+                        )
+                        float inputs:roughness = 0.75
+                        token outputs:surface
+                    }
+                }
+            }
+
+            def Cone "Tip" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.01
+                rel material:binding = </Root/BaseFrame/xArrow/Tip/DefaultMaterial>
+                double radius = 0.002
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, 0.025, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Material "DefaultMaterial"
+                {
+                    token outputs:mtlx:surface
+                    token outputs:realitykit:vertex
+                    prepend token outputs:surface.connect = </Root/BaseFrame/xArrow/Tip/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                    def Shader "DefaultSurfaceShader"
+                    {
+                        uniform token info:id = "UsdPreviewSurface"
+                        color3f inputs:diffuseColor = (0.59607846, 0.59607846, 0.6156863) (
+                            colorSpace = "srgb_texture"
+                        )
+                        float inputs:roughness = 0.75
+                        token outputs:surface
+                    }
+                }
+            }
+        }
+
+        def Xform "yArrow" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (0, 0, 0)
+            }
+        )
+        {
+            reorder nameChildren = ["Tail", "Tip"]
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Cone "Tail" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 3.1415927)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.02
+                rel material:binding = </Root/BaseFrame/yArrow/Tail/DefaultMaterial>
+                double radius = 0.001
+                quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, 0.01, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Material "DefaultMaterial"
+                {
+                    token outputs:mtlx:surface
+                    token outputs:realitykit:vertex
+                    token outputs:surface.connect = </Root/BaseFrame/yArrow/Tail/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                    def Shader "DefaultSurfaceShader"
+                    {
+                        uniform token info:id = "UsdPreviewSurface"
+                        color3f inputs:diffuseColor = (0.59607846, 0.59607846, 0.6156863) (
+                            colorSpace = "srgb_texture"
+                        )
+                        float inputs:roughness = 0.75
+                        token outputs:surface
+                    }
+                }
+            }
+
+            def Cone "Tip" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.01
+                rel material:binding = </Root/BaseFrame/yArrow/Tip/DefaultMaterial>
+                double radius = 0.002
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, 0.025, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Material "DefaultMaterial"
+                {
+                    token outputs:mtlx:surface
+                    token outputs:realitykit:vertex
+                    token outputs:surface.connect = </Root/BaseFrame/yArrow/Tip/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                    def Shader "DefaultSurfaceShader"
+                    {
+                        uniform token info:id = "UsdPreviewSurface"
+                        color3f inputs:diffuseColor = (0.59607846, 0.59607846, 0.6156863) (
+                            colorSpace = "srgb_texture"
+                        )
+                        float inputs:roughness = 0.75
+                        token outputs:surface
+                    }
+                }
+            }
+        }
+
+        def Xform "zArrow" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (1.5707964, 0, 0)
+            }
+        )
+        {
+            reorder nameChildren = ["Tail", "Tip"]
+            quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+            float3 xformOp:scale = (0.9999997, 0.9999997, 0.9999997)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Cone "Tail" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 3.1415927)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.02
+                rel material:binding = </Root/BaseFrame/zArrow/Tail/DefaultMaterial>
+                double radius = 0.001
+                quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, 0.01, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Material "DefaultMaterial"
+                {
+                    token outputs:mtlx:surface
+                    token outputs:realitykit:vertex
+                    token outputs:surface.connect = </Root/BaseFrame/zArrow/Tail/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                    def Shader "DefaultSurfaceShader"
+                    {
+                        uniform token info:id = "UsdPreviewSurface"
+                        color3f inputs:diffuseColor = (0.59607846, 0.59607846, 0.6156863) (
+                            colorSpace = "srgb_texture"
+                        )
+                        float inputs:roughness = 0.75
+                        token outputs:surface
+                    }
+                }
+            }
+
+            def Cone "Tip" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.01
+                rel material:binding = </Root/BaseFrame/zArrow/Tip/DefaultMaterial>
+                double radius = 0.002
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, 0.025, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Material "DefaultMaterial"
+                {
+                    token outputs:mtlx:surface
+                    token outputs:realitykit:vertex
+                    token outputs:surface.connect = </Root/BaseFrame/zArrow/Tip/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                    def Shader "DefaultSurfaceShader"
+                    {
+                        uniform token info:id = "UsdPreviewSurface"
+                        color3f inputs:diffuseColor = (0.59607846, 0.59607846, 0.6156863) (
+                            colorSpace = "srgb_texture"
+                        )
+                        float inputs:roughness = 0.75
+                        token outputs:surface
+                    }
+                }
+            }
+        }
+
+        def Xform "YawFrame" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (0, 0, 0.5235988)
+            }
+        )
+        {
+            reorder nameChildren = ["xArrow", "yArrow", "zArrow", "PitchFrame", "RollFrame"]
+            quatf xformOp:orient = (0.9659258, 0, 0, 0.25881904)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Xform "xArrow" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (0, 0, -1.5707964)
+                }
+            )
+            {
+                reorder nameChildren = ["Tail", "Tip"]
+                quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Cone "Tail" (
+                    active = true
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                    customData = {
+                        float3 rotationEulerHint = (0, 0, 3.1415927)
+                    }
+                )
+                {
+                    uniform token axis = "Y"
+                    double height = 0.0202
+                    rel material:binding = </Root/BaseFrame/YawFrame/xArrow/Tail/DefaultMaterial>
+                    double radius = 0.001
+                    quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                    float3 xformOp:scale = (1, 1, 1)
+                    float3 xformOp:translate = (0, 0.0101, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Material "DefaultMaterial"
+                    {
+                        token outputs:mtlx:surface
+                        token outputs:realitykit:vertex
+                        token outputs:surface.connect = </Root/BaseFrame/YawFrame/xArrow/Tail/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                        def Shader "DefaultSurfaceShader"
+                        {
+                            uniform token info:id = "UsdPreviewSurface"
+                            color3f inputs:diffuseColor = (1, 0.14913142, 0) (
+                                colorSpace = "srgb_texture"
+                            )
+                            float inputs:roughness = 0.75
+                            token outputs:surface
+                        }
+                    }
+                }
+
+                def Cone "Tip" (
+                    active = true
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    uniform token axis = "Y"
+                    double height = 0.0098
+                    rel material:binding = </Root/BaseFrame/YawFrame/xArrow/Tip/DefaultMaterial>
+                    double radius = 0.0019
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    float3 xformOp:translate = (0, 0.0251, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Material "DefaultMaterial"
+                    {
+                        token outputs:mtlx:surface
+                        token outputs:realitykit:vertex
+                        token outputs:surface.connect = </Root/BaseFrame/YawFrame/xArrow/Tip/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                        def Shader "DefaultSurfaceShader"
+                        {
+                            uniform token info:id = "UsdPreviewSurface"
+                            color3f inputs:diffuseColor = (1, 0.14913142, 0) (
+                                colorSpace = "srgb_texture"
+                            )
+                            float inputs:roughness = 0.75
+                            token outputs:surface
+                        }
+                    }
+                }
+            }
+
+            def Xform "yArrow" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 0)
+                }
+            )
+            {
+                reorder nameChildren = ["Tail", "Tip"]
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Cone "Tail" (
+                    active = true
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                    customData = {
+                        float3 rotationEulerHint = (0, 0, 3.1415927)
+                    }
+                )
+                {
+                    uniform token axis = "Y"
+                    double height = 0.0202
+                    rel material:binding = </Root/BaseFrame/YawFrame/yArrow/Tail/DefaultMaterial>
+                    double radius = 0.001
+                    quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                    float3 xformOp:scale = (1, 1, 1)
+                    float3 xformOp:translate = (0, 0.0101, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Material "DefaultMaterial"
+                    {
+                        token outputs:mtlx:surface
+                        token outputs:realitykit:vertex
+                        token outputs:surface.connect = </Root/BaseFrame/YawFrame/yArrow/Tail/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                        def Shader "DefaultSurfaceShader"
+                        {
+                            uniform token info:id = "UsdPreviewSurface"
+                            color3f inputs:diffuseColor = (1, 0.14913142, 0) (
+                                colorSpace = "srgb_texture"
+                            )
+                            float inputs:roughness = 0.75
+                            token outputs:surface
+                        }
+                    }
+                }
+
+                def Cone "Tip" (
+                    active = true
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    uniform token axis = "Y"
+                    double height = 0.0098
+                    rel material:binding = </Root/BaseFrame/YawFrame/yArrow/Tip/DefaultMaterial>
+                    double radius = 0.0019
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    float3 xformOp:translate = (0, 0.0251, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Material "DefaultMaterial"
+                    {
+                        token outputs:mtlx:surface
+                        token outputs:realitykit:vertex
+                        token outputs:surface.connect = </Root/BaseFrame/YawFrame/yArrow/Tip/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                        def Shader "DefaultSurfaceShader"
+                        {
+                            uniform token info:id = "UsdPreviewSurface"
+                            color3f inputs:diffuseColor = (1, 0.14913142, 0) (
+                                colorSpace = "srgb_texture"
+                            )
+                            float inputs:roughness = 0.75
+                            token outputs:surface
+                        }
+                    }
+                }
+            }
+
+            def Xform "PitchFrame" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (4.1023203e-15, 0.52359885, 5.960466e-8)
+                }
+            )
+            {
+                reorder nameChildren = ["xArrow", "yArrow", "zArrow", "RollFrame"]
+                quatf xformOp:orient = (0.9659258, -7.713409e-9, 0.25881904, 2.878684e-8)
+                float3 xformOp:scale = (1, 1, 1)
+                float3 xformOp:translate = (1.7763568e-15, 0, -2.9802322e-8)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Xform "xArrow" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (0, 0, -1.5707964)
+                    }
+                )
+                {
+                    reorder nameChildren = ["Tail", "Tip"]
+                    quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+                    float3 xformOp:scale = (1, 1, 1)
+                    float3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Cone "Tail" (
+                        active = true
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                        customData = {
+                            float3 rotationEulerHint = (0, 0, 3.1415927)
+                        }
+                    )
+                    {
+                        uniform token axis = "Y"
+                        double height = 0.0204
+                        rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/xArrow/Tail/DefaultMaterial>
+                        double radius = 0.001
+                        quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (0, 0.0102, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Material "DefaultMaterial"
+                        {
+                            token outputs:mtlx:surface
+                            token outputs:realitykit:vertex
+                            token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/xArrow/Tail/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                            def Shader "DefaultSurfaceShader"
+                            {
+                                uniform token info:id = "UsdPreviewSurface"
+                                color3f inputs:diffuseColor = (0, 0.97680455, 0) (
+                                    colorSpace = "srgb_texture"
+                                )
+                                float inputs:roughness = 0.75
+                                token outputs:surface
+                            }
+                        }
+                    }
+
+                    def Cone "Tip" (
+                        active = true
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        uniform token axis = "Y"
+                        double height = 0.0096
+                        rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/xArrow/Tip/DefaultMaterial>
+                        double radius = 0.0018
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (0, 0.0252, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Material "DefaultMaterial"
+                        {
+                            token outputs:mtlx:surface
+                            token outputs:realitykit:vertex
+                            token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/xArrow/Tip/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                            def Shader "DefaultSurfaceShader"
+                            {
+                                uniform token info:id = "UsdPreviewSurface"
+                                color3f inputs:diffuseColor = (0, 0.97680455, 0) (
+                                    colorSpace = "srgb_texture"
+                                )
+                                float inputs:roughness = 0.75
+                                token outputs:surface
+                            }
+                        }
+                    }
+                }
+
+                def Xform "zArrow" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (1.5707964, 0, 0)
+                    }
+                )
+                {
+                    reorder nameChildren = ["Tail", "Tip"]
+                    quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+                    float3 xformOp:scale = (0.9999997, 0.9999997, 0.9999997)
+                    float3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Cone "Tail" (
+                        active = true
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                        customData = {
+                            float3 rotationEulerHint = (0, 0, 3.1415927)
+                        }
+                    )
+                    {
+                        uniform token axis = "Y"
+                        double height = 0.0204
+                        rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/zArrow/Tail/DefaultMaterial>
+                        double radius = 0.001
+                        quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (0, 0.0102, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Material "DefaultMaterial"
+                        {
+                            token outputs:mtlx:surface
+                            token outputs:realitykit:vertex
+                            token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/zArrow/Tail/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                            def Shader "DefaultSurfaceShader"
+                            {
+                                uniform token info:id = "UsdPreviewSurface"
+                                color3f inputs:diffuseColor = (0, 0.97680455, 0) (
+                                    colorSpace = "srgb_texture"
+                                )
+                                float inputs:roughness = 0.75
+                                token outputs:surface
+                            }
+                        }
+                    }
+
+                    def Cone "Tip" (
+                        active = true
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        uniform token axis = "Y"
+                        double height = 0.0096
+                        rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/zArrow/Tip/DefaultMaterial>
+                        double radius = 0.0018
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (0, 0.0252, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Material "DefaultMaterial"
+                        {
+                            token outputs:mtlx:surface
+                            token outputs:realitykit:vertex
+                            token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/zArrow/Tip/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                            def Shader "DefaultSurfaceShader"
+                            {
+                                uniform token info:id = "UsdPreviewSurface"
+                                color3f inputs:diffuseColor = (0, 0.97680455, 0) (
+                                    colorSpace = "srgb_texture"
+                                )
+                                float inputs:roughness = 0.75
+                                token outputs:surface
+                            }
+                        }
+                    }
+                }
+
+                def Xform "RollFrame" (
+                    active = true
+                    customData = {
+                        float3 rotationEulerHint = (0.5235988, 0, 8.498326e-8)
+                    }
+                )
+                {
+                    reorder nameChildren = ["xArrow", "yArrow", "zArrow", "Ship"]
+                    quatf xformOp:orient = (0.9659258, 0.25881904, 1.0997643e-8, 4.1043762e-8)
+                    float3 xformOp:scale = (1, 1, 1)
+                    float3 xformOp:translate = (0, -2.141607e-9, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Xform "yArrow" (
+                        active = true
+                        customData = {
+                            float3 rotationEulerHint = (0, 0, 0)
+                        }
+                    )
+                    {
+                        reorder nameChildren = ["Tail", "Tip"]
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                        float3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Cone "Tip" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.0094
+                            rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/yArrow/Tip/DefaultMaterial>
+                            double radius = 0.0017000000000000001
+                            quatf xformOp:orient = (1, 0, 0, 0)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.0253, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                            def Material "DefaultMaterial"
+                            {
+                                token outputs:mtlx:surface
+                                token outputs:realitykit:vertex
+                                token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/yArrow/Tip/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                def Shader "DefaultSurfaceShader"
+                                {
+                                    uniform token info:id = "UsdPreviewSurface"
+                                    color3f inputs:diffuseColor = (0.016804177, 0.198351, 1) (
+                                        colorSpace = "srgb_texture"
+                                    )
+                                    float inputs:roughness = 0.75
+                                    token outputs:surface
+                                }
+                            }
+                        }
+
+                        def Cone "Tail" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                            customData = {
+                                float3 rotationEulerHint = (0, 0, 3.1415927)
+                            }
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.0206
+                            rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/yArrow/Tail/DefaultMaterial>
+                            double radius = 0.001
+                            quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.0103, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                            def Material "DefaultMaterial"
+                            {
+                                token outputs:mtlx:surface
+                                token outputs:realitykit:vertex
+                                token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/yArrow/Tail/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                def Shader "DefaultSurfaceShader"
+                                {
+                                    uniform token info:id = "UsdPreviewSurface"
+                                    color3f inputs:diffuseColor = (0.016804177, 0.198351, 1) (
+                                        colorSpace = "srgb_texture"
+                                    )
+                                    float inputs:roughness = 0.75
+                                    token outputs:surface
+                                }
+                            }
+                        }
+                    }
+
+                    def Xform "zArrow" (
+                        active = true
+                        customData = {
+                            float3 rotationEulerHint = (1.5707964, 0, 0)
+                        }
+                    )
+                    {
+                        reorder nameChildren = ["Tail", "Tip"]
+                        quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+                        float3 xformOp:scale = (0.9999997, 0.9999997, 0.9999997)
+                        float3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Cone "Tail" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                            customData = {
+                                float3 rotationEulerHint = (0, 0, 3.1415927)
+                            }
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.0206
+                            rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/zArrow/Tail/DefaultMaterial>
+                            double radius = 0.001
+                            quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.0103, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                            def Material "DefaultMaterial"
+                            {
+                                token outputs:mtlx:surface
+                                token outputs:realitykit:vertex
+                                token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/zArrow/Tail/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                def Shader "DefaultSurfaceShader"
+                                {
+                                    uniform token info:id = "UsdPreviewSurface"
+                                    color3f inputs:diffuseColor = (0.016804177, 0.198351, 1) (
+                                        colorSpace = "srgb_texture"
+                                    )
+                                    float inputs:roughness = 0.75
+                                    token outputs:surface
+                                }
+                            }
+                        }
+
+                        def Cone "Tip" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.0094
+                            rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/zArrow/Tip/DefaultMaterial>
+                            double radius = 0.0017000000000000001
+                            quatf xformOp:orient = (1, 0, 0, 0)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.0253, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                            def Material "DefaultMaterial"
+                            {
+                                token outputs:mtlx:surface
+                                token outputs:realitykit:vertex
+                                token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/zArrow/Tip/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                def Shader "DefaultSurfaceShader"
+                                {
+                                    uniform token info:id = "UsdPreviewSurface"
+                                    color3f inputs:diffuseColor = (0.016804177, 0.198351, 1) (
+                                        colorSpace = "srgb_texture"
+                                    )
+                                    float inputs:roughness = 0.75
+                                    token outputs:surface
+                                }
+                            }
+                        }
+                    }
+
+                    def Xform "Ship" (
+                        active = true
+                        customData = {
+                            float3 rotationEulerHint = (0, -3.7252907e-9, 0)
+                        }
+                    )
+                    {
+                        reorder nameChildren = ["Capsule", "xArrow", "yArrow", "zArrow"]
+                        quatf xformOp:orient = (1, 0, -1.8626454e-9, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (-2.9802322e-8, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Capsule "Capsule" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                            customData = {
+                                float3 rotationEulerHint = (0, 0, -1.5707964)
+                            }
+                        )
+                        {
+                            reorder nameChildren = ["LeftWing", "LeftRearWing", "RightRearWing", "DefaultMaterial", "Stabilizer", "RightWing"]
+                            uniform token axis = "Y"
+                            double height = 0.02
+                            rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/DefaultMaterial>
+                            double radius = 0.003
+                            quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                            def Material "DefaultMaterial"
+                            {
+                                token outputs:mtlx:surface
+                                token outputs:realitykit:vertex
+                                prepend token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                def Shader "DefaultSurfaceShader"
+                                {
+                                    uniform token info:id = "UsdPreviewSurface"
+                                    color3f inputs:diffuseColor = (1, 1, 1)
+                                    float inputs:metallic = 1
+                                    float inputs:roughness = 0.75
+                                    token outputs:surface
+                                }
+                            }
+
+                            def Cube "Stabilizer" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (-0.5235988, 0, 0)
+                                }
+                            )
+                            {
+                                rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/Stabilizer/DefaultMaterial>
+                                double size = 0.01
+                                quatf xformOp:orient = (0.9659258, -0.25881904, 0, 0)
+                                float3 xformOp:scale = (0.05, 0.3, 1)
+                                float3 xformOp:translate = (0, -0.01, -0.005)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                def Material "DefaultMaterial"
+                                {
+                                    token outputs:mtlx:surface
+                                    token outputs:realitykit:vertex
+                                    token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/Stabilizer/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                    def Shader "DefaultSurfaceShader"
+                                    {
+                                        uniform token info:id = "UsdPreviewSurface"
+                                        color3f inputs:diffuseColor = (1, 1, 1)
+                                        float inputs:metallic = 1
+                                        float inputs:roughness = 0.75
+                                        token outputs:surface
+                                    }
+                                }
+                            }
+
+                            def Cube "RightWing" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (0, 0, -0.5235988)
+                                }
+                            )
+                            {
+                                rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/RightWing/DefaultMaterial>
+                                double size = 0.01
+                                quatf xformOp:orient = (0.9659258, 0, 0, -0.25881904)
+                                float3 xformOp:scale = (1.5, 0.4, 0.1)
+                                float3 xformOp:translate = (0.0075, -0.001, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                def Material "DefaultMaterial"
+                                {
+                                    token outputs:mtlx:surface
+                                    token outputs:realitykit:vertex
+                                    token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/RightWing/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                    def Shader "DefaultSurfaceShader"
+                                    {
+                                        uniform token info:id = "UsdPreviewSurface"
+                                        color3f inputs:diffuseColor = (1, 1, 1)
+                                        float inputs:metallic = 1
+                                        float inputs:roughness = 0.75
+                                        token outputs:surface
+                                    }
+                                }
+                            }
+
+                            def Cube "LeftWing" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (0, 0, 0.5235988)
+                                }
+                            )
+                            {
+                                rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/LeftWing/DefaultMaterial>
+                                double size = 0.01
+                                quatf xformOp:orient = (0.9659258, 0, 0, 0.25881904)
+                                float3 xformOp:scale = (1.5, 0.4, 0.1)
+                                float3 xformOp:translate = (-0.0075, -0.001, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                def Material "DefaultMaterial"
+                                {
+                                    token outputs:mtlx:surface
+                                    token outputs:realitykit:vertex
+                                    prepend token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/LeftWing/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                    def Shader "DefaultSurfaceShader"
+                                    {
+                                        uniform token info:id = "UsdPreviewSurface"
+                                        color3f inputs:diffuseColor = (1, 1, 1)
+                                        float inputs:metallic = 1
+                                        float inputs:roughness = 0.75
+                                        token outputs:surface
+                                    }
+                                }
+                            }
+
+                            def Cube "LeftRearWing" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (0, 0, 0.5235988)
+                                }
+                            )
+                            {
+                                rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/LeftRearWing/DefaultMaterial>
+                                double size = 0.01
+                                quatf xformOp:orient = (0.9659258, 0, 0, 0.2588191)
+                                float3 xformOp:scale = (0.5, 0.3, 0.1)
+                                float3 xformOp:translate = (-0.004, -0.01, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                def Material "DefaultMaterial"
+                                {
+                                    token outputs:mtlx:surface
+                                    token outputs:realitykit:vertex
+                                    token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/LeftRearWing/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                    def Shader "DefaultSurfaceShader"
+                                    {
+                                        uniform token info:id = "UsdPreviewSurface"
+                                        color3f inputs:diffuseColor = (1, 1, 1)
+                                        float inputs:metallic = 1
+                                        float inputs:roughness = 0.75
+                                        token outputs:surface
+                                    }
+                                }
+                            }
+
+                            def Cube "RightRearWing" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (0, 0, -0.5235988)
+                                }
+                            )
+                            {
+                                rel material:binding = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/RightRearWing/DefaultMaterial>
+                                double size = 0.01
+                                quatf xformOp:orient = (0.9659258, 0, 0, -0.2588191)
+                                float3 xformOp:scale = (0.5, 0.3, 0.1)
+                                float3 xformOp:translate = (0.004, -0.01, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                def Material "DefaultMaterial"
+                                {
+                                    token outputs:mtlx:surface
+                                    token outputs:realitykit:vertex
+                                    token outputs:surface.connect = </Root/BaseFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/RightRearWing/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+                                    def Shader "DefaultSurfaceShader"
+                                    {
+                                        uniform token info:id = "UsdPreviewSurface"
+                                        color3f inputs:diffuseColor = (1, 1, 1)
+                                        float inputs:metallic = 1
+                                        float inputs:roughness = 0.75
+                                        token outputs:surface
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    def Sphere "Globe" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        customData = {
+            float3 rotationEulerHint = (1.5707958, -3.5527137e-15, 3.1415927)
+        }
+    )
+    {
+        rel material:binding = </Root/Globe/DefaultMaterial>
+        double radius = 0.3141
+        quatf xformOp:orient = (-3.0908627e-8, -3.090861e-8, 0.7071066, 0.70710695)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "DefaultMaterial"
+        {
+            token inputs:frame:stPrimvarName = "st" (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (126.25, 86.5)
+                        float2 sizeInSubgraph = (203.5, 53)
+                    }
+                }
+            )
+            token outputs:mtlx:surface.connect = </Root/Globe/DefaultMaterial/PreviewSurface.outputs:out>
+            token outputs:realitykit:vertex
+            token outputs:surface.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (-137.25, 109.5)
+            float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
+
+            def Shader "DefaultSurfaceShader" (
+                active = true
+            )
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoat.connect = </Root/Globe/DefaultMaterial/clearcoat.outputs:r>
+                float inputs:clearcoatRoughness = 0.75
+                color3f inputs:diffuseColor = (1, 1, 1)
+                color3f inputs:diffuseColor.connect = </Root/Globe/DefaultMaterial/diffuseColor.outputs:rgb>
+                color3f inputs:emissiveColor = (0, 0, 0)
+                color3f inputs:emissiveColor.connect = </Root/Globe/DefaultMaterial/emissiveColor.outputs:rgb>
+                float inputs:ior = 0.1
+                normal3f inputs:normal = (0, 0, 1)
+                normal3f inputs:normal.connect = </Root/Globe/DefaultMaterial/normal.outputs:rgb>
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+
+            def Shader "diffuseColor"
+            {
+                uniform token info:id = "UsdUVTexture"
+                asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthmap10k.jpg@
+                float2 inputs:st.connect = </Root/Globe/DefaultMaterial/diffuseColor/TexCoordReader.outputs:result>
+                color3f outputs:rgb
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    float2 outputs:result
+                }
+            }
+
+            def Shader "PreviewSurface" (
+                active = false
+            )
+            {
+                uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-255, 105)
+                float2 ui:nodegraph:node:size = (148.5, 199)
+            }
+
+            def Shader "normal"
+            {
+                uniform token info:id = "UsdUVTexture"
+                asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthnormal10k.jpg@
+                float2 inputs:st.connect = </Root/Globe/DefaultMaterial/normal/TexCoordReader.outputs:result>
+                normal3f outputs:rgb
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    float2 outputs:result
+                }
+            }
+
+            def Shader "emissiveColor"
+            {
+                uniform token info:id = "UsdUVTexture"
+                asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthlights10k.jpg@
+                float2 inputs:st.connect = </Root/Globe/DefaultMaterial/emissiveColor/TexCoordReader.outputs:result>
+                color3f outputs:rgb
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    float2 outputs:result
+                }
+            }
+
+            def Shader "clearcoat"
+            {
+                uniform token info:id = "UsdUVTexture"
+                asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthspec10k.jpg@
+                float2 inputs:st.connect = </Root/Globe/DefaultMaterial/clearcoat/TexCoordReader.outputs:result>
+                float outputs:r
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    float2 outputs:result
+                }
+            }
+        }
+    }
+
+    def Cube "GlobalX" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Root/GlobalX/DefaultMaterial>
+        double size = 0.01
+        float3 xformOp:translate = (0.314, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "DefaultMaterial"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+            prepend token outputs:surface.connect = </Root/GlobalX/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+            def Shader "DefaultSurfaceShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 0.14913142, 0) (
+                    colorSpace = "srgb_texture"
+                )
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+        }
+    }
+
+    def Cube "GlobalY" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Root/GlobalY/DefaultMaterial>
+        double size = 0.01
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0.314, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "DefaultMaterial"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+            prepend token outputs:surface.connect = </Root/GlobalY/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+            def Shader "DefaultSurfaceShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0, 0.97680455, 0) (
+                    colorSpace = "srgb_texture"
+                )
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+        }
+    }
+
+    def Cube "GlobalZ" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Root/GlobalZ/DefaultMaterial>
+        double size = 0.01
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0, 0.314)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "DefaultMaterial"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+            prepend token outputs:surface.connect = </Root/GlobalZ/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+            def Shader "DefaultSurfaceShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.016804177, 0.198351, 1) (
+                    colorSpace = "srgb_texture"
+                )
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+        }
+    }
+}
+
