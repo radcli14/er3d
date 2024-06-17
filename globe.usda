@@ -9,7 +9,7 @@ reorder rootPrims = ["Root", "GlobalX", "GlobalY", "GlobalZ"]
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Globe", "LatLong", "Red", "Green", "Blue", "Gray", "Materials", "BaseFrame"]
+    reorder nameChildren = ["Globe", "Long", "Materials", "Transform"]
     def Sphere "Globe" (
         active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
@@ -18,14 +18,14 @@ def Xform "Root"
         }
     )
     {
-        reorder nameChildren = ["DefaultMaterial", "GlobalZ", "GlobalX", "GlobalY"]
-        rel material:binding = </Root/Globe/DefaultMaterial>
+        reorder nameChildren = ["GlobeMaterial", "GlobalZ", "GlobalX", "GlobalY"]
+        rel material:binding = </Root/Globe/GlobeMaterial>
         double radius = 0.3141
         quatf xformOp:orient = (-3.0908623e-8, -3.0908613e-8, 0.70710665, 0.7071069)
         float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        def Material "DefaultMaterial"
+        def Material "GlobeMaterial"
         {
             token inputs:frame:stPrimvarName = "st" (
                 customData = {
@@ -35,9 +35,9 @@ def Xform "Root"
                     }
                 }
             )
-            token outputs:mtlx:surface.connect = </Root/Globe/DefaultMaterial/PreviewSurface.outputs:out>
+            token outputs:mtlx:surface.connect = </Root/Globe/GlobeMaterial/PreviewSurface.outputs:out>
             token outputs:realitykit:vertex
-            token outputs:surface.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+            token outputs:surface.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.outputs:surface>
             float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (-137.25, 109.5)
             float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
 
@@ -47,15 +47,15 @@ def Xform "Root"
             {
                 uniform token info:id = "UsdPreviewSurface"
                 float inputs:clearcoat = 0
-                float inputs:clearcoat.connect = </Root/Globe/DefaultMaterial/clearcoat.outputs:r>
+                float inputs:clearcoat.connect = </Root/Globe/GlobeMaterial/clearcoat.outputs:r>
                 float inputs:clearcoatRoughness = 0.75
                 color3f inputs:diffuseColor = (1, 1, 1)
-                color3f inputs:diffuseColor.connect = </Root/Globe/DefaultMaterial/diffuseColor.outputs:rgb>
+                color3f inputs:diffuseColor.connect = </Root/Globe/GlobeMaterial/diffuseColor.outputs:rgb>
                 color3f inputs:emissiveColor = (0, 0, 0)
-                color3f inputs:emissiveColor.connect = </Root/Globe/DefaultMaterial/emissiveColor.outputs:rgb>
+                color3f inputs:emissiveColor.connect = </Root/Globe/GlobeMaterial/emissiveColor.outputs:rgb>
                 float inputs:ior = 0.1
                 normal3f inputs:normal = (0, 0, 1)
-                normal3f inputs:normal.connect = </Root/Globe/DefaultMaterial/normal.outputs:rgb>
+                normal3f inputs:normal.connect = </Root/Globe/GlobeMaterial/normal.outputs:rgb>
                 float inputs:roughness = 0.75
                 token outputs:surface
             }
@@ -64,13 +64,13 @@ def Xform "Root"
             {
                 uniform token info:id = "UsdUVTexture"
                 asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthmap10k.jpg@
-                float2 inputs:st.connect = </Root/Globe/DefaultMaterial/diffuseColor/TexCoordReader.outputs:result>
+                float2 inputs:st.connect = </Root/Globe/GlobeMaterial/diffuseColor/TexCoordReader.outputs:result>
                 color3f outputs:rgb
 
                 def Shader "TexCoordReader"
                 {
                     uniform token info:id = "UsdPrimvarReader_float2"
-                    token inputs:varname.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    token inputs:varname.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
                     float2 outputs:result
                 }
             }
@@ -89,13 +89,13 @@ def Xform "Root"
             {
                 uniform token info:id = "UsdUVTexture"
                 asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthnormal10k.jpg@
-                float2 inputs:st.connect = </Root/Globe/DefaultMaterial/normal/TexCoordReader.outputs:result>
+                float2 inputs:st.connect = </Root/Globe/GlobeMaterial/normal/TexCoordReader.outputs:result>
                 normal3f outputs:rgb
 
                 def Shader "TexCoordReader"
                 {
                     uniform token info:id = "UsdPrimvarReader_float2"
-                    token inputs:varname.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    token inputs:varname.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
                     float2 outputs:result
                 }
             }
@@ -104,13 +104,13 @@ def Xform "Root"
             {
                 uniform token info:id = "UsdUVTexture"
                 asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthlights10k.jpg@
-                float2 inputs:st.connect = </Root/Globe/DefaultMaterial/emissiveColor/TexCoordReader.outputs:result>
+                float2 inputs:st.connect = </Root/Globe/GlobeMaterial/emissiveColor/TexCoordReader.outputs:result>
                 color3f outputs:rgb
 
                 def Shader "TexCoordReader"
                 {
                     uniform token info:id = "UsdPrimvarReader_float2"
-                    token inputs:varname.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    token inputs:varname.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
                     float2 outputs:result
                 }
             }
@@ -119,760 +119,14 @@ def Xform "Root"
             {
                 uniform token info:id = "UsdUVTexture"
                 asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthspec10k.jpg@
-                float2 inputs:st.connect = </Root/Globe/DefaultMaterial/clearcoat/TexCoordReader.outputs:result>
+                float2 inputs:st.connect = </Root/Globe/GlobeMaterial/clearcoat/TexCoordReader.outputs:result>
                 float outputs:r
 
                 def Shader "TexCoordReader"
                 {
                     uniform token info:id = "UsdPrimvarReader_float2"
-                    token inputs:varname.connect = </Root/Globe/DefaultMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    token inputs:varname.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
                     float2 outputs:result
-                }
-            }
-        }
-    }
-
-    def Xform "LatLong" (
-        active = true
-        customData = {
-            float3 rotationEulerHint = (0, -0.7504917, -1.43117)
-        }
-    )
-    {
-        quatf xformOp:orient = (0.70219505, -0.24044645, -0.276602, -0.61040884)
-        float3 xformOp:translate = (0, 0, 0)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-        def Xform "EarthRadius" (
-            active = true
-        )
-        {
-            quatf xformOp:orient = (1, 0, 0, 0)
-            float3 xformOp:scale = (1, 1, 1)
-            float3 xformOp:translate = (0.34, 0, 0)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-            def Xform "LocalGeodeticFrame" (
-                active = true
-                customData = {
-                    float3 rotationEulerHint = (0, -1.5707963, 0)
-                }
-            )
-            {
-                reorder nameChildren = ["YawFrame", "YawFrame_1", "xArrow", "yArrow", "zArrow"]
-                quatf xformOp:orient = (0.7071068, 0, -0.7071067, 0)
-                float3 xformOp:scale = (1, 1, 1)
-                float3 xformOp:translate = (0, 0, 0)
-                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                def Xform "xArrow" (
-                    active = true
-                    customData = {
-                        float3 rotationEulerHint = (0, 0, -1.5707964)
-                    }
-                )
-                {
-                    reorder nameChildren = ["Tail", "Tip"]
-                    quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
-                    float3 xformOp:scale = (1, 1, 1)
-                    float3 xformOp:translate = (0, 0, 0)
-                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                    def Cone "Tail" (
-                        active = true
-                        prepend apiSchemas = ["MaterialBindingAPI"]
-                        customData = {
-                            float3 rotationEulerHint = (0, 0, 3.1415927)
-                        }
-                    )
-                    {
-                        uniform token axis = "Y"
-                        double height = 0.02
-                        rel material:binding = </Root/Materials/Gray> (
-                            bindMaterialAs = "weakerThanDescendants"
-                        )
-                        double radius = 0.001
-                        quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
-                        float3 xformOp:scale = (1, 1, 1)
-                        float3 xformOp:translate = (0, 0.01, 0)
-                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                    }
-
-                    def Cone "Tip" (
-                        active = true
-                        prepend apiSchemas = ["MaterialBindingAPI"]
-                    )
-                    {
-                        uniform token axis = "Y"
-                        double height = 0.01
-                        rel material:binding = </Root/Materials/Gray> (
-                            bindMaterialAs = "weakerThanDescendants"
-                        )
-                        double radius = 0.002
-                        quatf xformOp:orient = (1, 0, 0, 0)
-                        float3 xformOp:scale = (1, 1, 1)
-                        float3 xformOp:translate = (0, 0.025, 0)
-                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                    }
-                }
-
-                def Xform "yArrow" (
-                    active = true
-                    customData = {
-                        float3 rotationEulerHint = (0, 0, 0)
-                    }
-                )
-                {
-                    reorder nameChildren = ["Tail", "Tip"]
-                    quatf xformOp:orient = (1, 0, 0, 0)
-                    float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
-                    float3 xformOp:translate = (0, 0, 0)
-                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                    def Cone "Tail" (
-                        active = true
-                        prepend apiSchemas = ["MaterialBindingAPI"]
-                        customData = {
-                            float3 rotationEulerHint = (0, 0, 3.1415927)
-                        }
-                    )
-                    {
-                        uniform token axis = "Y"
-                        double height = 0.02
-                        rel material:binding = </Root/Materials/Gray> (
-                            bindMaterialAs = "weakerThanDescendants"
-                        )
-                        double radius = 0.001
-                        quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
-                        float3 xformOp:scale = (1, 1, 1)
-                        float3 xformOp:translate = (0, 0.01, 0)
-                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                    }
-
-                    def Cone "Tip" (
-                        active = true
-                        prepend apiSchemas = ["MaterialBindingAPI"]
-                    )
-                    {
-                        uniform token axis = "Y"
-                        double height = 0.01
-                        rel material:binding = </Root/Materials/Gray> (
-                            bindMaterialAs = "weakerThanDescendants"
-                        )
-                        double radius = 0.002
-                        quatf xformOp:orient = (1, 0, 0, 0)
-                        float3 xformOp:scale = (1, 1, 1)
-                        float3 xformOp:translate = (0, 0.025, 0)
-                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                    }
-                }
-
-                def Xform "zArrow" (
-                    active = true
-                    customData = {
-                        float3 rotationEulerHint = (1.5707964, 0, 0)
-                    }
-                )
-                {
-                    reorder nameChildren = ["Tail", "Tip"]
-                    quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
-                    float3 xformOp:scale = (0.9999997, 0.9999997, 0.9999997)
-                    float3 xformOp:translate = (0, 0, 0)
-                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                    def Cone "Tail" (
-                        active = true
-                        prepend apiSchemas = ["MaterialBindingAPI"]
-                        customData = {
-                            float3 rotationEulerHint = (0, 0, 3.1415927)
-                        }
-                    )
-                    {
-                        uniform token axis = "Y"
-                        double height = 0.02
-                        rel material:binding = </Root/Materials/Gray> (
-                            bindMaterialAs = "weakerThanDescendants"
-                        )
-                        double radius = 0.001
-                        quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
-                        float3 xformOp:scale = (1, 1, 1)
-                        float3 xformOp:translate = (0, 0.01, 0)
-                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                    }
-
-                    def Cone "Tip" (
-                        active = true
-                        prepend apiSchemas = ["MaterialBindingAPI"]
-                    )
-                    {
-                        uniform token axis = "Y"
-                        double height = 0.01
-                        rel material:binding = </Root/Materials/Gray> (
-                            bindMaterialAs = "weakerThanDescendants"
-                        )
-                        double radius = 0.002
-                        quatf xformOp:orient = (1, 0, 0, 0)
-                        float3 xformOp:scale = (1, 1, 1)
-                        float3 xformOp:translate = (0, 0.025, 0)
-                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                    }
-                }
-
-                def Xform "YawFrame" (
-                    active = true
-                    customData = {
-                        float3 rotationEulerHint = (0, 0, 0.5235988)
-                    }
-                )
-                {
-                    reorder nameChildren = ["PitchFrame", "xArrow", "yArrow"]
-                    quatf xformOp:orient = (0.9659258, 0, 0, 0.25881904)
-                    float3 xformOp:scale = (1, 1, 1)
-                    float3 xformOp:translate = (0, 0, 0)
-                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                    def Xform "xArrow" (
-                        active = true
-                        customData = {
-                            float3 rotationEulerHint = (0, 0, -1.5707964)
-                        }
-                    )
-                    {
-                        reorder nameChildren = ["Tail", "Tip"]
-                        quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
-                        float3 xformOp:scale = (1, 1, 1)
-                        float3 xformOp:translate = (0, 0, 0)
-                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                        def Cone "Tail" (
-                            active = true
-                            prepend apiSchemas = ["MaterialBindingAPI"]
-                            customData = {
-                                float3 rotationEulerHint = (0, 0, 3.1415927)
-                            }
-                        )
-                        {
-                            uniform token axis = "Y"
-                            double height = 0.0202
-                            rel material:binding = </Root/Materials/Blue> (
-                                bindMaterialAs = "weakerThanDescendants"
-                            )
-                            double radius = 0.001
-                            quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
-                            float3 xformOp:scale = (1, 1, 1)
-                            float3 xformOp:translate = (0, 0.0101, 0)
-                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                        }
-
-                        def Cone "Tip" (
-                            active = true
-                            prepend apiSchemas = ["MaterialBindingAPI"]
-                        )
-                        {
-                            uniform token axis = "Y"
-                            double height = 0.0098
-                            rel material:binding = </Root/Materials/Blue> (
-                                bindMaterialAs = "weakerThanDescendants"
-                            )
-                            double radius = 0.0019
-                            quatf xformOp:orient = (1, 0, 0, 0)
-                            float3 xformOp:scale = (1, 1, 1)
-                            float3 xformOp:translate = (0, 0.0251, 0)
-                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                        }
-                    }
-
-                    def Xform "yArrow" (
-                        active = true
-                        customData = {
-                            float3 rotationEulerHint = (0, 0, 0)
-                        }
-                    )
-                    {
-                        reorder nameChildren = ["Tail", "Tip"]
-                        quatf xformOp:orient = (1, 0, 0, 0)
-                        float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
-                        float3 xformOp:translate = (0, 0, 0)
-                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                        def Cone "Tail" (
-                            active = true
-                            prepend apiSchemas = ["MaterialBindingAPI"]
-                            customData = {
-                                float3 rotationEulerHint = (0, 0, 3.1415927)
-                            }
-                        )
-                        {
-                            uniform token axis = "Y"
-                            double height = 0.0202
-                            rel material:binding = </Root/Materials/Blue> (
-                                bindMaterialAs = "weakerThanDescendants"
-                            )
-                            double radius = 0.001
-                            quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
-                            float3 xformOp:scale = (1, 1, 1)
-                            float3 xformOp:translate = (0, 0.0101, 0)
-                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                        }
-
-                        def Cone "Tip" (
-                            active = true
-                            prepend apiSchemas = ["MaterialBindingAPI"]
-                        )
-                        {
-                            uniform token axis = "Y"
-                            double height = 0.0098
-                            rel material:binding = </Root/Materials/Blue> (
-                                bindMaterialAs = "weakerThanDescendants"
-                            )
-                            double radius = 0.0019
-                            quatf xformOp:orient = (1, 0, 0, 0)
-                            float3 xformOp:scale = (1, 1, 1)
-                            float3 xformOp:translate = (0, 0.0251, 0)
-                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                        }
-                    }
-
-                    def Xform "PitchFrame" (
-                        active = true
-                        customData = {
-                            float3 rotationEulerHint = (4.10232e-15, 0.52359885, 0)
-                        }
-                    )
-                    {
-                        reorder nameChildren = ["RollFrame", "xArrow", "zArrow"]
-                        quatf xformOp:orient = (0.9659258, 1.9812685e-15, 0.25881904, -5.3087933e-16)
-                        float3 xformOp:scale = (1, 1, 1)
-                        float3 xformOp:translate = (1.7763568e-15, 0, -2.9802322e-8)
-                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                        def Xform "xArrow" (
-                            active = true
-                            customData = {
-                                float3 rotationEulerHint = (0, 0, -1.5707964)
-                            }
-                        )
-                        {
-                            reorder nameChildren = ["Tail", "Tip"]
-                            quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
-                            float3 xformOp:scale = (1, 1, 1)
-                            float3 xformOp:translate = (0, 0, 0)
-                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                            def Cone "Tail" (
-                                active = true
-                                prepend apiSchemas = ["MaterialBindingAPI"]
-                                customData = {
-                                    float3 rotationEulerHint = (0, 0, 3.1415927)
-                                }
-                            )
-                            {
-                                uniform token axis = "Y"
-                                double height = 0.0204
-                                rel material:binding = </Root/Materials/Green> (
-                                    bindMaterialAs = "weakerThanDescendants"
-                                )
-                                double radius = 0.001
-                                quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
-                                float3 xformOp:scale = (1, 1, 1)
-                                float3 xformOp:translate = (0, 0.0102, 0)
-                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                            }
-
-                            def Cone "Tip" (
-                                active = true
-                                prepend apiSchemas = ["MaterialBindingAPI"]
-                            )
-                            {
-                                uniform token axis = "Y"
-                                double height = 0.0096
-                                rel material:binding = </Root/Materials/Green> (
-                                    bindMaterialAs = "weakerThanDescendants"
-                                )
-                                double radius = 0.0018
-                                quatf xformOp:orient = (1, 0, 0, 0)
-                                float3 xformOp:scale = (1, 1, 1)
-                                float3 xformOp:translate = (0, 0.0252, 0)
-                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                            }
-                        }
-
-                        def Xform "zArrow" (
-                            active = true
-                            customData = {
-                                float3 rotationEulerHint = (1.5707964, 0, 0)
-                            }
-                        )
-                        {
-                            reorder nameChildren = ["Tail", "Tip"]
-                            quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
-                            float3 xformOp:scale = (0.9999997, 0.9999997, 0.9999997)
-                            float3 xformOp:translate = (0, 0, 0)
-                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                            def Cone "Tail" (
-                                active = true
-                                prepend apiSchemas = ["MaterialBindingAPI"]
-                                customData = {
-                                    float3 rotationEulerHint = (0, 0, 3.1415927)
-                                }
-                            )
-                            {
-                                uniform token axis = "Y"
-                                double height = 0.0204
-                                rel material:binding = </Root/Materials/Green> (
-                                    bindMaterialAs = "weakerThanDescendants"
-                                )
-                                double radius = 0.001
-                                quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
-                                float3 xformOp:scale = (1, 1, 1)
-                                float3 xformOp:translate = (0, 0.0102, 0)
-                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                            }
-
-                            def Cone "Tip" (
-                                active = true
-                                prepend apiSchemas = ["MaterialBindingAPI"]
-                            )
-                            {
-                                uniform token axis = "Y"
-                                double height = 0.0096
-                                rel material:binding = </Root/Materials/Green> (
-                                    bindMaterialAs = "weakerThanDescendants"
-                                )
-                                double radius = 0.0018
-                                quatf xformOp:orient = (1, 0, 0, 0)
-                                float3 xformOp:scale = (1, 1, 1)
-                                float3 xformOp:translate = (0, 0.0252, 0)
-                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                            }
-                        }
-
-                        def Xform "RollFrame" (
-                            active = true
-                            customData = {
-                                float3 rotationEulerHint = (0.5235988, 1.776357e-15, 8.498326e-8)
-                            }
-                        )
-                        {
-                            reorder nameChildren = ["xArrow", "yArrow", "zArrow", "Ship"]
-                            quatf xformOp:orient = (0.9659258, 0.25881904, 1.0997644e-8, 4.1043762e-8)
-                            float3 xformOp:scale = (1, 1, 1)
-                            float3 xformOp:translate = (0, -2.141607e-9, 0)
-                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                            def Xform "yArrow" (
-                                active = true
-                                customData = {
-                                    float3 rotationEulerHint = (0, 0, 0)
-                                }
-                            )
-                            {
-                                reorder nameChildren = ["Tail", "Tip"]
-                                quatf xformOp:orient = (1, 0, 0, 0)
-                                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
-                                float3 xformOp:translate = (0, 0, 0)
-                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                                def Cone "Tip" (
-                                    active = true
-                                    prepend apiSchemas = ["MaterialBindingAPI"]
-                                )
-                                {
-                                    uniform token axis = "Y"
-                                    double height = 0.0094
-                                    rel material:binding = </Root/Materials/Red> (
-                                        bindMaterialAs = "weakerThanDescendants"
-                                    )
-                                    double radius = 0.0017000000000000001
-                                    quatf xformOp:orient = (1, 0, 0, 0)
-                                    float3 xformOp:scale = (1, 1, 1)
-                                    float3 xformOp:translate = (0, 0.0253, 0)
-                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                                }
-
-                                def Cone "Tail" (
-                                    active = true
-                                    prepend apiSchemas = ["MaterialBindingAPI"]
-                                    customData = {
-                                        float3 rotationEulerHint = (0, 0, 3.1415927)
-                                    }
-                                )
-                                {
-                                    uniform token axis = "Y"
-                                    double height = 0.0206
-                                    rel material:binding = </Root/Materials/Red> (
-                                        bindMaterialAs = "weakerThanDescendants"
-                                    )
-                                    double radius = 0.001
-                                    quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
-                                    float3 xformOp:scale = (1, 1, 1)
-                                    float3 xformOp:translate = (0, 0.0103, 0)
-                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                                }
-                            }
-
-                            def Xform "zArrow" (
-                                active = true
-                                customData = {
-                                    float3 rotationEulerHint = (1.5707964, 0, 0)
-                                }
-                            )
-                            {
-                                reorder nameChildren = ["Tail", "Tip"]
-                                quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
-                                float3 xformOp:scale = (0.9999997, 0.9999997, 0.9999997)
-                                float3 xformOp:translate = (0, 0, 0)
-                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                                def Cone "Tail" (
-                                    active = true
-                                    prepend apiSchemas = ["MaterialBindingAPI"]
-                                    customData = {
-                                        float3 rotationEulerHint = (0, 0, 3.1415927)
-                                    }
-                                )
-                                {
-                                    uniform token axis = "Y"
-                                    double height = 0.0206
-                                    rel material:binding = </Root/Materials/Red> (
-                                        bindMaterialAs = "weakerThanDescendants"
-                                    )
-                                    double radius = 0.001
-                                    quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
-                                    float3 xformOp:scale = (1, 1, 1)
-                                    float3 xformOp:translate = (0, 0.0103, 0)
-                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                                }
-
-                                def Cone "Tip" (
-                                    active = true
-                                    prepend apiSchemas = ["MaterialBindingAPI"]
-                                )
-                                {
-                                    uniform token axis = "Y"
-                                    double height = 0.0094
-                                    rel material:binding = </Root/Materials/Red> (
-                                        bindMaterialAs = "weakerThanDescendants"
-                                    )
-                                    double radius = 0.0017000000000000001
-                                    quatf xformOp:orient = (1, 0, 0, 0)
-                                    float3 xformOp:scale = (1, 1, 1)
-                                    float3 xformOp:translate = (0, 0.0253, 0)
-                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-                                }
-                            }
-
-                            def Xform "Ship" (
-                                active = true
-                                customData = {
-                                    float3 rotationEulerHint = (0, -3.7252907e-9, 0)
-                                }
-                            )
-                            {
-                                reorder nameChildren = ["Capsule", "xArrow", "yArrow", "zArrow"]
-                                quatf xformOp:orient = (1, 0, -1.8626454e-9, 0)
-                                float3 xformOp:scale = (1, 1, 1)
-                                float3 xformOp:translate = (-2.9802322e-8, 0, 0)
-                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                                def Capsule "Capsule" (
-                                    active = true
-                                    prepend apiSchemas = ["MaterialBindingAPI"]
-                                    customData = {
-                                        float3 rotationEulerHint = (0, 0, -1.5707964)
-                                    }
-                                )
-                                {
-                                    reorder nameChildren = ["LeftWing", "LeftRearWing", "RightRearWing", "DefaultMaterial", "Stabilizer", "RightWing"]
-                                    uniform token axis = "Y"
-                                    double height = 0.02
-                                    rel material:binding = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/DefaultMaterial>
-                                    double radius = 0.003
-                                    quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
-                                    float3 xformOp:scale = (1, 1, 1)
-                                    float3 xformOp:translate = (0, 0, 0)
-                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                                    def Material "DefaultMaterial"
-                                    {
-                                        token outputs:mtlx:surface
-                                        token outputs:realitykit:vertex
-                                        prepend token outputs:surface.connect = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
-
-                                        def Shader "DefaultSurfaceShader"
-                                        {
-                                            uniform token info:id = "UsdPreviewSurface"
-                                            color3f inputs:diffuseColor = (1, 1, 1)
-                                            float inputs:metallic = 1
-                                            float inputs:roughness = 0.75
-                                            token outputs:surface
-                                        }
-                                    }
-
-                                    def Cube "Stabilizer" (
-                                        active = true
-                                        prepend apiSchemas = ["MaterialBindingAPI"]
-                                        customData = {
-                                            float3 rotationEulerHint = (-0.5235988, 0, 0)
-                                        }
-                                    )
-                                    {
-                                        rel material:binding = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/Stabilizer/DefaultMaterial>
-                                        double size = 0.01
-                                        quatf xformOp:orient = (0.9659258, -0.25881904, 0, 0)
-                                        float3 xformOp:scale = (0.05, 0.3, 1)
-                                        float3 xformOp:translate = (0, -0.01, -0.005)
-                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                                        def Material "DefaultMaterial"
-                                        {
-                                            token outputs:mtlx:surface
-                                            token outputs:realitykit:vertex
-                                            token outputs:surface.connect = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/Stabilizer/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
-
-                                            def Shader "DefaultSurfaceShader"
-                                            {
-                                                uniform token info:id = "UsdPreviewSurface"
-                                                color3f inputs:diffuseColor = (1, 1, 1)
-                                                float inputs:metallic = 1
-                                                float inputs:roughness = 0.75
-                                                token outputs:surface
-                                            }
-                                        }
-                                    }
-
-                                    def Cube "RightWing" (
-                                        active = true
-                                        prepend apiSchemas = ["MaterialBindingAPI"]
-                                        customData = {
-                                            float3 rotationEulerHint = (1.8913795e-9, 0.1745329, -0.34906584)
-                                        }
-                                    )
-                                    {
-                                        rel material:binding = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/RightWing/DefaultMaterial>
-                                        double size = 0.01
-                                        quatf xformOp:orient = (0.98106027, 0.015134435, 0.08583164, -0.17298739)
-                                        float3 xformOp:scale = (1.5, 0.4, 0.05)
-                                        float3 xformOp:translate = (0.0075, -0.001, 0)
-                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                                        def Material "DefaultMaterial"
-                                        {
-                                            token outputs:mtlx:surface
-                                            token outputs:realitykit:vertex
-                                            token outputs:surface.connect = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/RightWing/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
-
-                                            def Shader "DefaultSurfaceShader"
-                                            {
-                                                uniform token info:id = "UsdPreviewSurface"
-                                                color3f inputs:diffuseColor = (1, 1, 1)
-                                                float inputs:metallic = 1
-                                                float inputs:roughness = 0.75
-                                                token outputs:surface
-                                            }
-                                        }
-                                    }
-
-                                    def Cube "LeftWing" (
-                                        active = true
-                                        prepend apiSchemas = ["MaterialBindingAPI"]
-                                        customData = {
-                                            float3 rotationEulerHint = (1.8913795e-9, -0.1745329, 0.34906584)
-                                        }
-                                    )
-                                    {
-                                        rel material:binding = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/LeftWing/DefaultMaterial>
-                                        double size = 0.01
-                                        quatf xformOp:orient = (0.98106027, 0.015134435, -0.08583164, 0.17298739)
-                                        float3 xformOp:scale = (1.5, 0.4, 0.05)
-                                        float3 xformOp:translate = (-0.0075, -0.001, 0)
-                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                                        def Material "DefaultMaterial"
-                                        {
-                                            token outputs:mtlx:surface
-                                            token outputs:realitykit:vertex
-                                            prepend token outputs:surface.connect = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/LeftWing/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
-
-                                            def Shader "DefaultSurfaceShader"
-                                            {
-                                                uniform token info:id = "UsdPreviewSurface"
-                                                color3f inputs:diffuseColor = (1, 1, 1)
-                                                float inputs:metallic = 1
-                                                float inputs:roughness = 0.75
-                                                token outputs:surface
-                                            }
-                                        }
-                                    }
-
-                                    def Cube "LeftRearWing" (
-                                        active = true
-                                        prepend apiSchemas = ["MaterialBindingAPI"]
-                                        customData = {
-                                            float3 rotationEulerHint = (0, 0, 0.5235988)
-                                        }
-                                    )
-                                    {
-                                        rel material:binding = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/LeftRearWing/DefaultMaterial>
-                                        double size = 0.01
-                                        quatf xformOp:orient = (0.9659258, 0, 0, 0.2588191)
-                                        float3 xformOp:scale = (0.5, 0.3, 0.05)
-                                        float3 xformOp:translate = (-0.004, -0.01, 0)
-                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                                        def Material "DefaultMaterial"
-                                        {
-                                            token outputs:mtlx:surface
-                                            token outputs:realitykit:vertex
-                                            token outputs:surface.connect = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/LeftRearWing/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
-
-                                            def Shader "DefaultSurfaceShader"
-                                            {
-                                                uniform token info:id = "UsdPreviewSurface"
-                                                color3f inputs:diffuseColor = (1, 1, 1)
-                                                float inputs:metallic = 1
-                                                float inputs:roughness = 0.75
-                                                token outputs:surface
-                                            }
-                                        }
-                                    }
-
-                                    def Cube "RightRearWing" (
-                                        active = true
-                                        prepend apiSchemas = ["MaterialBindingAPI"]
-                                        customData = {
-                                            float3 rotationEulerHint = (0, 0, -0.5235988)
-                                        }
-                                    )
-                                    {
-                                        rel material:binding = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/RightRearWing/DefaultMaterial>
-                                        double size = 0.01
-                                        quatf xformOp:orient = (0.9659258, 0, 0, -0.2588191)
-                                        float3 xformOp:scale = (0.5, 0.3, 0.05)
-                                        float3 xformOp:translate = (0.004, -0.01, 0)
-                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-                                        def Material "DefaultMaterial"
-                                        {
-                                            token outputs:mtlx:surface
-                                            token outputs:realitykit:vertex
-                                            token outputs:surface.connect = </Root/LatLong/EarthRadius/LocalGeodeticFrame/YawFrame/PitchFrame/RollFrame/Ship/Capsule/RightRearWing/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
-
-                                            def Shader "DefaultSurfaceShader"
-                                            {
-                                                uniform token info:id = "UsdPreviewSurface"
-                                                color3f inputs:diffuseColor = (1, 1, 1)
-                                                float inputs:metallic = 1
-                                                float inputs:roughness = 0.75
-                                                token outputs:surface
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -882,7 +136,7 @@ def Xform "Root"
         active = true
     )
     {
-        reorder nameChildren = ["Red", "Green", "Blue", "Gray"]
+        reorder nameChildren = ["Red", "Green", "Blue", "Gray", "Shiny"]
         def Material "Red"
         {
             token outputs:mtlx:surface
@@ -940,10 +194,754 @@ def Xform "Root"
             def Shader "UsdPreviewSurface"
             {
                 uniform token info:id = "UsdPreviewSurface"
-                color3f inputs:diffuseColor = (0.59607846, 0.59607846, 0.6156863) (
+                color3f inputs:diffuseColor = (1, 1, 1) (
                     colorSpace = "srgb_texture"
                 )
                 token outputs:surface
+            }
+        }
+
+        def Material "Shiny"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+            prepend token outputs:surface.connect = </Root/Materials/Shiny/UsdPreviewSurface.outputs:surface>
+
+            def Shader "UsdPreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0.5
+                color3f inputs:diffuseColor = (1, 1, 1) (
+                    colorSpace = "lin_srgb"
+                )
+                float inputs:metallic = 0.7
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+    }
+
+    def Xform "Long" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0, 0, -1.43117)
+        }
+    )
+    {
+        reorder nameChildren = ["Lat", "EarthRadius"]
+        quatf xformOp:orient = (0.75470954, 0, 0, -0.656059)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Xform "Lat" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (3.7421843e-9, -0.7330383, 5.97581e-16)
+            }
+        )
+        {
+            quatf xformOp:orient = (0.9335804, 1.746815e-9, -0.35836795, 6.7053973e-10)
+            float3 xformOp:scale = (0.99999994, 1, 0.99999994)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Xform "EarthRadius" (
+                active = true
+                customData = {
+                    float3 rotationEulerHint = (0, 0, 0)
+                }
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (0.35, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Xform "LocalGeodeticFrame" (
+                    active = true
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                    customData = {
+                        float3 rotationEulerHint = (0, -1.5707963, 0)
+                    }
+                )
+                {
+                    reorder nameChildren = ["YawFrame", "YawFrame_1", "xArrow", "yArrow", "zArrow"]
+                    rel material:binding = </Root/Materials/Gray> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    quatf xformOp:orient = (0.7071068, 0, -0.7071067, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    float3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Xform "xArrow" (
+                        active = true
+                        customData = {
+                            float3 rotationEulerHint = (0, 0, -1.5707964)
+                        }
+                    )
+                    {
+                        reorder nameChildren = ["Tail", "Tip"]
+                        quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Cone "Tail" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                            customData = {
+                                float3 rotationEulerHint = (0, 0, 3.1415927)
+                            }
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.02
+                            rel material:binding = None (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            double radius = 0.001
+                            quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.01, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Cone "Tip" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.01
+                            rel material:binding = None (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            double radius = 0.002
+                            quatf xformOp:orient = (1, 0, 0, 0)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.025, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+                    }
+
+                    def Xform "yArrow" (
+                        active = true
+                        customData = {
+                            float3 rotationEulerHint = (0, 0, 0)
+                        }
+                    )
+                    {
+                        reorder nameChildren = ["Tail", "Tip"]
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                        float3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Cone "Tail" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                            customData = {
+                                float3 rotationEulerHint = (0, 0, 3.1415927)
+                            }
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.02
+                            rel material:binding = None (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            double radius = 0.001
+                            quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.01, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Cone "Tip" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.01
+                            rel material:binding = None (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            double radius = 0.002
+                            quatf xformOp:orient = (1, 0, 0, 0)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.025, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+                    }
+
+                    def Xform "zArrow" (
+                        active = true
+                        customData = {
+                            float3 rotationEulerHint = (1.5707964, 0, 0)
+                        }
+                    )
+                    {
+                        reorder nameChildren = ["Tail", "Tip"]
+                        quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+                        float3 xformOp:scale = (0.9999997, 0.9999997, 0.9999997)
+                        float3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Cone "Tail" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                            customData = {
+                                float3 rotationEulerHint = (0, 0, 3.1415927)
+                            }
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.02
+                            rel material:binding = None (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            double radius = 0.001
+                            quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.01, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Cone "Tip" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            uniform token axis = "Y"
+                            double height = 0.01
+                            rel material:binding = None (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            double radius = 0.002
+                            quatf xformOp:orient = (1, 0, 0, 0)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0.025, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+                    }
+
+                    def Xform "YawFrame" (
+                        active = true
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                        customData = {
+                            float3 rotationEulerHint = (0, 0, 0)
+                        }
+                    )
+                    {
+                        reorder nameChildren = ["PitchFrame", "xArrow", "yArrow"]
+                        rel material:binding = </Root/Materials/Blue> (
+                            bindMaterialAs = "weakerThanDescendants"
+                        )
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Xform "xArrow" (
+                            active = true
+                            customData = {
+                                float3 rotationEulerHint = (0, 0, -1.5707964)
+                            }
+                        )
+                        {
+                            reorder nameChildren = ["Tail", "Tip"]
+                            quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                            def Cone "Tail" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (0, 0, 3.1415927)
+                                }
+                            )
+                            {
+                                uniform token axis = "Y"
+                                double height = 0.0202
+                                rel material:binding = None (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                                double radius = 0.001
+                                quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                                float3 xformOp:scale = (1, 1, 1)
+                                float3 xformOp:translate = (0, 0.0101, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Cone "Tip" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                            )
+                            {
+                                uniform token axis = "Y"
+                                double height = 0.0098
+                                rel material:binding = None (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                                double radius = 0.0019
+                                quatf xformOp:orient = (1, 0, 0, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                float3 xformOp:translate = (0, 0.0251, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+                        }
+
+                        def Xform "yArrow" (
+                            active = true
+                            customData = {
+                                float3 rotationEulerHint = (0, 0, 0)
+                            }
+                        )
+                        {
+                            reorder nameChildren = ["Tail", "Tip"]
+                            quatf xformOp:orient = (1, 0, 0, 0)
+                            float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                            float3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                            def Cone "Tail" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (0, 0, 3.1415927)
+                                }
+                            )
+                            {
+                                uniform token axis = "Y"
+                                double height = 0.0202
+                                rel material:binding = None (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                                double radius = 0.001
+                                quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                                float3 xformOp:scale = (1, 1, 1)
+                                float3 xformOp:translate = (0, 0.0101, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Cone "Tip" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                            )
+                            {
+                                uniform token axis = "Y"
+                                double height = 0.0098
+                                rel material:binding = None (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                                double radius = 0.0019
+                                quatf xformOp:orient = (1, 0, 0, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                float3 xformOp:translate = (0, 0.0251, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+                        }
+
+                        def Xform "PitchFrame" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                            customData = {
+                                float3 rotationEulerHint = (4.10232e-15, 0, 0)
+                            }
+                        )
+                        {
+                            reorder nameChildren = ["RollFrame", "xArrow", "zArrow"]
+                            rel material:binding = </Root/Materials/Green> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            quatf xformOp:orient = (1, 2.05116e-15, 0, 0)
+                            float3 xformOp:scale = (1, 1, 1)
+                            float3 xformOp:translate = (1.7763568e-15, 0, -2.9802322e-8)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                            def Xform "xArrow" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (0, 0, -1.5707964)
+                                }
+                            )
+                            {
+                                reorder nameChildren = ["Tail", "Tip"]
+                                rel material:binding = None (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                                quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+                                float3 xformOp:scale = (1, 1, 1)
+                                float3 xformOp:translate = (0, 0, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                def Cone "Tail" (
+                                    active = true
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                    customData = {
+                                        float3 rotationEulerHint = (0, 0, 3.1415927)
+                                    }
+                                )
+                                {
+                                    uniform token axis = "Y"
+                                    double height = 0.0204
+                                    rel material:binding = None (
+                                        bindMaterialAs = "weakerThanDescendants"
+                                    )
+                                    double radius = 0.001
+                                    quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    float3 xformOp:translate = (0, 0.0102, 0)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Cone "Tip" (
+                                    active = true
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                )
+                                {
+                                    uniform token axis = "Y"
+                                    double height = 0.0096
+                                    rel material:binding = None (
+                                        bindMaterialAs = "weakerThanDescendants"
+                                    )
+                                    double radius = 0.0018
+                                    quatf xformOp:orient = (1, 0, 0, 0)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    float3 xformOp:translate = (0, 0.0252, 0)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+                            }
+
+                            def Xform "zArrow" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (1.5707964, 0, 0)
+                                }
+                            )
+                            {
+                                reorder nameChildren = ["Tail", "Tip"]
+                                rel material:binding = None (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                                quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+                                float3 xformOp:scale = (0.9999997, 0.9999997, 0.9999997)
+                                float3 xformOp:translate = (0, 0, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                def Cone "Tail" (
+                                    active = true
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                    customData = {
+                                        float3 rotationEulerHint = (0, 0, 3.1415927)
+                                    }
+                                )
+                                {
+                                    uniform token axis = "Y"
+                                    double height = 0.0204
+                                    rel material:binding = None (
+                                        bindMaterialAs = "weakerThanDescendants"
+                                    )
+                                    double radius = 0.001
+                                    quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    float3 xformOp:translate = (0, 0.0102, 0)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Cone "Tip" (
+                                    active = true
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                )
+                                {
+                                    uniform token axis = "Y"
+                                    double height = 0.0096
+                                    rel material:binding = None (
+                                        bindMaterialAs = "weakerThanDescendants"
+                                    )
+                                    double radius = 0.0018
+                                    quatf xformOp:orient = (1, 0, 0, 0)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    float3 xformOp:translate = (0, 0.0252, 0)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+                            }
+
+                            def Xform "RollFrame" (
+                                active = true
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                                customData = {
+                                    float3 rotationEulerHint = (0, 1.776357e-15, 8.498326e-8)
+                                }
+                            )
+                            {
+                                reorder nameChildren = ["xArrow", "yArrow", "zArrow", "Ship"]
+                                rel material:binding = </Root/Materials/Red> (
+                                    bindMaterialAs = "weakerThanDescendants"
+                                )
+                                quatf xformOp:orient = (1, -3.7740153e-23, 8.881785e-16, 4.249163e-8)
+                                float3 xformOp:scale = (1, 1, 1)
+                                float3 xformOp:translate = (0, -2.141607e-9, 0)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                def Xform "yArrow" (
+                                    active = true
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                    customData = {
+                                        float3 rotationEulerHint = (0, 0, 0)
+                                    }
+                                )
+                                {
+                                    reorder nameChildren = ["Tail", "Tip"]
+                                    rel material:binding = None (
+                                        bindMaterialAs = "weakerThanDescendants"
+                                    )
+                                    quatf xformOp:orient = (1, 0, 0, 0)
+                                    float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+                                    float3 xformOp:translate = (0, 0, 0)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                    def Cone "Tip" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                    )
+                                    {
+                                        uniform token axis = "Y"
+                                        double height = 0.0094
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.0017000000000000001
+                                        quatf xformOp:orient = (1, 0, 0, 0)
+                                        float3 xformOp:scale = (1, 1, 1)
+                                        float3 xformOp:translate = (0, 0.0253, 0)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+
+                                    def Cone "Tail" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                        customData = {
+                                            float3 rotationEulerHint = (0, 0, 3.1415927)
+                                        }
+                                    )
+                                    {
+                                        uniform token axis = "Y"
+                                        double height = 0.0206
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.001
+                                        quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                                        float3 xformOp:scale = (1, 1, 1)
+                                        float3 xformOp:translate = (0, 0.0103, 0)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+                                }
+
+                                def Xform "zArrow" (
+                                    active = true
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                    customData = {
+                                        float3 rotationEulerHint = (1.5707964, 0, 0)
+                                    }
+                                )
+                                {
+                                    reorder nameChildren = ["Tail", "Tip"]
+                                    rel material:binding = None (
+                                        bindMaterialAs = "weakerThanDescendants"
+                                    )
+                                    quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+                                    float3 xformOp:scale = (0.9999997, 0.9999997, 0.9999997)
+                                    float3 xformOp:translate = (0, 0, 0)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                    def Cone "Tail" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                        customData = {
+                                            float3 rotationEulerHint = (0, 0, 3.1415927)
+                                        }
+                                    )
+                                    {
+                                        uniform token axis = "Y"
+                                        double height = 0.0206
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.001
+                                        quatf xformOp:orient = (-4.371139e-8, 0, 0, 1)
+                                        float3 xformOp:scale = (1, 1, 1)
+                                        float3 xformOp:translate = (0, 0.0103, 0)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+
+                                    def Cone "Tip" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                    )
+                                    {
+                                        uniform token axis = "Y"
+                                        double height = 0.0094
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.0017000000000000001
+                                        quatf xformOp:orient = (1, 0, 0, 0)
+                                        float3 xformOp:scale = (1, 1, 1)
+                                        float3 xformOp:translate = (0, 0.0253, 0)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+                                }
+
+                                def Xform "Ship" (
+                                    active = true
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                    customData = {
+                                        float3 rotationEulerHint = (0, -3.7252907e-9, 0)
+                                    }
+                                )
+                                {
+                                    reorder nameChildren = ["Body", "RightWing", "LeftWing", "RightRearWing", "LeftRearWing", "Stabilizer"]
+                                    rel material:binding = </Root/Materials/Shiny> (
+                                        bindMaterialAs = "weakerThanDescendants"
+                                    )
+                                    quatf xformOp:orient = (1, 0, -1.8626454e-9, 0)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    float3 xformOp:translate = (-2.9802322e-8, 0, 0)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                    def Capsule "RightWing" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                        customData = {
+                                            float3 rotationEulerHint = (-0.17453296, 1.8626451e-9, 0.34906587)
+                                        }
+                                    )
+                                    {
+                                        uniform token axis = "Y"
+                                        double height = 0.0125
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.002
+                                        quatf xformOp:orient = (0.98106027, -0.085831665, -0.01513444, 0.17298742)
+                                        float3 xformOp:scale = (1, 1, 0.2)
+                                        float3 xformOp:translate = (-0.001, 0.0075, -0.001)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+
+                                    def Capsule "LeftWing" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                        customData = {
+                                            float3 rotationEulerHint = (0.17453296, 1.8626451e-9, -0.34906584)
+                                        }
+                                    )
+                                    {
+                                        uniform token axis = "Y"
+                                        double height = 0.0125
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.002
+                                        quatf xformOp:orient = (0.98106027, 0.085831665, -0.015134437, -0.17298739)
+                                        float3 xformOp:scale = (1.0000001, 1.0000001, 0.20000002)
+                                        float3 xformOp:translate = (-0.0009999871, -0.0075, -0.001)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+
+                                    def Capsule "Body" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                        customData = {
+                                            float3 rotationEulerHint = (0, 0, -1.5707964)
+                                        }
+                                    )
+                                    {
+                                        reorder nameChildren = ["RightWing", "RightRearWing", "LeftRearWing", "DefaultMaterial", "Stabilizer", "LeftWing"]
+                                        uniform token axis = "Y"
+                                        double height = 0.02
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.003
+                                        quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+                                        float3 xformOp:scale = (0.8, 1, 1)
+                                        float3 xformOp:translate = (0, 0, 0)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+
+                                    def Capsule "RightRearWing" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                        customData = {
+                                            float3 rotationEulerHint = (-0.17453292, 0, 0.5235988)
+                                        }
+                                    )
+                                    {
+                                        uniform token axis = "Y"
+                                        double height = 0.004
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.0015
+                                        quatf xformOp:orient = (0.9622502, -0.08418598, -0.022557566, 0.25783417)
+                                        float3 xformOp:scale = (0.99999994, 1, 0.25)
+                                        float3 xformOp:translate = (-0.0105, 0.003, 0)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+
+                                    def Capsule "LeftRearWing" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                        customData = {
+                                            float3 rotationEulerHint = (0.17453294, -4.0978197e-8, -0.5235988)
+                                        }
+                                    )
+                                    {
+                                        uniform token axis = "Y"
+                                        double height = 0.004
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.0015
+                                        quatf xformOp:orient = (0.9622502, 0.08418598, -0.022557588, -0.25783417)
+                                        float3 xformOp:scale = (0.99999976, 0.9999999, 0.25)
+                                        float3 xformOp:translate = (-0.010500013, -0.003, 0)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+
+                                    def Capsule "Stabilizer" (
+                                        active = true
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                        customData = {
+                                            float3 rotationEulerHint = (1.5707965, 0.5235988, -3.4412757e-8)
+                                        }
+                                    )
+                                    {
+                                        uniform token axis = "Y"
+                                        double height = 0.006
+                                        rel material:binding = None (
+                                            bindMaterialAs = "weakerThanDescendants"
+                                        )
+                                        double radius = 0.0015
+                                        quatf xformOp:orient = (0.68301266, 0.6830127, 0.18301268, -0.18301271)
+                                        float3 xformOp:scale = (0.9999997, 0.9999998, 0.25)
+                                        float3 xformOp:translate = (-0.010500039, 0, -0.003)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -960,7 +958,7 @@ def Sphere "GlobalX" (
     rel material:binding = </Root/Materials/Red> (
         bindMaterialAs = "weakerThanDescendants"
     )
-    double radius = 0.02
+    double radius = 0.01
     quatf xformOp:orient = (1, 0, 4.371138e-8, 0)
     float3 xformOp:scale = (1, 1, 1)
     float3 xformOp:translate = (0.32, 0, 0)
@@ -978,7 +976,7 @@ def Sphere "GlobalY" (
     rel material:binding = </Root/Materials/Green> (
         bindMaterialAs = "weakerThanDescendants"
     )
-    double radius = 0.02
+    double radius = 0.01
     quatf xformOp:orient = (1, 0, 4.371138e-8, 0)
     float3 xformOp:scale = (1, 1, 1)
     float3 xformOp:translate = (0, 0.32, 0)
@@ -993,7 +991,7 @@ def Sphere "GlobalZ" (
     rel material:binding = </Root/Materials/Blue> (
         bindMaterialAs = "weakerThanDescendants"
     )
-    double radius = 0.02
+    double radius = 0.01
     quatf xformOp:orient = (1, 0, 0, 0)
     float3 xformOp:scale = (1, 1, 1)
     float3 xformOp:translate = (0, 0, 0.32)
