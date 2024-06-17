@@ -9,7 +9,7 @@ reorder rootPrims = ["Root", "GlobalX", "GlobalY", "GlobalZ"]
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Globe", "Long", "Materials", "Transform"]
+    reorder nameChildren = ["Globe", "Long", "Sphere", "Materials"]
     def Sphere "Globe" (
         active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
@@ -265,7 +265,7 @@ def Xform "Root"
                     }
                 )
                 {
-                    reorder nameChildren = ["YawFrame", "YawFrame_1", "xArrow", "yArrow", "zArrow"]
+                    reorder nameChildren = ["Camera", "YawFrame", "xArrow", "yArrow", "zArrow"]
                     rel material:binding = </Root/Materials/Gray> (
                         bindMaterialAs = "weakerThanDescendants"
                     )
@@ -939,6 +939,34 @@ def Xform "Root"
                                     }
                                 }
                             }
+                        }
+                    }
+
+                    def Xform "Camera" (
+                        active = true
+                        customData = {
+                            float3 rotationEulerHint = (0, 0, 0)
+                        }
+                    )
+                    {
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1.0000002, 1.0000002)
+                        float3 xformOp:translate = (-0.03, -0.01, -0.02)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Sphere "Sphere" (
+                            active = true
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </Root/Materials/Gray> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            double radius = 0.001
+                            quatf xformOp:orient = (1, 1.477035e-8, 3.5795213e-9, 4.6760583e-8)
+                            float3 xformOp:scale = (1.0000001, 1, 1)
+                            float3 xformOp:translate = (0, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
                         }
                     }
                 }
