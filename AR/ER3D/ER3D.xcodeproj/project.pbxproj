@@ -14,6 +14,7 @@
 		8A1E9D2E2C220D7500D9E87D /* ER3DTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1E9D2D2C220D7500D9E87D /* ER3DTests.swift */; };
 		8A1E9D382C220D7500D9E87D /* ER3DUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1E9D372C220D7500D9E87D /* ER3DUITests.swift */; };
 		8A1E9D3A2C220D7500D9E87D /* ER3DUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1E9D392C220D7500D9E87D /* ER3DUITestsLaunchTests.swift */; };
+		8A1E9D472C22E4CC00D9E87D /* globe.usda in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E9D462C22E4CC00D9E87D /* globe.usda */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		8A1E9D332C220D7500D9E87D /* ER3DUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ER3DUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A1E9D372C220D7500D9E87D /* ER3DUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DUITests.swift; sourceTree = "<group>"; };
 		8A1E9D392C220D7500D9E87D /* ER3DUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		8A1E9D462C22E4CC00D9E87D /* globe.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = globe.usda; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 				8A1E9D1C2C220D7300D9E87D /* AppDelegate.swift */,
 				8A1E9D1E2C220D7300D9E87D /* ContentView.swift */,
 				8A1E9D202C220D7500D9E87D /* Assets.xcassets */,
+				8A1E9D462C22E4CC00D9E87D /* globe.usda */,
 				8A1E9D222C220D7500D9E87D /* Preview Content */,
 			);
 			path = ER3D;
@@ -231,6 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A1E9D472C22E4CC00D9E87D /* globe.usda in Resources */,
 				8A1E9D242C220D7500D9E87D /* Preview Assets.xcassets in Resources */,
 				8A1E9D212C220D7500D9E87D /* Assets.xcassets in Resources */,
 			);
