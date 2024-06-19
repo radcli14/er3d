@@ -19,124 +19,18 @@ def Xform "Root"
     )
     {
         reorder nameChildren = ["GlobeMaterial", "GlobalZ", "GlobalX", "GlobalY"]
-        rel material:binding = </Root/Globe/GlobeMaterial>
+        rel material:binding = </Root/Materials/GlobeMaterial>
         double radius = 0.3141
         quatf xformOp:orient = (-3.0908623e-8, -3.0908613e-8, 0.70710665, 0.7071069)
         float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-        def Material "GlobeMaterial"
-        {
-            token inputs:frame:stPrimvarName = "st" (
-                customData = {
-                    dictionary realitykit = {
-                        float2 positionInSubgraph = (126.25, 86.5)
-                        float2 sizeInSubgraph = (203.5, 53)
-                    }
-                }
-            )
-            token outputs:mtlx:surface.connect = </Root/Globe/GlobeMaterial/PreviewSurface.outputs:out>
-            token outputs:realitykit:vertex
-            token outputs:surface.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.outputs:surface>
-            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (-137.25, 109.5)
-            float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
-
-            def Shader "DefaultSurfaceShader" (
-                active = true
-            )
-            {
-                uniform token info:id = "UsdPreviewSurface"
-                float inputs:clearcoat = 0
-                float inputs:clearcoat.connect = </Root/Globe/GlobeMaterial/clearcoat.outputs:r>
-                float inputs:clearcoatRoughness = 0.75
-                color3f inputs:diffuseColor = (1, 1, 1)
-                color3f inputs:diffuseColor.connect = </Root/Globe/GlobeMaterial/diffuseColor.outputs:rgb>
-                color3f inputs:emissiveColor = (0, 0, 0)
-                color3f inputs:emissiveColor.connect = </Root/Globe/GlobeMaterial/emissiveColor.outputs:rgb>
-                float inputs:ior = 0.1
-                normal3f inputs:normal = (0, 0, 1)
-                normal3f inputs:normal.connect = </Root/Globe/GlobeMaterial/normal.outputs:rgb>
-                float inputs:roughness = 0.75
-                token outputs:surface
-            }
-
-            def Shader "diffuseColor"
-            {
-                uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @8081_earthmap10k.jpg@
-                float2 inputs:st.connect = </Root/Globe/GlobeMaterial/diffuseColor/TexCoordReader.outputs:result>
-                color3f outputs:rgb
-
-                def Shader "TexCoordReader"
-                {
-                    uniform token info:id = "UsdPrimvarReader_float2"
-                    token inputs:varname.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
-                    float2 outputs:result
-                }
-            }
-
-            def Shader "PreviewSurface" (
-                active = false
-            )
-            {
-                uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
-                token outputs:out
-                float2 ui:nodegraph:node:pos = (-255, 105)
-                float2 ui:nodegraph:node:size = (148.5, 199)
-            }
-
-            def Shader "normal"
-            {
-                uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @8081_earthnormal10k.jpg@
-                float2 inputs:st.connect = </Root/Globe/GlobeMaterial/normal/TexCoordReader.outputs:result>
-                normal3f outputs:rgb
-
-                def Shader "TexCoordReader"
-                {
-                    uniform token info:id = "UsdPrimvarReader_float2"
-                    token inputs:varname.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
-                    float2 outputs:result
-                }
-            }
-
-            def Shader "emissiveColor"
-            {
-                uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @8081_earthlights10k.jpg@
-                float2 inputs:st.connect = </Root/Globe/GlobeMaterial/emissiveColor/TexCoordReader.outputs:result>
-                color3f outputs:rgb
-
-                def Shader "TexCoordReader"
-                {
-                    uniform token info:id = "UsdPrimvarReader_float2"
-                    token inputs:varname.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
-                    float2 outputs:result
-                }
-            }
-
-            def Shader "clearcoat"
-            {
-                uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @8081_earthspec10k.jpg@
-                float2 inputs:st.connect = </Root/Globe/GlobeMaterial/clearcoat/TexCoordReader.outputs:result>
-                float outputs:r
-
-                def Shader "TexCoordReader"
-                {
-                    uniform token info:id = "UsdPrimvarReader_float2"
-                    token inputs:varname.connect = </Root/Globe/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
-                    float2 outputs:result
-                }
-            }
-        }
     }
 
     def Scope "Materials" (
         active = true
     )
     {
-        reorder nameChildren = ["Red", "Green", "Blue", "Gray", "Shiny"]
+        reorder nameChildren = ["Red", "Green", "Blue", "Gray", "Shiny", "GlobeMaterial"]
         def Material "Red"
         {
             token outputs:mtlx:surface
@@ -217,6 +111,112 @@ def Xform "Root"
                 float inputs:metallic = 0.7
                 float inputs:roughness = 0.5
                 token outputs:surface
+            }
+        }
+
+        def Material "GlobeMaterial"
+        {
+            token inputs:frame:stPrimvarName = "st" (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (126.25, 86.5)
+                        float2 sizeInSubgraph = (203.5, 53)
+                    }
+                }
+            )
+            token outputs:mtlx:surface.connect = </Root/Materials/GlobeMaterial/PreviewSurface.outputs:out>
+            token outputs:realitykit:vertex
+            token outputs:surface.connect = </Root/Materials/GlobeMaterial/DefaultSurfaceShader.outputs:surface>
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (-137.25, 109.5)
+            float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
+
+            def Shader "DefaultSurfaceShader" (
+                active = true
+            )
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoat.connect = </Root/Materials/GlobeMaterial/clearcoat.outputs:r>
+                float inputs:clearcoatRoughness = 0.75
+                color3f inputs:diffuseColor = (1, 1, 1)
+                color3f inputs:diffuseColor.connect = </Root/Materials/GlobeMaterial/diffuseColor.outputs:rgb>
+                color3f inputs:emissiveColor = (0, 0, 0)
+                color3f inputs:emissiveColor.connect = </Root/Materials/GlobeMaterial/emissiveColor.outputs:rgb>
+                float inputs:ior = 0.1
+                normal3f inputs:normal = (0, 0, 1)
+                normal3f inputs:normal.connect = </Root/Materials/GlobeMaterial/normal.outputs:rgb>
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+
+            def Shader "diffuseColor"
+            {
+                uniform token info:id = "UsdUVTexture"
+                asset inputs:file = @../../ER3D/ER3D/art.scnassets/8081_earthmap10k.jpg@
+                float2 inputs:st.connect = </Root/Materials/GlobeMaterial/diffuseColor/TexCoordReader.outputs:result>
+                color3f outputs:rgb
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname.connect = </Root/Materials/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    float2 outputs:result
+                }
+            }
+
+            def Shader "PreviewSurface" (
+                active = false
+            )
+            {
+                uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-255, 105)
+                float2 ui:nodegraph:node:size = (148.5, 199)
+            }
+
+            def Shader "normal"
+            {
+                uniform token info:id = "UsdUVTexture"
+                asset inputs:file = @../../ER3D/ER3D/art.scnassets/8081_earthnormal10k.jpg@
+                float2 inputs:st.connect = </Root/Materials/GlobeMaterial/normal/TexCoordReader.outputs:result>
+                normal3f outputs:rgb
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname.connect = </Root/Materials/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    float2 outputs:result
+                }
+            }
+
+            def Shader "emissiveColor"
+            {
+                uniform token info:id = "UsdUVTexture"
+                asset inputs:file = @../../ER3D/ER3D/art.scnassets/8081_earthlights10k.jpg@
+                float2 inputs:st.connect = </Root/Materials/GlobeMaterial/emissiveColor/TexCoordReader.outputs:result>
+                color3f outputs:rgb
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname.connect = </Root/Materials/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    float2 outputs:result
+                }
+            }
+
+            def Shader "clearcoat"
+            {
+                uniform token info:id = "UsdUVTexture"
+                asset inputs:file = @../../ER3D/ER3D/art.scnassets/8081_earthspec10k.jpg@
+                float2 inputs:st.connect = </Root/Materials/GlobeMaterial/clearcoat/TexCoordReader.outputs:result>
+                float outputs:r
+
+                def Shader "TexCoordReader"
+                {
+                    uniform token info:id = "UsdPrimvarReader_float2"
+                    token inputs:varname.connect = </Root/Materials/GlobeMaterial/DefaultSurfaceShader.inputs:frame:stPrimvarName>
+                    float2 outputs:result
+                }
             }
         }
     }
@@ -981,6 +981,7 @@ def Xform "Root"
         def RealityKitStruct "descriptor"
         {
             matrix4d transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+            token type = "World"
         }
     }
 }
