@@ -63,7 +63,7 @@ def Xform "Root"
             def Shader "diffuseColor"
             {
                 uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthmap10k.jpg@
+                asset inputs:file = @8081_earthmap10k.jpg@
                 float2 inputs:st.connect = </Root/Globe/GlobeMaterial/diffuseColor/TexCoordReader.outputs:result>
                 color3f outputs:rgb
 
@@ -88,7 +88,7 @@ def Xform "Root"
             def Shader "normal"
             {
                 uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthnormal10k.jpg@
+                asset inputs:file = @8081_earthnormal10k.jpg@
                 float2 inputs:st.connect = </Root/Globe/GlobeMaterial/normal/TexCoordReader.outputs:result>
                 normal3f outputs:rgb
 
@@ -103,7 +103,7 @@ def Xform "Root"
             def Shader "emissiveColor"
             {
                 uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthlights10k.jpg@
+                asset inputs:file = @8081_earthlights10k.jpg@
                 float2 inputs:st.connect = </Root/Globe/GlobeMaterial/emissiveColor/TexCoordReader.outputs:result>
                 color3f outputs:rgb
 
@@ -118,7 +118,7 @@ def Xform "Root"
             def Shader "clearcoat"
             {
                 uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @ER3D/ER3D/art.scnassets/8081_earthspec10k.jpg@
+                asset inputs:file = @8081_earthspec10k.jpg@
                 float2 inputs:st.connect = </Root/Globe/GlobeMaterial/clearcoat/TexCoordReader.outputs:result>
                 float outputs:r
 
@@ -971,6 +971,16 @@ def Xform "Root"
                     }
                 }
             }
+        }
+    }
+
+    def RealityKitComponent "Anchoring"
+    {
+        uniform token info:id = "RealityKit.Anchoring"
+
+        def RealityKitStruct "descriptor"
+        {
+            matrix4d transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
         }
     }
 }

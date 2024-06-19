@@ -15,6 +15,14 @@ struct ER3DView: View {
         ZStack(alignment: .bottom) {
             renderedView
             controls
+            GeometryReader { geometry in
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("ER3D").font(Font.system(.largeTitle, design: .monospaced, weight: .bold)).cornerRadius(12)
+                    Text("Euler Rotations in 3-Dimensions").font(.caption2)
+                }
+                .offset(x: 24, y: 36)
+                .foregroundColor(.white)
+            }
         }
         .ignoresSafeArea()
         .onRotate { newOrientation in
