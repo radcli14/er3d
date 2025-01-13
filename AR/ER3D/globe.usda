@@ -152,7 +152,7 @@ def Xform "Root"
             def Shader "diffuseColor"
             {
                 uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @../../ER3D/ER3D/art.scnassets/8081_earthmap10k.jpg@
+                asset inputs:file = @ER3D/Assets.xcassets/8081_earthmap10k.imageset/8081_earthmap10k.jpg@
                 float2 inputs:st.connect = </Root/Materials/GlobeMaterial/diffuseColor/TexCoordReader.outputs:result>
                 color3f outputs:rgb
 
@@ -177,7 +177,7 @@ def Xform "Root"
             def Shader "normal"
             {
                 uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @../../ER3D/ER3D/art.scnassets/8081_earthnormal10k.jpg@
+                asset inputs:file = @ER3D/Assets.xcassets/8081_earthnormal10k.imageset/8081_earthnormal10k.jpg@
                 float2 inputs:st.connect = </Root/Materials/GlobeMaterial/normal/TexCoordReader.outputs:result>
                 normal3f outputs:rgb
 
@@ -192,7 +192,7 @@ def Xform "Root"
             def Shader "emissiveColor"
             {
                 uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @../../ER3D/ER3D/art.scnassets/8081_earthlights10k.jpg@
+                asset inputs:file = @ER3D/Assets.xcassets/8081_earthlights10k.imageset/8081_earthlights10k.jpg@
                 float2 inputs:st.connect = </Root/Materials/GlobeMaterial/emissiveColor/TexCoordReader.outputs:result>
                 color3f outputs:rgb
 
@@ -207,7 +207,7 @@ def Xform "Root"
             def Shader "clearcoat"
             {
                 uniform token info:id = "UsdUVTexture"
-                asset inputs:file = @../../ER3D/ER3D/art.scnassets/8081_earthspec10k.jpg@
+                asset inputs:file = @ER3D/Assets.xcassets/8081_earthspec10k.imageset/8081_earthspec10k.jpg@
                 float2 inputs:st.connect = </Root/Materials/GlobeMaterial/clearcoat/TexCoordReader.outputs:result>
                 float outputs:r
 
@@ -981,7 +981,7 @@ def Xform "Root"
         def RealityKitStruct "descriptor"
         {
             matrix4d transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
-            token type = "World"
+            token type = "Plane"
         }
     }
 }
@@ -997,7 +997,7 @@ def Sphere "GlobalX" (
     rel material:binding = </Root/Materials/Red> (
         bindMaterialAs = "weakerThanDescendants"
     )
-    double radius = 0.01
+    double radius = 0.1
     quatf xformOp:orient = (1, 0, 4.371138e-8, 0)
     float3 xformOp:scale = (1, 1, 1)
     float3 xformOp:translate = (0.32, 0, 0)
@@ -1015,7 +1015,7 @@ def Sphere "GlobalY" (
     rel material:binding = </Root/Materials/Green> (
         bindMaterialAs = "weakerThanDescendants"
     )
-    double radius = 0.01
+    double radius = 0.1
     quatf xformOp:orient = (1, 0, 4.371138e-8, 0)
     float3 xformOp:scale = (1, 1, 1)
     float3 xformOp:translate = (0, 0.32, 0)
@@ -1030,7 +1030,7 @@ def Sphere "GlobalZ" (
     rel material:binding = </Root/Materials/Blue> (
         bindMaterialAs = "weakerThanDescendants"
     )
-    double radius = 0.01
+    double radius = 0.1
     quatf xformOp:orient = (1, 0, 0, 0)
     float3 xformOp:scale = (1, 1, 1)
     float3 xformOp:translate = (0, 0, 0.32)

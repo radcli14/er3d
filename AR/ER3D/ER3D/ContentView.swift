@@ -29,7 +29,16 @@ struct ARViewContainer: UIViewRepresentable {
         // Create horizontal plane anchor for the content
         let anchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
         anchor.children.append(model)
-
+        
+        if let globe = try? ModelEntity.loadModel(named: "globe") {
+            print("globe = \(globe)")
+            anchor.children.append(globe)
+            if let globeAnchor = globe.anchor {
+                arView.scene.anchors.append(globeAnchor)
+                print("globeAnchor = \(globeAnchor)")
+            }
+        }
+        
         // Add the horizontal plane anchor to the scene
         arView.scene.anchors.append(anchor)
 
