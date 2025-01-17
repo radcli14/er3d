@@ -7,6 +7,8 @@
 
 import Foundation
 import RealityKit
+import SwiftUI
+import UIKit
 
 @Observable class ER3DRealityViewModel {
     var arView: ARView
@@ -17,30 +19,79 @@ import RealityKit
     init() {
         // Set up the ARView
         arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: true)
+        //arView.environment.sceneUnderstanding.options.insert(.collision)
+        //arView.environment.sceneUnderstanding.options.insert(.receivesLighting)
+        //arView.environment.sceneUnderstanding.options.insert(.occlusion)
+        //arView.debugOptions = [.showFeaturePoints, .showWorldOrigin, .showAnchorOrigins, .showSceneUnderstanding, .showPhysics]
         
         // Create an AnchorEntity for the content
         anchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
+        anchor.transform.rotation = simd_quatf(angle: .pi, axis: SIMD3<Float>(0, 1, 0))
         arView.scene.anchors.append(anchor)
-
+        
         // Load the globe model asynchronously
         Task {
             await loadGlobe()
         }
     }
     
-    /// Load the globe model asynchronously, set up the sphere with collisions, and add it to the arView
+    /// Load the globe model asynchronously, set up the sphere and ship with collisions, and add it to the arView
     private func loadGlobe() async {
-        // Load the globe model asynchronously
         globe = try? await Entity(named: "globe")
         guard let globe else { return }
-        
-        // Set up the sphere collisions and gestures which allow you to move, rotate, and scale
-        let sphere = await globe.findEntity(named: "Sphere") as! ModelEntity
-        await sphere.generateCollisionShapes(recursive: false)
-        await arView.installGestures(.all, for: sphere)
-        
-        // Add the globe to the AR view
+        addGlobeGestures()
+        //addShipGestures()
         await anchor.addChild(globe)
+    }
+    
+    // MARK: - Gestures
+    
+    private func remove(_ gestures: [any EntityGestureRecognizer]?) {
+        gestures?.forEach { recognizer in
+            if let idx = arView.gestureRecognizers?.firstIndex(of: recognizer) {
+                arView.gestureRecognizers?.remove(at: idx)
+            }
+        }
+    }
+    
+    private var globeGestures: [any EntityGestureRecognizer]?
+    
+    /// Set up the sphere collisions and gestures which allow you to move, rotate, and scale the globe
+    func addGlobeGestures() {
+        if let sphere = globe?.findEntity(named: "Sphere") as? ModelEntity {
+            sphere.generateCollisionShapes(recursive: false)
+            globeGestures = arView.installGestures(.all, for: sphere)
+        }
+    }
+    
+    /// Remove the globe gestures to enable separate gestures to modify latitude and longitude
+    func removeGlobeGestures() {
+        remove(globeGestures)
+        globeGestures = nil
+    }
+    
+    private var shipGestures: [any EntityGestureRecognizer]?
+    
+    /// Set up the ship collisions and gestures which allow you to pivot the ship around the earth center to modify latitude and longitude
+    func addShipGestures() {
+        // TODO: this function appears to have no effect, or intermittent effect
+        if let ship = globe?.findEntity(named: "Space_Shuttle_Discovery"),
+           let node = ship.findEntity(named: "node_0") as? ModelEntity {
+            node.generateCollisionShapes(recursive: true)
+            shipGestures = arView.installGestures(.translation, for: node)
+            shipGestures?.forEach { gesture in
+                gesture.addTarget(self, action: #selector(handleShipGesture(_:)))
+            }
+        }
+    }
+    
+    func removeShipGestures() {
+        remove(shipGestures)
+        shipGestures = nil
+    }
+    
+    @objc private func handleShipGesture(_ gesture: UIGestureRecognizer) {
+        print("Gesture detected: \(gesture.state)")
     }
     
     // MARK: - Euler Angles
