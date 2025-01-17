@@ -37,7 +37,11 @@ import UIKit
     
     /// Load the globe model asynchronously, set up the sphere and ship with collisions, and add it to the arView
     private func loadGlobe() async {
-        globe = try? await Entity(named: "globe")
+        if #available(iOS 18.0, *) {
+            globe = try? await Entity(named: "globe")
+        } else {
+            // Fallback on earlier versions
+        }
         guard let globe else { return }
         addGlobeGestures()
         //addShipGestures()
