@@ -68,7 +68,7 @@ import UIKit
     func handleControlVisibilityChange() {
         if controlVisibility == .latLongControls {
             removeGlobeGestures()
-        } else if globeGestures == nil {
+        } else {
             addGlobeGestures()
         }
     }
@@ -96,7 +96,11 @@ import UIKit
     /// Remove the globe gestures to enable separate gestures to modify latitude and longitude
     func removeGlobeGestures() {
         remove(globeGestures)
-        globeGestures = nil
+        
+        // Retain rotation gesture
+        if let sphere = globe?.findEntity(named: "Sphere") as? ModelEntity {
+            globeGestures = arView.installGestures(.rotation, for: sphere)
+        }
     }
     
     private var shipGestures: [any EntityGestureRecognizer]?
