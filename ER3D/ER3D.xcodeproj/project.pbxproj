@@ -138,6 +138,9 @@
 				8A45101A28E65D48009BD378 /* ER3DUITests */,
 				8A4E82D12D35446100173D0B /* EulerRotations3D */,
 				8A450FFE28E65D46009BD378 /* Products */,
+				8A4E82EB2D357CE100173D0B /* Controls */,
+				8AD2ECC92C18A96C00491255 /* Data */,
+				8A66F7E22C0A2B49001DFB0B /* Extensions */,
 			);
 			sourceTree = "<group>";
 		};
@@ -155,14 +158,11 @@
 		8A450FFF28E65D46009BD378 /* ER3D */ = {
 			isa = PBXGroup;
 			children = (
-				8A4E82EB2D357CE100173D0B /* Controls */,
-				8AD2ECC92C18A96C00491255 /* Data */,
 				8A45100028E65D46009BD378 /* ER3DApp.swift */,
 				8A45100228E65D46009BD378 /* ER3DView.swift */,
 				8A45102A28E65DCA009BD378 /* ER3DViewModel.swift */,
 				8A66F7DA2C0A1893001DFB0B /* ER3DSceneModel.swift */,
 				8A66F7D62C08CD98001DFB0B /* YawPitchRollSceneModel.swift */,
-				8A66F7E22C0A2B49001DFB0B /* Extensions */,
 				8A66F7E52C0A2B49001DFB0B /* Nodes */,
 				8A45100428E65D48009BD378 /* Assets.xcassets */,
 				8A4510AA28E6788B009BD378 /* art.scnassets */,
