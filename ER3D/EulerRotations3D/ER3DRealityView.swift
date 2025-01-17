@@ -34,7 +34,19 @@ struct ER3DRealityView : View {
                 viewModel.controlVisibility = .bottomButtons
             }
         }
-        //.gesture(spatialEventGesture)
+        .onChange(of: viewModel.controlVisibility) {
+            viewModel.handleControlVisibilityChange()
+        }
+        .latLongGesture(
+            isActive: viewModel.controlVisibility == .latLongControls,
+            initialLat: viewModel.lat,
+            initialLong: viewModel.long,
+            scale: viewModel.latLongScale,
+            onUpdate: { (lat, long) in
+                viewModel.lat = lat
+                viewModel.long = long
+            }
+        )
         .overlay {
             overlayControls
         }
@@ -56,16 +68,6 @@ struct ER3DRealityView : View {
                 resetLatLong: viewModel.resetLatLong
             )
         }
-    }
-    
-    var spatialEventGesture: some Gesture {
-        SpatialEventGesture()
-            .onChanged { events in
-                print("spatial gesture, events.count = \(events.count)")
-            }
-            .onEnded { events in
-                print("spatial gesture ended, events.count = \(events.count)")
-            }
     }
 }
 

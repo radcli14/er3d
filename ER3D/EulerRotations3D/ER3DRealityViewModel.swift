@@ -40,12 +40,37 @@ import UIKit
         if #available(iOS 18.0, *) {
             globe = try? await Entity(named: "globe")
         } else {
-            // Fallback on earlier versions
+            fatalError("iOS version is too low to load the globe model, must be >=18.0")
         }
         guard let globe else { return }
+        setInitialLatLong()
         addGlobeGestures()
         //addShipGestures()
         await anchor.addChild(globe)
+    }
+    
+    private func setInitialLatLong() {
+        if let latRotation = globe?.findEntity(named: "Lat")?.transform.rotation {
+            if latRotation.angle.magnitude > 0 {
+                lat = -Constants.rad2deg * latRotation.angle * latRotation.axis.y
+            }
+        }
+        if let longRotation = globe?.findEntity(named: "Long")?.transform.rotation {
+            if longRotation.angle.magnitude > 0 {
+                long = Constants.rad2deg * longRotation.angle * longRotation.axis.z
+            }
+        }
+    }
+    
+    // MARK: - State Changes
+    
+    /// When the user toggles to lat/long control, remove the ARView gestures, or add them back in when toggling away
+    func handleControlVisibilityChange() {
+        if controlVisibility == .latLongControls {
+            removeGlobeGestures()
+        } else if globeGestures == nil {
+            addGlobeGestures()
+        }
     }
     
     // MARK: - Gestures
@@ -130,18 +155,24 @@ import UIKit
     
     // MARK: - Latitude and Longitude
     
+    /// Sets the rate at which the position of the ship model will change based on a translation gesture when the lat/long controls are active
+    let latLongScale: Float = -0.1
+    
+    /// Latitude angle in degrees
     var lat: Float = 0.0 {
         didSet {
-            globe?.findEntity(named: "Lat")?.transform = Transform(yaw: lat)
+            globe?.findEntity(named: "Lat")?.transform = Transform(yaw: -lat * Constants.deg2rad)
         }
     }
     
+    /// Longitude angle in degrees
     var long: Float = 0.0 {
         didSet {
-            globe?.findEntity(named: "Long")?.transform = Transform(roll: long)
+            globe?.findEntity(named: "Long")?.transform = Transform(roll: long * Constants.deg2rad)
         }
     }
     
+    /// Resets the latitude and longitude angles to zero (off the cape of Africa)
     func resetLatLong() {
         lat = 0.0
         long = 0.0

@@ -12,7 +12,8 @@ struct LatLongGesture: ViewModifier {
     let isActive: Bool
     let initialLat: Float
     let initialLong: Float
-    let cameraAngle: CGFloat = 0
+    var cameraAngle: CGFloat = 0
+    var scale: Float = 0.05
     let onUpdate: (Float, Float) -> Void
     
     @GestureState var gestureLatLong: GestureLatLongState = GestureLatLongState()
@@ -29,7 +30,10 @@ struct LatLongGesture: ViewModifier {
                     gestureLatLong.setInitial(lat: initialLat, long: initialLong)
                 }
                 if isActive {
-                    let update = gestureLatLong.update(for: inMotionDragGestureValue.translation, rotatedBy: cameraAngle)
+                    let update = gestureLatLong.update(
+                        for: inMotionDragGestureValue.translation, rotatedBy: cameraAngle,
+                        scale: scale
+                    )
                     DispatchQueue.main.async {
                         withAnimation {
                             onUpdate(update.lat, update.long)
@@ -53,8 +57,25 @@ struct LatLongGesture: ViewModifier {
 }
 
 extension View {
-    func latLongGesture(isActive: Bool, initialLat: Float, initialLong: Float, cameraAngle: CGFloat = 0, onUpdate: @escaping (Float, Float) -> Void) -> some View {
-        modifier(LatLongGesture(isActive: isActive, initialLat: initialLat, initialLong: initialLong, onUpdate: onUpdate))
+    
+    @ViewBuilder
+    func latLongGesture(
+        isActive: Bool,
+        initialLat: Float,
+        initialLong: Float,
+        cameraAngle: CGFloat = 0,
+        scale: Float = 0.05,
+        onUpdate: @escaping (Float, Float) -> Void
+    ) -> some View {
+        let gesture = LatLongGesture(
+            isActive: isActive,
+            initialLat: initialLat,
+            initialLong: initialLong,
+            cameraAngle: cameraAngle,
+            scale: scale,
+            onUpdate: onUpdate
+        )
+        modifier(gesture)
     }
 }
 
@@ -72,12 +93,12 @@ struct GestureLatLongState {
         isFirstUpdate = false
     }
     
-    mutating func update(for translation: CGSize, rotatedBy angle: CGFloat = 0) -> GestureLatLongState {
+    mutating func update(for translation: CGSize, rotatedBy angle: CGFloat = 0, scale: Float = 0.05) -> GestureLatLongState {
         x = translation.width * cos(angle) - translation.height * sin(angle)
         y = translation.width * sin(angle) + translation.height * cos(angle)
         return GestureLatLongState(
-            lat: max(min(lat + 0.05 * Float(y), 90), -90),
-            long: long - 0.05 * Float(x)
+            lat: max(min(lat + scale * Float(y), 89), -89),
+            long: long - scale * Float(x)
         )
     }
     
