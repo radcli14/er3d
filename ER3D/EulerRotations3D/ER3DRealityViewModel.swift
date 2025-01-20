@@ -9,6 +9,7 @@ import Foundation
 import RealityKit
 import SwiftUI
 import UIKit
+import Globe
 
 @Observable class ER3DRealityViewModel {
     var arView: ARView
@@ -38,7 +39,7 @@ import UIKit
     /// Load the globe model asynchronously, set up the sphere and ship with collisions, and add it to the arView
     private func loadGlobe() async {
         if #available(iOS 18.0, *) {
-            globe = try? await Entity(named: "globe")
+            globe = try? await Entity(named: "globe", in: Globe.globeBundle)
         } else {
             fatalError("iOS version is too low to load the globe model, must be >=18.0")
         }

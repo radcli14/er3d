@@ -1,0 +1,282 @@
+{
+  "4D79A6BE-1907-488C-AA0F-04CEB8D2157E" : {
+    "objectMetadataList" : [
+      [
+        "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
+        "Root",
+        "YawFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
+        "Root",
+        "YawFrame",
+        "PitchFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
+        "Root",
+        "YawFrame",
+        "PitchFrame",
+        "RollFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
+        "Root",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  },
+  "7AE4F243-F936-4614-B941-5EECC72DB0A0" : {
+    "objectMetadataList" : [
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "Globe",
+        "GlobalX"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame",
+        "YawFrame",
+        "PitchFrame",
+        "RollFrame",
+        "frame70pct"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame",
+        "YawFrame",
+        "PitchFrame",
+        "RollFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "Long",
+        "Lat"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame",
+        "frame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame",
+        "YawFrame",
+        "frame90pct"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "ECEF",
+        "Long"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame",
+        "YawFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "Globe"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame",
+        "YawFrame",
+        "PitchFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  }
+}

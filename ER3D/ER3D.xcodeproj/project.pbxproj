@@ -26,6 +26,7 @@
 		8A66F7E92C0A2B62001DFB0B /* ArrowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E32C0A2B49001DFB0B /* ArrowNode.swift */; };
 		8A66F7EB2C0A313D001DFB0B /* Planets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7EA2C0A313D001DFB0B /* Planets.swift */; };
 		8AD2ECCB2C18A98000491255 /* VariableDescriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD2ECCA2C18A98000491255 /* VariableDescriptions.swift */; };
+		8AE7E2522D3E7CF400EE4315 /* Globe in Frameworks */ = {isa = PBXBuildFile; productRef = 8AE7E2512D3E7CF400EE4315 /* Globe */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AE7E2522D3E7CF400EE4315 /* Globe in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +301,7 @@
 			);
 			name = EulerRotations3D;
 			packageProductDependencies = (
+				8AE7E2512D3E7CF400EE4315 /* Globe */,
 			);
 			productName = EulerRotations3D;
 			productReference = 8A4E82D02D35446100173D0B /* EulerRotations3D.app */;
@@ -339,6 +342,9 @@
 				Base,
 			);
 			mainGroup = 8A450FF428E65D46009BD378;
+			packageReferences = (
+				8AE7E2502D3E7CF400EE4315 /* XCLocalSwiftPackageReference "Globe" */,
+			);
 			productRefGroup = 8A450FFE28E65D46009BD378 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -818,6 +824,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		8AE7E2502D3E7CF400EE4315 /* XCLocalSwiftPackageReference "Globe" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Globe;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8AE7E2512D3E7CF400EE4315 /* Globe */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Globe;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8A450FF528E65D46009BD378 /* Project object */;
 }
