@@ -44,10 +44,11 @@ import Globe
             fatalError("iOS version is too low to load the globe model, must be >=18.0")
         }
         guard let globe else { return }
+        await anchor.addChild(globe)
         setInitialLatLong()
         addGlobeGestures()
         //addShipGestures()
-        await anchor.addChild(globe)
+        animateGlobeEnteringScene()
     }
     
     private func setInitialLatLong() {
@@ -63,12 +64,27 @@ import Globe
         }
     }
     
+    /// Animate the globe appearing and rotating to its initial longitude
+    private func animateGlobeEnteringScene() {
+        guard let sphere = globe?.findEntity(named: "Sphere") else { return }
+        // Get the default transform
+        var transform = sphere.transform
+        
+        // The globe should initially be invisible (zero scale) at time of entering the scene
+        sphere.transform.scale = SIMD3(0.0, 0.0, 0.0)
+        
+        // Animate the globe appearing and rotating to its initial longitude
+        transform.rotation = simd_quatf(angle: (-long+90) * Constants.deg2rad, axis: SIMD3(0, 1, 0))
+        transform.scale = SIMD3<Float>(1.0, 1.0, 1.0)
+        sphere.move(to: transform, relativeTo: sphere.parent, duration: 2.0)
+    }
+    
     // MARK: - State Changes
     
     /// When the user toggles to lat/long control, remove the ARView gestures, or add them back in when toggling away
     func handleControlVisibilityChange() {
         if controlVisibility == .latLongControls {
-            removeGlobeGestures()
+            removeGlobeTranslationGesture()
         } else {
             addGlobeGestures()
         }
@@ -78,54 +94,46 @@ import Globe
     
     private func remove(_ gestures: [any EntityGestureRecognizer]?) {
         gestures?.forEach { recognizer in
-            if let idx = arView.gestureRecognizers?.firstIndex(of: recognizer) {
-                arView.gestureRecognizers?.remove(at: idx)
-            }
+            remove(recognizer)
         }
     }
     
-    private var globeGestures: [any EntityGestureRecognizer]?
+    private func remove(_ recognizer: (any EntityGestureRecognizer)?) {
+        if let recognizer, let idx = arView.gestureRecognizers?.firstIndex(of: recognizer) {
+            arView.gestureRecognizers?.remove(at: idx)
+        }
+    }
     
+    /// The translation gesture on the globe sphere, separated from the other gestures becasue we will add and remove it depending on if the user is viewing latitude and longitude
+    var globeTranslationGesture: EntityGestureRecognizer?
+    
+    /// The two finger gestures for rotation and scale of the globe sphere
+    var globeRotationAndScaleGestures: [any EntityGestureRecognizer]?
+
     /// Set up the sphere collisions and gestures which allow you to move, rotate, and scale the globe
     func addGlobeGestures() {
+        print("ER3DRealityViewModel.addGlobeGestures()")
         if let sphere = globe?.findEntity(named: "Sphere") as? ModelEntity {
-            sphere.generateCollisionShapes(recursive: false)
-            globeGestures = arView.installGestures(.all, for: sphere)
-        }
-    }
-    
-    /// Remove the globe gestures to enable separate gestures to modify latitude and longitude
-    func removeGlobeGestures() {
-        remove(globeGestures)
-        
-        // Retain rotation gesture
-        if let sphere = globe?.findEntity(named: "Sphere") as? ModelEntity {
-            globeGestures = arView.installGestures(.rotation, for: sphere)
-        }
-    }
-    
-    private var shipGestures: [any EntityGestureRecognizer]?
-    
-    /// Set up the ship collisions and gestures which allow you to pivot the ship around the earth center to modify latitude and longitude
-    func addShipGestures() {
-        // TODO: this function appears to have no effect, or intermittent effect
-        if let ship = globe?.findEntity(named: "Space_Shuttle_Discovery"),
-           let node = ship.findEntity(named: "node_0") as? ModelEntity {
-            node.generateCollisionShapes(recursive: true)
-            shipGestures = arView.installGestures(.translation, for: node)
-            shipGestures?.forEach { gesture in
-                gesture.addTarget(self, action: #selector(handleShipGesture(_:)))
+            if sphere.components[CollisionComponent.self] == nil {
+                print("  - Generating collision shapes for the sphere")
+                sphere.generateCollisionShapes(recursive: false)
+            }
+            if globeTranslationGesture == nil {
+                print("  - Installing translation gesture")
+                globeTranslationGesture = arView.installGestures(.translation, for: sphere).first
+            }
+            if globeRotationAndScaleGestures == nil {
+                print("  - Installing rotation and scale gestures")
+                globeRotationAndScaleGestures = arView.installGestures([.rotation, .scale], for: sphere)
             }
         }
     }
     
-    func removeShipGestures() {
-        remove(shipGestures)
-        shipGestures = nil
-    }
-    
-    @objc private func handleShipGesture(_ gesture: UIGestureRecognizer) {
-        print("Gesture detected: \(gesture.state)")
+    /// Remove the globe translation gestures to enable separate gestures to modify latitude and longitude
+    func removeGlobeTranslationGesture() {
+        print("ER3DRealityViewModel.removeGlobeTranslationGesture()")
+        remove(globeTranslationGesture)
+        globeTranslationGesture = nil
     }
     
     // MARK: - Euler Angles
