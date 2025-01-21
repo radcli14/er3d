@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A35A7E72D3FF382006C752A /* Globe in Frameworks */ = {isa = PBXBuildFile; productRef = 8A35A7E62D3FF382006C752A /* Globe */; };
 		8A45100128E65D46009BD378 /* ER3DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45100028E65D46009BD378 /* ER3DApp.swift */; };
 		8A45100328E65D46009BD378 /* ER3DView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45100228E65D46009BD378 /* ER3DView.swift */; };
 		8A45100528E65D48009BD378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A45100428E65D48009BD378 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 		8A4510AB28E6788C009BD378 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A4510AA28E6788B009BD378 /* art.scnassets */; };
 		8A4E82FA2D3586F000173D0B /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E12C0A2B49001DFB0B /* View+Extensions.swift */; };
 		8A4E82FB2D35871900173D0B /* VariableDescriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD2ECCA2C18A98000491255 /* VariableDescriptions.swift */; };
+		8A5CF7F32D3FEE5F005DCCD9 /* Globe in Frameworks */ = {isa = PBXBuildFile; productRef = 8A5CF7F22D3FEE5F005DCCD9 /* Globe */; };
 		8A66F7D72C08CD98001DFB0B /* YawPitchRollSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7D62C08CD98001DFB0B /* YawPitchRollSceneModel.swift */; };
 		8A66F7DB2C0A1893001DFB0B /* ER3DSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7DA2C0A1893001DFB0B /* ER3DSceneModel.swift */; };
 		8A66F7E62C0A2B5D001DFB0B /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E12C0A2B49001DFB0B /* View+Extensions.swift */; };
@@ -125,6 +127,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A35A7E72D3FF382006C752A /* Globe in Frameworks */,
+				8A5CF7F32D3FEE5F005DCCD9 /* Globe in Frameworks */,
 				8AE7E2522D3E7CF400EE4315 /* Globe in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +306,8 @@
 			name = EulerRotations3D;
 			packageProductDependencies = (
 				8AE7E2512D3E7CF400EE4315 /* Globe */,
+				8A5CF7F22D3FEE5F005DCCD9 /* Globe */,
+				8A35A7E62D3FF382006C752A /* Globe */,
 			);
 			productName = EulerRotations3D;
 			productReference = 8A4E82D02D35446100173D0B /* EulerRotations3D.app */;
@@ -343,7 +349,7 @@
 			);
 			mainGroup = 8A450FF428E65D46009BD378;
 			packageReferences = (
-				8AE7E2502D3E7CF400EE4315 /* XCLocalSwiftPackageReference "Globe" */,
+				8A35A7E52D3FF382006C752A /* XCLocalSwiftPackageReference "Globe" */,
 			);
 			productRefGroup = 8A450FFE28E65D46009BD378 /* Products */;
 			projectDirPath = "";
@@ -716,6 +722,7 @@
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -753,6 +760,7 @@
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -826,13 +834,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		8AE7E2502D3E7CF400EE4315 /* XCLocalSwiftPackageReference "Globe" */ = {
+		8A35A7E52D3FF382006C752A /* XCLocalSwiftPackageReference "Globe" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Globe;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8A35A7E62D3FF382006C752A /* Globe */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Globe;
+		};
+		8A5CF7F22D3FEE5F005DCCD9 /* Globe */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Globe;
+		};
 		8AE7E2512D3E7CF400EE4315 /* Globe */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Globe;
