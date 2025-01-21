@@ -9,53 +9,48 @@ import SwiftUI
 
 /// A custom slider using specified angle limits, steps, and labels
 struct AngleSlider: View {
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
-    
     @Binding var angle: Float
     let name: String
     let symbol: String
+    var angleRange = -Float.pi...Float.pi
+    
+    @State private var showInfo = false
     
     var body: some View {
-        ZStack {
-            Text("\(symbol) = \(String(format: "%.0f", angle * Constants.rad2deg)) deg")
-                .font(.callout)
-                .foregroundColor(.secondary)
-                .offset(Constants.sliderLabelOffset)
+        VStack(spacing: Constants.sliderSpacing) {
             Slider(
                 value: $angle,
-                in: Constants.angleRange,
+                in: angleRange,
                 step: Constants.sliderStep,
-                label: { Text(name) },
-                minimumValueLabel: { Text(isLandscape ? "" : minValueString) },
-                maximumValueLabel: { Text(isLandscape ? "" : maxValueString) }
+                label: { Text(name) }
             )
-            .offset(Constants.sliderOffset)
+            HStack {
+                Button {
+                    angle = 0
+                } label: {
+                    Image(systemName: "arrow.counterclockwise")
+                }
+                Text("\(name) \(symbol) = \(String(format: "%.0f", angle * Constants.rad2deg)) deg")
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                Spacer()
+                Button {
+                    showInfo = true
+                } label: {
+                    Image(systemName: "info.bubble")
+                }
+                .popover(isPresented: $showInfo) {
+                    PopoverContent(key: name)
+                }
+            }
         }
-        .frame(height: Constants.sliderHeight)
-        .angleSliderContextMenu(name, onResetAction: { angle = 0 })
-    }
-    
-    var isLandscape: Bool {
-        verticalSizeClass == .compact
-    }
-    
-    /// The lower bound for the slider
-    private var minValueString: String {
-        String(Int(Constants.angleRange.lowerBound * Constants.rad2deg))
-    }
-    
-    /// The upper bound for a slider
-    private var maxValueString: String {
-        String(Int(Constants.angleRange.upperBound * Constants.rad2deg))
+        .padding(.horizontal)
+        .padding(.top)
     }
     
     private struct Constants {
-        static let angleRange = -Float.pi...Float.pi
-        static let sliderStep = Float.pi / 180
-        static let sliderSpacing = CGFloat(0)
-        static let sliderOffset = CGSize(width: 0, height: -10)
-        static let sliderLabelOffset = CGSize(width: 0, height: 14)
-        static let sliderHeight = CGFloat(48)
+        static let sliderStep: Float = .pi / 180
+        static let sliderSpacing: CGFloat = 0
         static let rad2deg: Float = 180 / .pi
     }
 }

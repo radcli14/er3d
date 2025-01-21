@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum ControlVisibility {
-    case bottomButtons, angleControls, latLongControls
+    case bottomButtons, angleControls, latLongControls, settings
 }
 
 struct BottomButtons: View {
@@ -16,23 +16,23 @@ struct BottomButtons: View {
     
     var body: some View {
         HStack(spacing: Constants.spacing) {
-            Button(action: {
-                withAnimation {
-                    controlVisibility = .angleControls
-                }
-            }) {
-                Image(systemName: "rotate.3d.circle")
-            }
-            Button(action: {
-                withAnimation {
-                    controlVisibility = .latLongControls
-                }
-            }) {
-                Image(systemName: "globe")
-            }
+            bottomButton("rotate.3d.circle", visibility: .angleControls)
+            bottomButton("globe", visibility: .latLongControls)
+            //bottomButton("gear", visibility: .settings)
         }
         .font(.largeTitle)
         .padding(Constants.padding)
+    }
+    
+    /// A button with a system icon that sets the `controlVisibility` to a specified value when tapped
+    private func bottomButton(_ systemName: String, visibility: ControlVisibility) -> some View {
+        Button {
+            withAnimation {
+                controlVisibility = visibility
+            }
+        } label: {
+            Image(systemName: systemName)
+        }
     }
     
     private struct Constants {

@@ -28,6 +28,8 @@ struct ER3DControls: View {
                 LatLongAngleControls(lat: $lat, long: $long) {
                     resetLatLong()
                 }
+            case .settings:
+                Text("Settings")
             case .bottomButtons:
                 BottomButtons(controlVisibility: $controlVisibility)
             }
