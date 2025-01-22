@@ -16,32 +16,58 @@ struct EulerAngleControls: View {
     @Binding var roll: Float
     let onResetAction: () -> Void
     
+    @State private var showInfo = false
+    
     var body: some View {
-        if verticalSizeClass == .compact {
-            HStack {
-                eulerAngleControlsInStack
+        VStack(spacing: 0) {
+            headerLine
+            eulerAngleControlsInStack
+        }
+        .padding(Constants.sliderPadding)
+    }
+    
+    private var headerLine: some View {
+        HStack {
+            Button {
+                onResetAction()
+            } label: {
+                Image(systemName: "arrow.counterclockwise.circle.fill")
             }
-            .padding(.bottom, Constants.sliderPadding)
-        } else {
-            VStack(spacing: Constants.sliderSpacing) {
-                eulerAngleControlsInStack
+            Text("Yaw → Pitch → Roll Sequence").font(.headline)
+                .popover(isPresented: $showInfo) {
+                    PopoverContent(key: "Yaw → Pitch → Roll")
+                }
+            Button {
+                showInfo = true
+            } label: {
+                Image(systemName: "info.circle.fill")
             }
-            .padding(Constants.sliderPadding)
         }
     }
     
     @ViewBuilder
     private var eulerAngleControlsInStack: some View {
-        Text("Yaw → Pitch → Roll Sequence").font(.headline)
-            .angleSliderContextMenu("Yaw → Pitch → Roll", onResetAction: onResetAction)
+        if isLandscape {
+            HStack(spacing: sliderSpacing) {
+                eulerAngleControlsList
+            }
+        } else {
+            VStack(spacing: sliderSpacing) {
+                eulerAngleControlsList
+            }
+            .padding(.top)
+        }
+    }
+    
+    @ViewBuilder
+    private var eulerAngleControlsList: some View {
         AngleSlider(angle: $yaw, name: "Yaw", symbol: "ψ")
         AngleSlider(angle: $pitch, name: "Pitch", symbol: "𝜃")
         AngleSlider(angle: $roll, name: "Roll", symbol: "φ")
     }
-    
-    /// Dimension of the sheet that pops up from the bottom
-    private var angleControlsHeight: CGFloat {
-        isLandscape ? 64 : 212
+
+    private var sliderSpacing: CGFloat {
+        isLandscape ? 36 : 12
     }
     
     var isLandscape: Bool {

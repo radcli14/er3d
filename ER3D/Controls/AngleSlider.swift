@@ -44,8 +44,7 @@ struct AngleSlider: View {
                 }
             }
         }
-        .padding(.horizontal)
-        .padding(.top)
+        //.padding(.top)
     }
     
     private struct Constants {

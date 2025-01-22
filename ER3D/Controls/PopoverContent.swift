@@ -14,10 +14,13 @@ struct PopoverContent: View {
         ScrollView {
             VStack(alignment: .leading) {
                 Text(key).font(.title)
-                Text(variableDescriptions[key] ?? key)
+                if let description = variableDescriptions[key] {
+                    Text(description)
+                }
             }
             .padding()
         }
+        .frame(height: 256)
         .presentationCompactAdaptation(.popover)
     }
 }
