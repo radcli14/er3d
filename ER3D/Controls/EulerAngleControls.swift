@@ -15,9 +15,7 @@ struct EulerAngleControls: View {
     @Binding var pitch: Float
     @Binding var roll: Float
     let onResetAction: () -> Void
-    
-    @State private var showInfo = false
-    
+
     var body: some View {
         VStack(spacing: 0) {
             headerLine
@@ -34,14 +32,7 @@ struct EulerAngleControls: View {
                 Image(systemName: "arrow.counterclockwise.circle.fill")
             }
             Text("Yaw → Pitch → Roll Sequence").font(.headline)
-                .popover(isPresented: $showInfo) {
-                    PopoverContent(key: "Yaw → Pitch → Roll")
-                }
-            Button {
-                showInfo = true
-            } label: {
-                Image(systemName: "info.circle.fill")
-            }
+            InfoButtonWithPopover(key: "Yaw → Pitch → Roll", isFilled: true)
         }
     }
     

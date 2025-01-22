@@ -81,6 +81,7 @@
 				ER3DControls.swift,
 				ER3DHeader.swift,
 				EulerAngleControls.swift,
+				InfoButtonWithPopover.swift,
 				LatLongAngleControls.swift,
 				LatLongGesture.swift,
 				PopoverContent.swift,

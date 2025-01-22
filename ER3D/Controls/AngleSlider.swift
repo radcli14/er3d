@@ -14,8 +14,6 @@ struct AngleSlider: View {
     let symbol: String
     var angleRange = -Float.pi...Float.pi
     
-    @State private var showInfo = false
-    
     var body: some View {
         VStack(spacing: Constants.sliderSpacing) {
             Slider(
@@ -34,17 +32,9 @@ struct AngleSlider: View {
                     .font(.callout)
                     .foregroundColor(.secondary)
                 Spacer()
-                Button {
-                    showInfo = true
-                } label: {
-                    Image(systemName: "info.bubble")
-                }
-                .popover(isPresented: $showInfo) {
-                    PopoverContent(key: name)
-                }
+                InfoButtonWithPopover(key: name)
             }
         }
-        //.padding(.top)
     }
     
     private struct Constants {

@@ -36,37 +36,53 @@ struct LatLongAngleControls: View {
     @ViewBuilder
     private var latLongContent: some View {
         latLongMessage
-            .angleSliderContextMenu("Latitude & Longitude", onResetAction: onResetAction )
         Divider()
         latLongState
     }
     
     /// Displays fixed text labeling that you have the latitude/longitude control open
     private var latLongMessage: some View {
-        VStack {
-            Text("Latitude & Longitude").font(.headline)
-            Text("Drag on globe to update").font(.caption)
+        HStack {
+            Button {
+                onResetAction()
+            } label: {
+                Image(systemName: "arrow.counterclockwise.circle.fill")
+            }
+            
+            VStack {
+                Text("Latitude & Longitude").font(.headline)
+                Text("Drag on globe to update").font(.caption)
+            }
+            InfoButtonWithPopover(key: "Latitude & Longitude", isFilled: true)
         }
+        .frame(maxWidth: isLandscape ? 0.5 * Constants.latLongMenuWidthInLandscape : .infinity)
     }
     
     /// Displays current numerical values for the latitude and longitude
     private var latLongState: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                let format = "%.2f"
-                Text("Latitude = \(String(format: format, lat)) deg")
-                    .angleSliderContextMenu("Latitude", onResetAction: { lat = 0 })
-                Text("Longitude = \(String(format: format, long)) deg")
-                    .angleSliderContextMenu("Longitude", onResetAction: { long = 0 })
-            }
-            Spacer()
+        VStack(alignment: .leading) {
+            StateLabel(key: "Latitude", state: $lat)
+            StateLabel(key: "Longitude", state: $long)
         }
-        .frame(maxWidth: 0.5 * Constants.latLongMenuWidthInLandscape)
+        .frame(maxWidth: isLandscape ? 0.5 * Constants.latLongMenuWidthInLandscape : .infinity)
+    }
+    
+    private func StateLabel(key: String, state: Binding<Float>) -> some View {
+        HStack {
+            Button {
+                state.wrappedValue = 0
+            } label: {
+                Image(systemName: "arrow.counterclockwise")
+            }
+            Text("\(key) = \(String(format: "%.2f", state.wrappedValue)) deg")
+            Spacer()
+            InfoButtonWithPopover(key: key)
+        }
     }
     
     private struct Constants {
         static let padding: CGFloat = 12
-        static let latLongMenuWidthInLandscape = CGFloat(444)
+        static let latLongMenuWidthInLandscape = CGFloat(640)
         static let latLongMenuHeightInLandscape = CGFloat(64)
         static let rad2deg: Float = 180 / .pi
     }
