@@ -13,12 +13,18 @@ enum ControlVisibility {
 
 struct BottomButtons: View {
     @Binding var controlVisibility: ControlVisibility
+    var latLongAreAvailable = true
+    var settingsAreAvailable = false
     
     var body: some View {
         HStack(spacing: Constants.spacing) {
             bottomButton("rotate.3d.circle", visibility: .angleControls)
-            bottomButton("globe", visibility: .latLongControls)
-            //bottomButton("gear", visibility: .settings)
+            if latLongAreAvailable {
+                bottomButton("globe", visibility: .latLongControls)
+            }
+            if settingsAreAvailable {
+                bottomButton("gear", visibility: .settings)
+            }
         }
         .font(.largeTitle)
         .padding(Constants.padding)

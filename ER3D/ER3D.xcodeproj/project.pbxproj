@@ -82,6 +82,7 @@
 				LatLongAngleControls.swift,
 				LatLongGesture.swift,
 				PopoverContent.swift,
+				SettingsContent.swift,
 			);
 			target = 8A4E82CF2D35446100173D0B /* EulerRotations3D */;
 		};

@@ -29,9 +29,9 @@ struct ER3DControls: View {
                     resetLatLong()
                 }
             case .settings:
-                Text("Settings")
+                SettingsContent()
             case .bottomButtons:
-                BottomButtons(controlVisibility: $controlVisibility)
+                BottomButtons(controlVisibility: $controlVisibility, settingsAreAvailable: true)
             }
         }
         .background(.background)
@@ -46,6 +46,7 @@ struct ER3DControls: View {
 }
 
 #Preview {
+    @Previewable @State var settings = SettingsContent.ViewModel()
     @Previewable @State var controlVisibility = ControlVisibility.bottomButtons
     @Previewable @State var yaw: Float = 0.0
     @Previewable @State var pitch: Float = 0.0
@@ -58,4 +59,5 @@ struct ER3DControls: View {
         resetYawPitchRollAngles: { print("Reset YPR") },
         resetLatLong: { print("Reset Lat/Long") }
     )
+    .environment(settings)
 }

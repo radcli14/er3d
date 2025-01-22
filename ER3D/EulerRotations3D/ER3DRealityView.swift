@@ -72,5 +72,7 @@ struct ER3DRealityView : View {
 }
 
 #Preview {
+    @Previewable @State var settings = SettingsContent.ViewModel()
     ER3DRealityView()
+        .environment(settings)
 }
