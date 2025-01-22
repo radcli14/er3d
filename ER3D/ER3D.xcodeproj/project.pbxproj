@@ -17,12 +17,10 @@
 		8A45101E28E65D48009BD378 /* ER3DUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45101D28E65D48009BD378 /* ER3DUITestsLaunchTests.swift */; };
 		8A45102B28E65DCA009BD378 /* ER3DViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45102A28E65DCA009BD378 /* ER3DViewModel.swift */; };
 		8A4510AB28E6788C009BD378 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A4510AA28E6788B009BD378 /* art.scnassets */; };
-		8A4E82FA2D3586F000173D0B /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E12C0A2B49001DFB0B /* View+Extensions.swift */; };
 		8A4E82FB2D35871900173D0B /* VariableDescriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD2ECCA2C18A98000491255 /* VariableDescriptions.swift */; };
 		8A5CF7F32D3FEE5F005DCCD9 /* Globe in Frameworks */ = {isa = PBXBuildFile; productRef = 8A5CF7F22D3FEE5F005DCCD9 /* Globe */; };
 		8A66F7D72C08CD98001DFB0B /* YawPitchRollSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7D62C08CD98001DFB0B /* YawPitchRollSceneModel.swift */; };
 		8A66F7DB2C0A1893001DFB0B /* ER3DSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7DA2C0A1893001DFB0B /* ER3DSceneModel.swift */; };
-		8A66F7E62C0A2B5D001DFB0B /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E12C0A2B49001DFB0B /* View+Extensions.swift */; };
 		8A66F7E72C0A2B5D001DFB0B /* SceneKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E02C0A2B49001DFB0B /* SceneKit+Extensions.swift */; };
 		8A66F7E82C0A2B62001DFB0B /* FrameNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E42C0A2B49001DFB0B /* FrameNode.swift */; };
 		8A66F7E92C0A2B62001DFB0B /* ArrowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A66F7E32C0A2B49001DFB0B /* ArrowNode.swift */; };
@@ -65,7 +63,6 @@
 		8A66F7D62C08CD98001DFB0B /* YawPitchRollSceneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YawPitchRollSceneModel.swift; sourceTree = "<group>"; };
 		8A66F7DA2C0A1893001DFB0B /* ER3DSceneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DSceneModel.swift; sourceTree = "<group>"; };
 		8A66F7E02C0A2B49001DFB0B /* SceneKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneKit+Extensions.swift"; sourceTree = "<group>"; };
-		8A66F7E12C0A2B49001DFB0B /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		8A66F7E32C0A2B49001DFB0B /* ArrowNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowNode.swift; sourceTree = "<group>"; };
 		8A66F7E42C0A2B49001DFB0B /* FrameNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameNode.swift; sourceTree = "<group>"; };
 		8A66F7EA2C0A313D001DFB0B /* Planets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
@@ -208,7 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				8A66F7E02C0A2B49001DFB0B /* SceneKit+Extensions.swift */,
-				8A66F7E12C0A2B49001DFB0B /* View+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -413,7 +409,6 @@
 				8A66F7DB2C0A1893001DFB0B /* ER3DSceneModel.swift in Sources */,
 				8A66F7E92C0A2B62001DFB0B /* ArrowNode.swift in Sources */,
 				8A66F7D72C08CD98001DFB0B /* YawPitchRollSceneModel.swift in Sources */,
-				8A66F7E62C0A2B5D001DFB0B /* View+Extensions.swift in Sources */,
 				8A45100128E65D46009BD378 /* ER3DApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,7 +434,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A4E82FA2D3586F000173D0B /* View+Extensions.swift in Sources */,
 				8A4E82FB2D35871900173D0B /* VariableDescriptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
