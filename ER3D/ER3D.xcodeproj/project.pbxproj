@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8A35A7E72D3FF382006C752A /* Globe in Frameworks */ = {isa = PBXBuildFile; productRef = 8A35A7E62D3FF382006C752A /* Globe */; };
+		8A35A7FE2D417D8B006C752A /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A35A7FD2D417D8B006C752A /* Date+Extensions.swift */; };
+		8A35A7FF2D417D8B006C752A /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A35A7FD2D417D8B006C752A /* Date+Extensions.swift */; };
 		8A45100128E65D46009BD378 /* ER3DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45100028E65D46009BD378 /* ER3DApp.swift */; };
 		8A45100328E65D46009BD378 /* ER3DView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A45100228E65D46009BD378 /* ER3DView.swift */; };
 		8A45100528E65D48009BD378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A45100428E65D48009BD378 /* Assets.xcassets */; };
@@ -47,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8A35A7FD2D417D8B006C752A /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		8A450FFD28E65D46009BD378 /* ER3D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ER3D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A45100028E65D46009BD378 /* ER3DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DApp.swift; sourceTree = "<group>"; };
 		8A45100228E65D46009BD378 /* ER3DView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ER3DView.swift; sourceTree = "<group>"; };
@@ -90,7 +93,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ARViewContainer.swift,
-				ER3DRealityViewModel.swift,
 			);
 			target = 8A450FFC28E65D46009BD378 /* ER3D */;
 		};
@@ -206,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				8A66F7E02C0A2B49001DFB0B /* SceneKit+Extensions.swift */,
+				8A35A7FD2D417D8B006C752A /* Date+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A35A7FE2D417D8B006C752A /* Date+Extensions.swift in Sources */,
 				8AD2ECCB2C18A98000491255 /* VariableDescriptions.swift in Sources */,
 				8A66F7E72C0A2B5D001DFB0B /* SceneKit+Extensions.swift in Sources */,
 				8A66F7EB2C0A313D001DFB0B /* Planets.swift in Sources */,
@@ -435,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A35A7FF2D417D8B006C752A /* Date+Extensions.swift in Sources */,
 				8A4E82FB2D35871900173D0B /* VariableDescriptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

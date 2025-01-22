@@ -16,19 +16,21 @@ import Globe
     var anchor: AnchorEntity
     var globe: Entity?
     var controlVisibility: ControlVisibility = .bottomButtons
-    
-    init() {
+
+    init(cameraMode: ARView.CameraMode = .nonAR) {
         // Set up the ARView
-        arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: true)
-        //arView.environment.sceneUnderstanding.options.insert(.collision)
-        //arView.environment.sceneUnderstanding.options.insert(.receivesLighting)
-        //arView.environment.sceneUnderstanding.options.insert(.occlusion)
-        //arView.debugOptions = [.showFeaturePoints, .showWorldOrigin, .showAnchorOrigins, .showSceneUnderstanding, .showPhysics]
-        
+        arView = ARView(frame: .zero, cameraMode: cameraMode, automaticallyConfigureSession: true)
+
         // Create an AnchorEntity for the content
         anchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
-        anchor.transform.rotation = simd_quatf(angle: .pi, axis: SIMD3<Float>(0, 1, 0))
         arView.scene.anchors.append(anchor)
+        
+        // Set up environment options
+        arView.environment.sceneUnderstanding.options.insert(.collision)
+        arView.environment.sceneUnderstanding.options.insert(.receivesLighting)
+        arView.environment.sceneUnderstanding.options.insert(.occlusion)
+        //arView.environment.lighting.resource = try! .load(named: "lighting")
+        //arView.debugOptions = [.showFeaturePoints, .showWorldOrigin, .showAnchorOrigins, .showSceneUnderstanding, .showPhysics]
         
         // Load the globe model asynchronously
         Task {
@@ -38,16 +40,12 @@ import Globe
     
     /// Load the globe model asynchronously, set up the sphere and ship with collisions, and add it to the arView
     private func loadGlobe() async {
-        if #available(iOS 18.0, *) {
-            globe = try? await Entity(named: "globe", in: Globe.globeBundle)
-        } else {
-            fatalError("iOS version is too low to load the globe model, must be >=18.0")
-        }
+        globe = try? await Entity(named: "globe", in: Globe.globeBundle)
         guard let globe else { return }
         await anchor.addChild(globe)
+        setSunLocation()
         setInitialLatLong()
         addGlobeGestures()
-        //addShipGestures()
         animateGlobeEnteringScene()
     }
     
@@ -62,6 +60,17 @@ import Globe
                 long = Constants.rad2deg * longRotation.angle * longRotation.axis.z
             }
         }
+    }
+    
+    /// Set the angular position of the sun based on the date and time of day
+    private func setSunLocation() {
+        let azimuth = Date.now.solarTimeOffsetAngleRadians
+        let azRotation = simd_quatf(angle: azimuth, axis: SIMD3(0, 1, 0))
+        let elevation = Date.now.solarElevationAngleRadians
+        let elRotation = simd_quatf(angle: elevation, axis: SIMD3(1, 0, 0))
+        print("ER3DRealityViewModel.setSunLocation(): azimuth = \(azimuth * Constants.rad2deg) deg, elevation = \(elevation * Constants.rad2deg) deg")
+        globe?.findEntity(named: "SunAzimuth")?.transform.rotation = azRotation
+        globe?.findEntity(named: "SunElevation")?.transform.rotation = elRotation
     }
     
     /// Animate the globe appearing and rotating to its initial longitude

@@ -13,14 +13,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    var settings: SettingsContent.ViewModel?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        @State var settings = SettingsContent.ViewModel()
+        // Initialize the settings, and get the saved camera mode
+        settings = SettingsContent.ViewModel()
+        let stateString = loadState() ?? ".nonAR"
+        settings?.cameraMode = stateString == "ar" ? .ar : .nonAR
+
+        let viewModel = ER3DRealityViewModel(cameraMode: settings!.cameraMode)
         
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ER3DRealityView()
-            .environment(settings)
+        let contentView = ER3DRealityView(viewModel: viewModel)
+            .environment(settings!)
 
         // Use a UIHostingController as window root view controller.
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -33,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        saveState()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -47,6 +54,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
+    // MARK: - Save and Load State
 
+    let cameraModeKey = "cameraMode"
+    
+    func saveState() {
+        if let settings {
+            let cameraModeString = String(describing: settings.cameraMode)
+            UserDefaults.standard.set(cameraModeString, forKey: cameraModeKey)
+        }
+    }
+    
+    func loadState() -> String? {
+        if let cameraModeString = UserDefaults.standard.string(forKey: cameraModeKey) {
+            return cameraModeString
+        }
+        return nil
+    }
 }
 
