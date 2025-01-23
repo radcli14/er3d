@@ -65,9 +65,9 @@ import Globe
     /// Set the angular position of the sun based on the date and time of day
     private func setSunLocation() {
         let azimuth = Date.now.solarTimeOffsetAngleRadians
-        let azRotation = simd_quatf(angle: azimuth, axis: SIMD3(0, 1, 0))
+        let azRotation = simd_quatf(angle: azimuth, axis: SIMD3(0, 0, -1)) // negative ECEF-Z, travels westward for increasing angle
         let elevation = Date.now.solarElevationAngleRadians
-        let elRotation = simd_quatf(angle: elevation, axis: SIMD3(1, 0, 0))
+        let elRotation = simd_quatf(angle: elevation, axis: SIMD3(0, 1, 0))
         print("ER3DRealityViewModel.setSunLocation(): azimuth = \(azimuth * Constants.rad2deg) deg, elevation = \(elevation * Constants.rad2deg) deg")
         globe?.findEntity(named: "SunAzimuth")?.transform.rotation = azRotation
         globe?.findEntity(named: "SunElevation")?.transform.rotation = elRotation
@@ -113,7 +113,7 @@ import Globe
         }
     }
     
-    /// The translation gesture on the globe sphere, separated from the other gestures becasue we will add and remove it depending on if the user is viewing latitude and longitude
+    /// The translation gesture on the globe touch cylinder, separated from the other gestures becasue we will add and remove it depending on if the user is viewing latitude and longitude
     var globeTranslationGesture: EntityGestureRecognizer?
     
     /// The two finger gestures for rotation and scale of the globe sphere

@@ -9,7 +9,7 @@ reorder rootPrims = ["Root", "GlobalX", "GlobalY", "GlobalZ"]
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Anchoring", "Materials", "Sphere", "Sun"]
+    reorder nameChildren = ["Anchoring", "Materials", "Sphere", "Earth", "SunElevation"]
     def Scope "Materials" (
         active = true
     )
@@ -98,7 +98,9 @@ def Xform "Root"
             }
         }
 
-        def Material "GlobeMaterial"
+        def Material "GlobeMaterial" (
+            active = false
+        )
         {
             token inputs:frame:stPrimvarName = "st" (
                 customData = {
@@ -129,6 +131,7 @@ def Xform "Root"
                 float inputs:ior = 0.1
                 normal3f inputs:normal = (0, 0, 1)
                 normal3f inputs:normal.connect = </Root/Materials/GlobeMaterial/normal.outputs:rgb>
+                float inputs:opacity = 0
                 float inputs:roughness = 0.75
                 token outputs:surface
             }
@@ -217,20 +220,19 @@ def Xform "Root"
     }
 
     def Sphere "Sphere" (
-        active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
     )
     {
-        reorder nameChildren = ["Globe", "ECEF"]
+        reorder nameChildren = ["Globe", "Earth", "ECEF"]
         rel material:binding = None (
             bindMaterialAs = "weakerThanDescendants"
         )
         double radius = 0.6
-        float3 xformOp:translate = (0, 0.63, 0)
+        float3 xformOp:translate = (0, 0.7, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def Sphere "Globe" (
-            active = true
+            active = false
             prepend apiSchemas = ["MaterialBindingAPI"]
             customData = {
                 float3 rotationEulerHint = (0, 1.0658143e-14, 0)
@@ -244,6 +246,186 @@ def Xform "Root"
             float3 xformOp:scale = (1, 0.99999994, 0.99999994)
             float3 xformOp:translate = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def "Earth" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (0, -0.148353, 0)
+            }
+            references = @Earth.usdz@
+        )
+        {
+            reorder nameChildren = ["geom", "GlobalX", "GlobalY", "GlobalZ", "ECEF"]
+            quatf xformOp:orient = (0.9972502, 0, -0.07410849, 0)
+            float3 xformOp:scale = (6.28, 6.28, 6.28)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "geom"
+            {
+                over "realistic"
+                {
+                    over "materials"
+                    {
+                        over "usdpreviewsurface8sg"
+                        {
+                            string inputs:earth_realistic_ao_1:varname (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (317, 709.5)
+                                    }
+                                }
+                            )
+                            string inputs:earth_realistic_bc_1:varname (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (604, 709.5)
+                                    }
+                                }
+                            )
+                            string inputs:earth_realistic_n_1:varname (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (891, 709.5)
+                                    }
+                                }
+                            )
+                            string inputs:earth_realistic_r_1:varname (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (1178, 709.5)
+                                    }
+                                }
+                            )
+                            token outputs:realitykit:vertex
+                            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (1406.75, 235.75)
+
+                            over "earth_realistic_n_1_mtlx_scale"
+                            {
+                                float2 ui:nodegraph:node:pos = (619.25, 521.5)
+                            }
+
+                            over "earth_realistic_bc_1_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (885.5, 421.5)
+                                int ui:nodegraph:node:stackingOrder = 5
+                            }
+
+                            over "earth_realistic_mat_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (1154.5, 235.75)
+                                int ui:nodegraph:node:stackingOrder = 7
+                                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["Advanced"]
+                            }
+
+                            over "Lookup_st"
+                            {
+                                float2 ui:nodegraph:node:pos = (91, 346.25)
+                            }
+
+                            over "earth_realistic_r_1_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (619.25, 261)
+                                int ui:nodegraph:node:stackingOrder = 3
+                            }
+
+                            over "earth_realistic_ao_1_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (350, 100.5)
+                                int ui:nodegraph:node:stackingOrder = 4
+                            }
+
+                            over "earth_realistic_n_1_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (350, 521.5)
+                                int ui:nodegraph:node:stackingOrder = 1
+                            }
+
+                            over "earth_realistic_n_1_mtlx_offset"
+                            {
+                                float2 ui:nodegraph:node:pos = (885.5, 600)
+                            }
+                        }
+
+                        over "usdpreviewsurface7sg"
+                        {
+                            string inputs:earth_clouds_realistic_bc_1:varname (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (321.75, 890.5)
+                                    }
+                                }
+                            )
+                            string inputs:earth_clouds_realistic_n_1:varname (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (608.75, 890.5)
+                                    }
+                                }
+                            )
+                            string inputs:earth_clouds_realistic_o_1:varname (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (895.75, 890.5)
+                                    }
+                                }
+                            )
+                            string inputs:earth_clouds_realistic_r_1:varname (
+                                customData = {
+                                    dictionary realitykit = {
+                                        float2 positionInSubgraph = (1182.75, 890.5)
+                                    }
+                                }
+                            )
+                            token outputs:realitykit:vertex
+                            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (1416.25, 281)
+
+                            over "earth_clouds_realistic_r_1_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (350, 702.5)
+                            }
+
+                            over "earth_clouds_realistic_o_1_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (623, 100.5)
+                            }
+
+                            over "earth_clouds_realistic_bc_1_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (893, 263)
+                            }
+
+                            over "earth_clouds_realistic_n_1_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (350, 441.5)
+                                int ui:nodegraph:node:stackingOrder = 1
+                            }
+
+                            over "earth_clouds_realistic_n_1_mtlx_scale"
+                            {
+                                float2 ui:nodegraph:node:pos = (623, 441.5)
+                            }
+
+                            over "earth_clouds_realistic_mat_mtlx"
+                            {
+                                float2 ui:nodegraph:node:pos = (1163, 281)
+                                int ui:nodegraph:node:stackingOrder = 2
+                            }
+
+                            over "Lookup_st"
+                            {
+                                float2 ui:nodegraph:node:pos = (91, 301)
+                            }
+
+                            over "earth_clouds_realistic_n_1_mtlx_offset"
+                            {
+                                float2 ui:nodegraph:node:pos = (893, 441.5)
+                            }
+                        }
+                    }
+                }
+            }
 
             def Cone "GlobalX" (
                 active = true
@@ -260,8 +442,8 @@ def Xform "Root"
                 )
                 double radius = 0.05
                 quatf xformOp:orient = (0.70710677, 0, 0, 0.70710677)
-                float3 xformOp:scale = (1, 1, 1)
-                float3 xformOp:translate = (-0.35, 0, 0)
+                float3 xformOp:scale = (0.15923566, 0.15923566, 0.15923566)
+                float3 xformOp:translate = (-0.055732485, 0, 0)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
             }
 
@@ -281,9 +463,9 @@ def Xform "Root"
                 double radius = 0.05
                 float2 ui:nodegraph:node:pos = (20, 20)
                 int ui:nodegraph:node:stackingOrder = 1
-                quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
-                float3 xformOp:scale = (0.9999998, 0.9999999, 0.9999998)
-                float3 xformOp:translate = (0, 0, 0.35)
+                quatf xformOp:orient = (0.7071067, 0.70710677, 0, 0)
+                float3 xformOp:scale = (0.15923563, 0.15923563, 0.15923563)
+                float3 xformOp:translate = (0, 0, 0.055732477)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
             }
 
@@ -304,8 +486,8 @@ def Xform "Root"
                 float2 ui:nodegraph:node:pos = (40, 40)
                 int ui:nodegraph:node:stackingOrder = 2
                 quatf xformOp:orient = (1, 0, 0, 0)
-                float3 xformOp:scale = (0.9999997, 0.9999997, 0.99999964)
-                float3 xformOp:translate = (0, 0.35, 0)
+                float3 xformOp:scale = (0.15923563, 0.15923561, 0.15923561)
+                float3 xformOp:translate = (0, 0.05573248, 0)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
             }
         }
@@ -317,9 +499,9 @@ def Xform "Root"
             }
         )
         {
-            reorder nameChildren = ["Long", "Sun", "SunMidnightEquinox"]
-            quatf xformOp:orient = (-3.090862e-8, 3.090862e-8, 0.70710677, 0.7071067)
-            float3 xformOp:scale = (0.99999994, 0.99999994, 0.99999994)
+            reorder nameChildren = ["Long", "SunAzimuth"]
+            quatf xformOp:orient = (-3.0908623e-8, 3.0908627e-8, 0.70710677, 0.70710677)
+            float3 xformOp:scale = (0.9999999, 0.9999999, 0.9999999)
             float3 xformOp:translate = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
@@ -501,64 +683,49 @@ def Xform "Root"
                 }
             }
 
-            def Xform "SunMidnightEquinox" (
+            def Xform "SunAzimuth" (
                 active = true
                 customData = {
-                    float3 rotationEulerHint = (-1.5707964, 0, 1.5707964)
+                    float3 rotationEulerHint = (0, 0, 0)
                 }
             )
             {
-                reorder nameChildren = ["Sun", "SunElevation", "SunAzimuth"]
-                quatf xformOp:orient = (-0.5, 0.5, 0.5, -0.5)
-                float3 xformOp:scale = (1.0000002, 1.0000002, 1.0000002)
-                float3 xformOp:translate = (-1.715649e-15, -4.554441e-8, 0)
+                reorder nameChildren = ["Sun", "SunElevation"]
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1.0000001, 1.0000001, 1.0000001)
+                float3 xformOp:translate = (-8.056579e-15, 0, 0)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-                def Xform "SunAzimuth" (
+                def Xform "SunElevation" (
                     active = true
-                    customData = {
-                        float3 rotationEulerHint = (6.991641e-16, 0, 0)
-                    }
                 )
                 {
-                    float2 ui:nodegraph:node:pos = (20, 20)
-                    int ui:nodegraph:node:stackingOrder = 1
-                    quatf xformOp:orient = (1, 3.4958204e-16, 0, 0)
-                    float3 xformOp:scale = (0.9999998, 0.9999998, 0.9999998)
-                    float3 xformOp:translate = (3.5527137e-15, 0, -8.2499836e-22)
+                    reorder nameChildren = ["Sun", "Sun"]
+                    quatf xformOp:orient = (1, 4.214685e-8, 9.00005e-15, -1.3563454e-15)
+                    float3 xformOp:scale = (1.0000001, 1.0000001, 1.0000001)
+                    float3 xformOp:translate = (-6.061251e-22, 5.960465e-8, -4.6701746e-15)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-                    def Xform "SunElevation" (
+                    def "Sun" (
                         active = true
                         customData = {
-                            float3 rotationEulerHint = (0, 4.3368087e-19, 2.5167417e-11)
+                            float3 rotationEulerHint = (0, -1.5707963, 0)
                         }
+                        references = @Sun.usdz@
                     )
                     {
-                        quatf xformOp:orient = (1, -2.7286568e-30, 2.1684043e-19, 1.2583708e-11)
-                        float3 xformOp:scale = (1.0000002, 1.0000002, 1.0000002)
-                        float3 xformOp:translate = (-2.9750508e-15, 0, 8.6736174e-19)
+                        quatf xformOp:orient = (0.70710677, 0, -0.70710677, 0)
+                        float3 xformOp:scale = (0.25, 0.25, 0.25)
+                        float3 xformOp:translate = (-0.62, 0, 0)
                         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-                        def Xform "Sun" (
-                            customData = {
-                                float3 rotationEulerHint = (0, 0, 0)
-                            }
-                        )
+                        def RealityKitComponent "DirectionalLight"
                         {
-                            quatf xformOp:orient = (1, 1.9489027e-18, -3.714007e-11, -3.5527137e-15)
-                            float3 xformOp:scale = (1, 1, 1)
-                            float3 xformOp:translate = (-1.0617724e-10, 0, 2)
-                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            uniform token info:id = "RealityKit.DirectionalLight"
+                            float intensity = 10000
 
-                            def RealityKitComponent "DirectionalLight"
+                            def RealityKitStruct "Shadow"
                             {
-                                token info:id = "RealityKit.DirectionalLight"
-                                float intensity = 20000
-
-                                def RealityKitStruct "Shadow"
-                                {
-                                }
                             }
                         }
                     }

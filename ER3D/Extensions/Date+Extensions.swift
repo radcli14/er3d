@@ -48,6 +48,7 @@ extension Date {
     }
     
     var solarTimeOffsetAngleRadians: Float {
-        -Float(2.0 * .pi * solarTimeOffset / 24.0)
+        print("solarTimeOffset = \(solarTimeOffset)")
+        return Float(2.0 * .pi * solarTimeOffset / 24.0)
     }
 }

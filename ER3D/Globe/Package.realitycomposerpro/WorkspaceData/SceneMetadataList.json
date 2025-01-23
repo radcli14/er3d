@@ -55,11 +55,19 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
+        "Earth",
+        "geom",
+        "realistic"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
         "Sphere",
-        "ECEF",
-        "SunMidnightEquinox",
-        "SunAzimuth",
-        "SunElevation"
+        "Earth"
       ],
       {
         "isExpanded" : true,
@@ -78,7 +86,11 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Sphere"
+        "Sphere",
+        "ECEF",
+        "SunMidnightEquinox",
+        "SunAzimuth",
+        "SunElevation"
       ],
       {
         "isExpanded" : true,
@@ -88,8 +100,10 @@
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
         "Sphere",
-        "Globe",
-        "GlobalX"
+        "ECEF",
+        "SunAzimuth",
+        "SunElevation",
+        "Sun"
       ],
       {
         "isExpanded" : true,
@@ -98,8 +112,11 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Sphere",
-        "ECEF"
+        "Earth",
+        "geom",
+        "realistic",
+        "geo",
+        "lod0"
       ],
       {
         "isExpanded" : true,
@@ -121,7 +138,155 @@
         "Sphere",
         "ECEF",
         "SunMidnightEquinox",
+        "SunAzimuth",
+        "SunElevation",
+        "Sun"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "TouchCylinder"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
         "SunAzimuth"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Cylinder"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "ECEF",
+        "SunAzimuth",
+        "SunElevation"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "SunMidnightEquinox",
+        "SunAzimuth",
+        "SunElevation",
+        "Sun",
+        "SunSphere"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "SunAzimuth",
+        "SunElevation"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "materials",
+        "usdpreviewsurface8sg"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "geo"
       ],
       {
         "isExpanded" : true,
@@ -141,17 +306,9 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Sphere",
+        "Earth",
         "ECEF",
-        "SunMidnightEquinox"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root"
+        "SunAzimuth"
       ],
       {
         "isExpanded" : true,
@@ -160,7 +317,29 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Materials"
+        "Earth",
+        "ECEF"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "materials",
+        "usdpreviewsurface7sg"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root"
       ],
       {
         "isExpanded" : true,
