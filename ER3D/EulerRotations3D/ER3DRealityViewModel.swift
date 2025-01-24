@@ -13,40 +13,40 @@ import Globe
 
 @Observable class ER3DRealityViewModel {
     var arView: ARView
-    var anchor: AnchorEntity
+
     var globe: Entity?
     var controlVisibility: ControlVisibility = .bottomButtons
+    
+    /// The `testBox` is used for debugging the `.nonAR` view, to provide it with pre-existing content that doesn't require the globe to load
+    let testBox = ModelEntity(mesh: .generateBox(width: 1, height: 0.1, depth: 1, cornerRadius: 0.05), materials: [SimpleMaterial(color: .blue, isMetallic: true)])
 
     init(cameraMode: ARView.CameraMode = .nonAR) {
         // Set up the ARView
         arView = ARView(frame: .zero, cameraMode: cameraMode, automaticallyConfigureSession: true)
-
-        // Create an AnchorEntity for the content
-        anchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
-        arView.scene.anchors.append(anchor)
-        
-        // Set up environment options
-        arView.environment.sceneUnderstanding.options.insert(.collision)
-        arView.environment.sceneUnderstanding.options.insert(.receivesLighting)
-        arView.environment.sceneUnderstanding.options.insert(.occlusion)
         //arView.environment.lighting.resource = try! .load(named: "lighting")
         //arView.debugOptions = [.showFeaturePoints, .showWorldOrigin, .showAnchorOrigins, .showSceneUnderstanding, .showPhysics]
         
         // Load the globe model asynchronously
         Task {
             await loadGlobe()
+            toggleTo(cameraMode, onStart: true)
         }
     }
+    
+    // MARK: - Initialization
     
     /// Load the globe model asynchronously, set up the sphere and ship with collisions, and add it to the arView
     private func loadGlobe() async {
         globe = try? await Entity(named: "globe", in: Globe.globeBundle)
-        guard let globe else { return }
-        await anchor.addChild(globe)
         setSunLocation()
         setInitialLatLong()
         addGlobeGestures()
-        animateGlobeEnteringScene()
+        setGlobeScaleToZero()
+    }
+    
+    /// The globe should initially be invisible (zero scale) before entering the scene
+    private func setGlobeScaleToZero() {
+        globe?.findEntity(named: "Sphere")?.transform.scale = SIMD3(0.0, 0.0, 0.0)
     }
     
     private func setInitialLatLong() {
@@ -75,17 +75,94 @@ import Globe
     
     /// Animate the globe appearing and rotating to its initial longitude
     private func animateGlobeEnteringScene() {
+        print("ER3DRealityViewModel.animateGlobeEnteringScene()")
         guard let sphere = globe?.findEntity(named: "Sphere") else { return }
+        print("  - Got sphere")
         // Get the default transform
         var transform = sphere.transform
         
-        // The globe should initially be invisible (zero scale) at time of entering the scene
-        sphere.transform.scale = SIMD3(0.0, 0.0, 0.0)
-        
         // Animate the globe appearing and rotating to its initial longitude
+        globe?.transform.translation = .zero
+        transform.translation = SIMD3(0, 0.7, 0)
         transform.rotation = simd_quatf(angle: (-long+90) * Constants.deg2rad, axis: SIMD3(0, 1, 0))
         transform.scale = SIMD3<Float>(1.0, 1.0, 1.0)
-        sphere.move(to: transform, relativeTo: sphere.parent, duration: 2.0)
+        sphere.move(to: transform, relativeTo: arView.scene.anchors.first!, duration: 2.0)
+        print("  - Moving to \(transform)")
+    }
+    
+    // MARK: - AR View Modes
+    
+    func toggleTo(_ cameraMode: ARView.CameraMode, onStart: Bool = false) {
+        switch cameraMode {
+        case .ar: toggleToArView(onStart: onStart)
+        case .nonAR: toggleToStandardView(onStart: onStart)
+        default: fatalError("Tried to toggle to a cameraMode that is not handled")
+        }
+    }
+    
+    private func toggleToArView(onStart: Bool = false) {
+        print("ER3DRealityViewModel.toggleToArView(onStart: Bool = \(onStart))")
+        addSceneUnderstanding()
+        arView.cameraMode = .ar
+        
+        arView.scene.anchors.removeAll()
+        let arAnchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
+        globe?.setParent(arAnchor)
+        
+        arView.scene.anchors.append(arAnchor)
+        
+        animateGlobeEnteringScene()
+    }
+    
+    private func toggleToStandardView(onStart: Bool = false) {
+        print("ER3DRealityViewModel.toggleToStandardView(onStart: Bool = \(onStart))")
+        removeSceneUnderstanding()
+        arView.cameraMode = .nonAR
+        
+        arView.scene.anchors.removeAll()
+        let standardAnchor = AnchorEntity(world: .zero)
+        globe?.setParent(standardAnchor)
+        standardAnchor.addChild(testBox)
+        
+        arView.scene.anchors.append(standardAnchor)
+        
+        arView.scene.addAnchor(standardCameraAnchor)
+        
+        print("anchor = \(standardAnchor)\nglobe.transform = \(globe!.transform)\n\nsphere.transform = \(globe!.findEntity(named: "Sphere")!.transform)\n\ntestBox.transform = \(testBox.transform)\n")
+        print("Globe is enabled: \(globe!.isEnabled)")
+        print("Globe parent: \(String(describing: globe!.parent?.name)) is anchor \(globe!.parent == standardAnchor)")
+        print("Anchor children: \(standardAnchor.children.map { $0.name })")
+        
+        animateGlobeEnteringScene()
+    }
+    
+    /// Camera anchor to be used when in `.nonAR` mode
+    private var standardCameraAnchor: AnchorEntity {
+        let cameraEntity = PerspectiveCamera()
+        cameraEntity.camera.fieldOfViewInDegrees = 60
+        var cameraTransform = Transform(pitch: -0.1)
+        cameraTransform.translation = SIMD3<Float>(0, 1.2, 1)
+        let standardCameraAnchor = AnchorEntity(world: cameraTransform.matrix)
+        standardCameraAnchor.addChild(cameraEntity)
+        return standardCameraAnchor
+    }
+    
+    private let sceneUnderstandingOptions: [ARView.Environment.SceneUnderstanding.Options] = [
+        .receivesLighting, .occlusion, .physics
+    ]
+    
+    /// Adds Scene Understanding to the `arView`, so that the coins bounce off the ground, tables occlude the model, etc
+    func addSceneUnderstanding() {
+        for option in sceneUnderstandingOptions {
+            arView.environment.sceneUnderstanding.options.insert(option)
+        }
+    }
+    
+    /// Removes Scene Understanding from the `arView`
+    func removeSceneUnderstanding() {
+        for option in sceneUnderstandingOptions {
+            arView.environment.sceneUnderstanding.options.remove(option)
+        }
     }
     
     // MARK: - State Changes
@@ -150,21 +227,24 @@ import Globe
     /// Rotation angle about the Yaw-Z axis in radians
     var yaw: Float = 0.0 {
         didSet {
-            globe?.findEntity(named: "YawFrame")?.transform = Transform(roll: yaw)
+            guard let frame = globe?.findEntity(named: "YawFrame") else { return }
+            frame.move(to: Transform(roll: yaw), relativeTo: frame.parent, duration: Constants.frameMoveDuration)
         }
     }
     
     /// Rotation angle about the Pitch-Y axis in radians
     var pitch: Float = 0.0 {
         didSet {
-            globe?.findEntity(named: "PitchFrame")?.transform = Transform(yaw: pitch)
+            guard let frame = globe?.findEntity(named: "PitchFrame") else { return }
+            frame.move(to: Transform(yaw: pitch), relativeTo: frame.parent, duration: Constants.frameMoveDuration)
         }
     }
     
     /// Rotation angle about the Roll-X axis in radians
     var roll: Float = 0.0 {
         didSet {
-            globe?.findEntity(named: "RollFrame")?.transform = Transform(pitch: roll)
+            guard let frame = globe?.findEntity(named: "RollFrame") else { return }
+            frame.move(to: Transform(pitch: roll), relativeTo: frame.parent, duration: Constants.frameMoveDuration)
         }
     }
     
@@ -205,5 +285,6 @@ import Globe
     private struct Constants {
         static let rad2deg: Float = 180 / .pi
         static let deg2rad: Float = .pi / 180
+        static let frameMoveDuration = 0.5
     }
 }

@@ -18,3 +18,8 @@ struct ARViewContainer: UIViewRepresentable {
     
     func updateUIView(_ uiView: ARView, context: Context) {}
 }
+
+#Preview {
+    @Previewable @State var viewModel = ER3DRealityViewModel(cameraMode: .nonAR)
+    ARViewContainer(viewModel: viewModel)
+}

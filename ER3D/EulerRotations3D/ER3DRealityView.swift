@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 
 struct ER3DRealityView : View {
+    @Environment(SettingsContent.ViewModel.self) var settings
     @State var viewModel = ER3DRealityViewModel()
     
     var body: some View {
@@ -29,6 +30,9 @@ struct ER3DRealityView : View {
         }
          */
         ARViewContainer(viewModel: viewModel)
+            .onChange(of: settings.cameraMode) {
+                viewModel.toggleTo(settings.cameraMode)
+            }
         .onTapGesture {
             withAnimation {
                 viewModel.controlVisibility = .bottomButtons

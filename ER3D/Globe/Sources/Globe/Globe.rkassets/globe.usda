@@ -733,5 +733,18 @@ def Xform "Root"
             }
         }
     }
+
+    def "SkySphere" (
+        active = true
+        prepend references = @SkySphere.usdz@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+
+        over "SkySphere_mat"
+        {
+            asset inputs:SkySphere_Texture = @starmap_2020_4k.exr@
+        }
+    }
 }
 

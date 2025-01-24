@@ -5,7 +5,8 @@
         "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
         "Root",
         "YawFrame",
-        "PitchFrame"
+        "PitchFrame",
+        "RollFrame"
       ],
       {
         "isExpanded" : true,
@@ -15,8 +16,7 @@
         "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
         "Root",
         "YawFrame",
-        "PitchFrame",
-        "RollFrame"
+        "PitchFrame"
       ],
       {
         "isExpanded" : true,
@@ -57,7 +57,69 @@
         "Root",
         "Earth",
         "geom",
+        "realistic",
+        "geo",
+        "lod0"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "ECEF",
+        "SunAzimuth"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "materials",
+        "usdpreviewsurface7sg"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "geo"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
         "realistic"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "SunAzimuth",
+        "SunElevation",
+        "Sun"
       ],
       {
         "isExpanded" : true,
@@ -77,130 +139,11 @@
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
         "Sphere",
-        "Globe"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "SunMidnightEquinox",
-        "SunAzimuth",
-        "SunElevation"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "SunAzimuth",
-        "SunElevation",
-        "Sun"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "geom",
-        "realistic",
-        "geo",
-        "lod0"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "ECEF",
-        "Long"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
         "ECEF",
         "SunMidnightEquinox",
         "SunAzimuth",
         "SunElevation",
         "Sun"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Materials"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "geom"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "TouchCylinder"
-      ],
-      {
-        "disallowsFraming" : false,
-        "isExpanded" : false,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "geom",
-        "realistic",
-        "materials"
       ],
       {
         "isExpanded" : true,
@@ -220,11 +163,34 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Cylinder"
+        "SkySphere"
       ],
       {
-        "disallowsFraming" : false,
-        "isExpanded" : false,
+        "disallowsFraming" : true,
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "materials",
+        "usdpreviewsurface8sg"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF"
+      ],
+      {
+        "isExpanded" : true,
         "isLocked" : false
       },
       [
@@ -258,8 +224,71 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
+        "Earth",
+        "geom"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "ECEF",
+        "Long"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "ECEF"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "TouchCylinder"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Cylinder"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
         "Sphere",
         "ECEF",
+        "SunMidnightEquinox",
         "SunAzimuth",
         "SunElevation"
       ],
@@ -270,11 +299,16 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Earth",
-        "geom",
-        "realistic",
-        "materials",
-        "usdpreviewsurface8sg"
+        "Sphere",
+        "Globe"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -283,10 +317,16 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Earth",
-        "geom",
-        "realistic",
-        "geo"
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere"
       ],
       {
         "isExpanded" : true,
@@ -306,40 +346,10 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Earth",
+        "Sphere",
         "ECEF",
-        "SunAzimuth"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "ECEF"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "geom",
-        "realistic",
-        "materials",
-        "usdpreviewsurface7sg"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root"
+        "SunAzimuth",
+        "SunElevation"
       ],
       {
         "isExpanded" : true,
@@ -356,46 +366,8 @@
         "ZUp",
         "Procession",
         "Nutation",
-        "Spin"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Sphere",
-        "ZUp",
-        "Procession",
-        "Nutation"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Sphere",
-        "ZUp"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Sphere"
+        "Spin",
+        "gyro"
       ],
       {
         "isExpanded" : true,
@@ -414,10 +386,7 @@
       },
       [
         "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Sphere",
-        "ZUp",
-        "Procession"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -441,7 +410,18 @@
       [
         "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
         "Root",
-        "Materials"
+        "Sphere",
+        "ZUp",
+        "Procession"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
+        "Root",
+        "Sphere"
       ],
       {
         "isExpanded" : true,
@@ -454,8 +434,38 @@
         "ZUp",
         "Procession",
         "Nutation",
-        "Spin",
-        "gyro"
+        "Spin"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
+        "Root",
+        "Materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
+        "Root",
+        "Sphere",
+        "ZUp",
+        "Procession",
+        "Nutation"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
+        "Root",
+        "Sphere",
+        "ZUp"
       ],
       {
         "isExpanded" : true,
