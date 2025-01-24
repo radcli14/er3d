@@ -3,31 +3,26 @@
 # This config file contains the config of your webpages
 # You may also want to update /config/webpack.pwa.js in case you want to generate a Progressive Web App
 
-title: Mobile App Landing Page Template
-email: contact@sandoche.com
+title: ER3D - Euler Rotations in 3-Dimensions
+email: Eliott.Radcliffe@DC-Engineer.com
 description: Free to use static landing page template to showcase your mobile app
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://mobileapplandingpage.learn.uno" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/er3d" # the subpath of your site, e.g. /blog
+url: "radcli14.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 theme_color: '#efeeff'
-twitter_username: sandochee
-github_username:  sandoche
-author: Sandoche Adittane
+github_username:  radcli14
+author: Eliott Radcliffe
 logo: assets/images/large-logo.png
-twitter:
-  username: sandochee
 social:
-  name: Sandoche Adittane
+  name: Eliott Radcliffe
   links:
-    - https://twitter.com/sandochee
-    - https://www.facebook.com/sandoche
-    - https://www.linkedin.com/in/sandoche
-    - https://plus.google.com/+SandocheADITTANE
-    - https://github.com/sandoche
+    - https://www.facebook.com/CaptainBadIdea
+    - www.linkedin.com/in/eliott-radcliffe-dcdc-llc
+    - https://github.com/radcli14
 
 languages: ["en"]
 ampdir: amp
 
-github: https://github.com/sandoche/Mobile-app-landingpage-template
+github: https://github.com/radcli14/er3d
 
 ### Google webmaster tools, Google Analytics, Doorbell and Cookie consent uncomment and put the API key
 #webmaster_verifications:
