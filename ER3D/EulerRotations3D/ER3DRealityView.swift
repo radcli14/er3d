@@ -63,12 +63,12 @@ struct ER3DRealityView : View {
             Spacer()
             ER3DControls(
                 controlVisibility: $viewModel.controlVisibility,
-                yaw: $viewModel.yaw,
-                pitch: $viewModel.pitch,
-                roll: $viewModel.roll,
+                yaw: $viewModel.sequence.first.angle,
+                pitch: $viewModel.sequence.second.angle,
+                roll: $viewModel.sequence.third.angle,
                 lat: $viewModel.lat,
                 long: $viewModel.long,
-                resetYawPitchRollAngles: viewModel.resetYawPitchRollAngles,
+                resetYawPitchRollAngles: { viewModel.sequence.reset() },
                 resetLatLong: viewModel.resetLatLong
             )
         }

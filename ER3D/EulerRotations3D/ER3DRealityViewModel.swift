@@ -9,12 +9,12 @@ import Foundation
 import RealityKit
 import SwiftUI
 import UIKit
-import Globe
 
 @Observable class ER3DRealityViewModel {
     var arView: ARView
 
-    var globe: Entity?
+    //var globe: Entity?
+    var sequence: RotationSequence = YawPitchRollSequence()
     var controlVisibility: ControlVisibility = .bottomButtons
     
     /// The `testBox` is used for debugging the `.nonAR` view, to provide it with pre-existing content that doesn't require the globe to load
@@ -26,68 +26,14 @@ import Globe
         //arView.environment.lighting.resource = try! .load(named: "lighting")
         //arView.debugOptions = [.showFeaturePoints, .showWorldOrigin, .showAnchorOrigins, .showSceneUnderstanding, .showPhysics]
         
-        // Load the globe model asynchronously
-        Task {
-            await loadGlobe()
-            toggleTo(cameraMode, onStart: true)
-        }
-    }
-    
-    // MARK: - Initialization
-    
-    /// Load the globe model asynchronously, set up the sphere and ship with collisions, and add it to the arView
-    private func loadGlobe() async {
-        globe = try? await Entity(named: "globe", in: Globe.globeBundle)
-        setSunLocation()
-        setInitialLatLong()
-        addGlobeGestures()
-        setGlobeScaleToZero()
-    }
-    
-    /// The globe should initially be invisible (zero scale) before entering the scene
-    private func setGlobeScaleToZero() {
-        globe?.findEntity(named: "Sphere")?.transform.scale = SIMD3(0.0, 0.0, 0.0)
-    }
-    
-    private func setInitialLatLong() {
-        if let latRotation = globe?.findEntity(named: "Lat")?.transform.rotation {
-            if latRotation.angle.magnitude > 0 {
-                lat = -Constants.rad2deg * latRotation.angle * latRotation.axis.y
+        // Toggle to the applicable camera mode once the sequence rootEntity is ready
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+            if self.sequence.rootEntity != nil {
+                self.toggleTo(self.arView.cameraMode, onStart: true)
+                self.sequence.addGestures(to: self.arView)
+                timer.invalidate()
             }
         }
-        if let longRotation = globe?.findEntity(named: "Long")?.transform.rotation {
-            if longRotation.angle.magnitude > 0 {
-                long = Constants.rad2deg * longRotation.angle * longRotation.axis.z
-            }
-        }
-    }
-    
-    /// Set the angular position of the sun based on the date and time of day
-    private func setSunLocation() {
-        let azimuth = Date.now.solarTimeOffsetAngleRadians
-        let azRotation = simd_quatf(angle: azimuth, axis: SIMD3(0, 0, -1)) // negative ECEF-Z, travels westward for increasing angle
-        let elevation = Date.now.solarElevationAngleRadians
-        let elRotation = simd_quatf(angle: elevation, axis: SIMD3(0, 1, 0))
-        print("ER3DRealityViewModel.setSunLocation(): azimuth = \(azimuth * Constants.rad2deg) deg, elevation = \(elevation * Constants.rad2deg) deg")
-        globe?.findEntity(named: "SunAzimuth")?.transform.rotation = azRotation
-        globe?.findEntity(named: "SunElevation")?.transform.rotation = elRotation
-    }
-    
-    /// Animate the globe appearing and rotating to its initial longitude
-    private func animateGlobeEnteringScene() {
-        print("ER3DRealityViewModel.animateGlobeEnteringScene()")
-        guard let sphere = globe?.findEntity(named: "Sphere") else { return }
-        print("  - Got sphere")
-        // Get the default transform
-        var transform = sphere.transform
-        
-        // Animate the globe appearing and rotating to its initial longitude
-        globe?.transform.translation = .zero
-        transform.translation = SIMD3(0, 0.7, 0)
-        transform.rotation = simd_quatf(angle: (-long+90) * Constants.deg2rad, axis: SIMD3(0, 1, 0))
-        transform.scale = SIMD3<Float>(1.0, 1.0, 1.0)
-        sphere.move(to: transform, relativeTo: arView.scene.anchors.first!, duration: 2.0)
-        print("  - Moving to \(transform)")
     }
     
     // MARK: - AR View Modes
@@ -102,38 +48,40 @@ import Globe
     
     private func toggleToArView(onStart: Bool = false) {
         print("ER3DRealityViewModel.toggleToArView(onStart: Bool = \(onStart))")
+        guard let rootEntity = sequence.rootEntity else { return }
         addSceneUnderstanding()
         arView.cameraMode = .ar
         
         arView.scene.anchors.removeAll()
         let arAnchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
-        globe?.setParent(arAnchor)
+        rootEntity.setParent(arAnchor)
         
         arView.scene.anchors.append(arAnchor)
         
-        animateGlobeEnteringScene()
+        sequence.animateEnteringScene()
     }
     
     private func toggleToStandardView(onStart: Bool = false) {
         print("ER3DRealityViewModel.toggleToStandardView(onStart: Bool = \(onStart))")
+        guard let rootEntity = sequence.rootEntity else { return }
         removeSceneUnderstanding()
         arView.cameraMode = .nonAR
         
         arView.scene.anchors.removeAll()
         let standardAnchor = AnchorEntity(world: .zero)
-        globe?.setParent(standardAnchor)
+        rootEntity.setParent(standardAnchor)
         standardAnchor.addChild(testBox)
         
         arView.scene.anchors.append(standardAnchor)
         
         arView.scene.addAnchor(standardCameraAnchor)
         
-        print("anchor = \(standardAnchor)\nglobe.transform = \(globe!.transform)\n\nsphere.transform = \(globe!.findEntity(named: "Sphere")!.transform)\n\ntestBox.transform = \(testBox.transform)\n")
-        print("Globe is enabled: \(globe!.isEnabled)")
-        print("Globe parent: \(String(describing: globe!.parent?.name)) is anchor \(globe!.parent == standardAnchor)")
+        print("anchor = \(standardAnchor)\nglobe.transform = \(rootEntity.transform)\n\nsphere.transform = \(rootEntity.findEntity(named: "Sphere")!.transform)\n\ntestBox.transform = \(testBox.transform)\n")
+        print("Globe is enabled: \(rootEntity.isEnabled)")
+        print("Globe parent: \(String(describing: rootEntity.parent?.name)) is anchor \(rootEntity.parent == standardAnchor)")
         print("Anchor children: \(standardAnchor.children.map { $0.name })")
         
-        animateGlobeEnteringScene()
+        sequence.animateEnteringScene()
     }
     
     /// Camera anchor to be used when in `.nonAR` mode
@@ -170,89 +118,10 @@ import Globe
     /// When the user toggles to lat/long control, remove the ARView gestures, or add them back in when toggling away
     func handleControlVisibilityChange() {
         if controlVisibility == .latLongControls {
-            removeGlobeTranslationGesture()
+            sequence.removeTranslationGesture(from: arView)
         } else {
-            addGlobeGestures()
+            sequence.addGestures(to: arView)
         }
-    }
-    
-    // MARK: - Gestures
-    
-    private func remove(_ gestures: [any EntityGestureRecognizer]?) {
-        gestures?.forEach { recognizer in
-            remove(recognizer)
-        }
-    }
-    
-    private func remove(_ recognizer: (any EntityGestureRecognizer)?) {
-        if let recognizer, let idx = arView.gestureRecognizers?.firstIndex(of: recognizer) {
-            arView.gestureRecognizers?.remove(at: idx)
-        }
-    }
-    
-    /// The translation gesture on the globe touch cylinder, separated from the other gestures becasue we will add and remove it depending on if the user is viewing latitude and longitude
-    var globeTranslationGesture: EntityGestureRecognizer?
-    
-    /// The two finger gestures for rotation and scale of the globe sphere
-    var globeRotationAndScaleGestures: [any EntityGestureRecognizer]?
-
-    /// Set up the sphere collisions and gestures which allow you to move, rotate, and scale the globe
-    func addGlobeGestures() {
-        print("ER3DRealityViewModel.addGlobeGestures()")
-        if let sphere = globe?.findEntity(named: "Sphere") as? ModelEntity {
-            if sphere.components[CollisionComponent.self] == nil {
-                print("  - Generating collision shapes for the sphere")
-                sphere.generateCollisionShapes(recursive: false)
-            }
-            if globeTranslationGesture == nil {
-                print("  - Installing translation gesture")
-                globeTranslationGesture = arView.installGestures(.translation, for: sphere).first
-            }
-            if globeRotationAndScaleGestures == nil {
-                print("  - Installing rotation and scale gestures")
-                globeRotationAndScaleGestures = arView.installGestures([.rotation, .scale], for: sphere)
-            }
-        }
-    }
-    
-    /// Remove the globe translation gestures to enable separate gestures to modify latitude and longitude
-    func removeGlobeTranslationGesture() {
-        print("ER3DRealityViewModel.removeGlobeTranslationGesture()")
-        remove(globeTranslationGesture)
-        globeTranslationGesture = nil
-    }
-    
-    // MARK: - Euler Angles
-
-    /// Rotation angle about the Yaw-Z axis in radians
-    var yaw: Float = 0.0 {
-        didSet {
-            guard let frame = globe?.findEntity(named: "YawFrame") else { return }
-            frame.move(to: Transform(roll: yaw), relativeTo: frame.parent, duration: Constants.frameMoveDuration)
-        }
-    }
-    
-    /// Rotation angle about the Pitch-Y axis in radians
-    var pitch: Float = 0.0 {
-        didSet {
-            guard let frame = globe?.findEntity(named: "PitchFrame") else { return }
-            frame.move(to: Transform(yaw: pitch), relativeTo: frame.parent, duration: Constants.frameMoveDuration)
-        }
-    }
-    
-    /// Rotation angle about the Roll-X axis in radians
-    var roll: Float = 0.0 {
-        didSet {
-            guard let frame = globe?.findEntity(named: "RollFrame") else { return }
-            frame.move(to: Transform(pitch: roll), relativeTo: frame.parent, duration: Constants.frameMoveDuration)
-        }
-    }
-    
-    /// Set each of the euler angles to zero
-    func resetYawPitchRollAngles() {
-        yaw = 0.0
-        pitch = 0.0
-        roll = 0.0
     }
     
     // MARK: - Latitude and Longitude
@@ -261,23 +130,19 @@ import Globe
     let latLongScale: Float = -0.1
     
     /// Latitude angle in degrees
-    var lat: Float = 0.0 {
-        didSet {
-            globe?.findEntity(named: "Lat")?.transform = Transform(yaw: -lat * Constants.deg2rad)
-        }
-    }
+    var lat: Float = 0.0
     
     /// Longitude angle in degrees
-    var long: Float = 0.0 {
-        didSet {
-            globe?.findEntity(named: "Long")?.transform = Transform(roll: long * Constants.deg2rad)
-        }
+    var long: Float = 0.0
+    
+    func setLatLong(lat: Float, long: Float) {
+        self.lat = lat
+        self.long = long
     }
     
     /// Resets the latitude and longitude angles to zero (off the cape of Africa)
     func resetLatLong() {
-        lat = 0.0
-        long = 0.0
+        setLatLong(lat: 0, long: 0)
     }
     
     // MARK: - Constants
