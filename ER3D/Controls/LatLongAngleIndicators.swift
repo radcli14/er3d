@@ -84,7 +84,6 @@ struct LatLongAngleIndicators: View {
         static let padding: CGFloat = 12
         static let latLongMenuWidthInLandscape = CGFloat(640)
         static let latLongMenuHeightInLandscape = CGFloat(64)
-        static let rad2deg: Float = 180 / .pi
     }
 }
 

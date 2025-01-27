@@ -13,8 +13,13 @@ import UIKit
 @Observable class ER3DRealityViewModel {
     var arView: ARView
 
-    //var globe: Entity?
     var sequence: RotationSequence = YawPitchRollSequence()
+    
+    /// If the globe sequence is active, then provide it as a `HasLatLong` type
+    var latLongSequence: HasLatLong? {
+        sequence as? HasLatLong
+    }
+    
     var controlVisibility: ControlVisibility = .bottomButtons
     
     /// The `testBox` is used for debugging the `.nonAR` view, to provide it with pre-existing content that doesn't require the globe to load
@@ -125,35 +130,21 @@ import UIKit
     }
     
     // MARK: - Latitude and Longitude
-    
-    /// Sets the rate at which the position of the ship model will change based on a translation gesture when the lat/long controls are active
-    let latLongScale: Float = -0.1
-    
-    /// Latitude angle in degrees
-    var lat: Float = 0.0
-    
-    /// Longitude angle in degrees
-    var long: Float = 0.0
-    
-    func setLatLong(lat: Float, long: Float) {
-        self.lat = lat
-        self.long = long
+
+    func handleDragGesture(at touchPoint: CGPoint) {
+        if var latLongSequence, controlVisibility == .latLongControls, let hit = arView.hitTest(touchPoint).first, hit.entity.name == "Sphere" {
+            latLongSequence.setLatLong(given: hit)
+        }
     }
     
     /// Resets the latitude and longitude angles to zero (off the cape of Africa)
     func resetLatLong(_ stateToReset: String) {
-        switch stateToReset {
-        case "Latitude": lat = 0
-        case "Longitude": long = 0
-        default: setLatLong(lat: 0, long: 0)
+        if var latLongSequence {
+            switch stateToReset {
+            case "Latitude": latLongSequence.lat.radians = 0
+            case "Longitude": latLongSequence.long.radians = 0
+            default: latLongSequence.setLatLong(lat: 0, long: 0)
+            }
         }
-    }
-    
-    // MARK: - Constants
-    
-    private struct Constants {
-        static let rad2deg: Float = 180 / .pi
-        static let deg2rad: Float = .pi / 180
-        static let frameMoveDuration = 0.5
     }
 }

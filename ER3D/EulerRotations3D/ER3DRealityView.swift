@@ -41,16 +41,21 @@ struct ER3DRealityView : View {
         .onChange(of: viewModel.controlVisibility) {
             viewModel.handleControlVisibilityChange()
         }
-        .latLongGesture(
+        /*.latLongGesture(
             isActive: viewModel.controlVisibility == .latLongControls,
-            initialLat: viewModel.lat,
-            initialLong: viewModel.long,
-            scale: viewModel.latLongScale,
+            initialLat: viewModel.latLongSequence?.lat.radians ?? 0,
+            initialLong: viewModel.latLongSequence?.long.radians ?? 0,
+            scale: viewModel.latLongSequence?.latLongScale ?? 0,
             onUpdate: { (lat, long) in
-                viewModel.lat = lat
-                viewModel.long = long
+                if var sequence = viewModel.latLongSequence {
+                    print("gesture got lat = \(lat) long = \(long)")
+                    sequence.setLatLong(lat: lat, long: long)
+                }
             }
-        )
+        )*/
+        .latLongRaycastGesture { touchPoint in
+            viewModel.handleDragGesture(at: touchPoint)
+        }
         .overlay {
             overlayControls
         }
@@ -63,11 +68,11 @@ struct ER3DRealityView : View {
             Spacer()
             ER3DControls(
                 controlVisibility: $viewModel.controlVisibility,
-                yaw: $viewModel.sequence.first.angle,
-                pitch: $viewModel.sequence.second.angle,
-                roll: $viewModel.sequence.third.angle,
-                lat: viewModel.lat,
-                long: viewModel.long,
+                yaw: $viewModel.sequence.first.radians,
+                pitch: $viewModel.sequence.second.radians,
+                roll: $viewModel.sequence.third.radians,
+                lat: viewModel.latLongSequence?.lat.degrees ?? 0,
+                long: viewModel.latLongSequence?.long.degrees ?? 0,
                 resetYawPitchRollAngles: { viewModel.sequence.reset() },
                 resetLatLong: { stateToReset in viewModel.resetLatLong(stateToReset) }
             )

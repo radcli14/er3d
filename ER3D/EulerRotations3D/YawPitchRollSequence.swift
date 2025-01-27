@@ -10,7 +10,7 @@ import RealityKit
 import Globe
 
 /// Provides the globe model to teach the Yaw → Pitch → Roll Euler angle sequence
-class YawPitchRollSequence: RotationSequence {
+@Observable class YawPitchRollSequence: RotationSequence, HasLatLong {
     /// Rotation angle about the Yaw-Z axis in radians
     var first: EulerAngle = .yaw
     
@@ -19,6 +19,12 @@ class YawPitchRollSequence: RotationSequence {
     
     /// Rotation angle about the Roll-X axis in radians
     var third: EulerAngle = .roll
+    
+    /// Rotation angle north from the equator
+    var lat: EulerAngle = .latitude
+    
+    /// Rotation angle about the north pole relative to GMT
+    var long: EulerAngle = .longitude
     
     /// The globe as the root entity
     var rootEntity: Entity? { globe }
@@ -39,12 +45,19 @@ class YawPitchRollSequence: RotationSequence {
         setSunLocation()
         setInitialLatLong()
         setScaleToZero()
+        hideSkySphere()
+    }
+    
+    private func hideSkySphere() {
+        globe?.findEntity(named: "SkySphere")?.removeFromParent()
     }
     
     private func attachFrames() {
         first.frame = globe?.findEntity(named: "YawFrame")
         second.frame = globe?.findEntity(named: "PitchFrame")
         third.frame = globe?.findEntity(named: "RollFrame")
+        lat.frame = globe?.findEntity(named: "Lat")
+        long.frame = globe?.findEntity(named: "Long")
     }
     
     /// The globe should initially be invisible (zero scale) before entering the scene
@@ -53,14 +66,14 @@ class YawPitchRollSequence: RotationSequence {
     }
     
     private func setInitialLatLong() {
-        if let latRotation = globe?.findEntity(named: "Lat")?.transform.rotation {
+        if let latRotation = lat.frame?.transform.rotation {
             if latRotation.angle.magnitude > 0 {
-                lat = -Constants.rad2deg * latRotation.angle * latRotation.axis.y
+                lat.radians = -latRotation.angle * latRotation.axis.y
             }
         }
-        if let longRotation = globe?.findEntity(named: "Long")?.transform.rotation {
+        if let longRotation = long.frame?.transform.rotation {
             if longRotation.angle.magnitude > 0 {
-                long = Constants.rad2deg * longRotation.angle * longRotation.axis.z
+                long.radians = longRotation.angle * longRotation.axis.z
             }
         }
     }
@@ -71,7 +84,7 @@ class YawPitchRollSequence: RotationSequence {
         let azRotation = simd_quatf(angle: azimuth, axis: SIMD3(0, 0, -1)) // negative ECEF-Z, travels westward for increasing angle
         let elevation = Date.now.solarElevationAngleRadians
         let elRotation = simd_quatf(angle: elevation, axis: SIMD3(0, 1, 0))
-        print("YawPitchRollSequence.setSunLocation(): azimuth = \(azimuth * Constants.rad2deg) deg, elevation = \(elevation * Constants.rad2deg) deg")
+        print("YawPitchRollSequence.setSunLocation(): azimuth = \(azimuth * 180 / .pi) deg, elevation = \(elevation * 180 / .pi) deg")
         globe?.findEntity(named: "SunAzimuth")?.transform.rotation = azRotation
         globe?.findEntity(named: "SunElevation")?.transform.rotation = elRotation
     }
@@ -87,35 +100,10 @@ class YawPitchRollSequence: RotationSequence {
         // Animate the globe appearing and rotating to its initial longitude
         globe?.transform.translation = .zero
         transform.translation = SIMD3(0, 0.7, 0)
-        transform.rotation = simd_quatf(angle: (-long+90) * Constants.deg2rad, axis: SIMD3(0, 1, 0))
+        transform.rotation = simd_quatf(angle: -long.radians + 0.5 * .pi, axis: SIMD3(0, 1, 0))
         transform.scale = SIMD3<Float>(1.0, 1.0, 1.0)
         sphere.move(to: transform, relativeTo: sphere.parent, duration: 2.0)
         print("  - Moving to \(transform)")
-    }
-    
-    // MARK: - Latitude and Longitude
-    
-    /// Sets the rate at which the position of the ship model will change based on a translation gesture when the lat/long controls are active
-    let latLongScale: Float = -0.1
-    
-    /// Latitude angle in degrees
-    var lat: Float = 0.0 {
-        didSet {
-            globe?.findEntity(named: "Lat")?.transform = Transform(yaw: -lat * Constants.deg2rad)
-        }
-    }
-    
-    /// Longitude angle in degrees
-    var long: Float = 0.0 {
-        didSet {
-            globe?.findEntity(named: "Long")?.transform = Transform(roll: long * Constants.deg2rad)
-        }
-    }
-    
-    /// Resets the latitude and longitude angles to zero (off the cape of Africa)
-    func resetLatLong() {
-        lat = 0.0
-        long = 0.0
     }
     
     // MARK: - Gestures
@@ -149,12 +137,5 @@ class YawPitchRollSequence: RotationSequence {
         print("YawPitchRollSequence.removeTranslationGesture()")
         remove(globeTranslationGesture, from: arView)
         globeTranslationGesture = nil
-    }
-
-    // MARK: - Constants
-    
-    private struct Constants {
-        static let rad2deg: Float = 180 / .pi
-        static let deg2rad: Float = .pi / 180
     }
 }

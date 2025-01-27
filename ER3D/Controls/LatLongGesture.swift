@@ -8,6 +8,27 @@
 import Foundation
 import SwiftUI
 
+struct LatLongRaycastGesture: ViewModifier {
+    let handleDragGesture: (CGPoint) -> Void
+    
+    @GestureState private var touchPoint: CGPoint?
+    
+    func body(content: Content) -> some View {
+        content
+            .gesture(gesture)
+    }
+    
+    var gesture: some Gesture {
+        DragGesture()
+            .updating($touchPoint) { inMotionDragGestureValue, touchPoint, _ in
+                touchPoint = inMotionDragGestureValue.location
+                if let touchPoint {
+                    handleDragGesture(touchPoint)
+                }
+            }
+    }
+}
+
 struct LatLongGesture: ViewModifier {
     let isActive: Bool
     let initialLat: Float
@@ -57,6 +78,12 @@ struct LatLongGesture: ViewModifier {
 }
 
 extension View {
+    
+    @ViewBuilder
+    func latLongRaycastGesture(handleDragGesture: @escaping (CGPoint) -> Void) -> some View {
+        let gesture = LatLongRaycastGesture(handleDragGesture: handleDragGesture)
+        modifier(gesture)
+    }
     
     @ViewBuilder
     func latLongGesture(

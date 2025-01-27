@@ -426,70 +426,6 @@ def Xform "Root"
                     }
                 }
             }
-
-            def Cone "GlobalX" (
-                active = true
-                prepend apiSchemas = ["MaterialBindingAPI"]
-                customData = {
-                    float3 rotationEulerHint = (0, 0, 1.5707964)
-                }
-            )
-            {
-                uniform token axis = "Y"
-                double height = 0.7000000000000001
-                rel material:binding = </Root/Materials/Red> (
-                    bindMaterialAs = "weakerThanDescendants"
-                )
-                double radius = 0.05
-                quatf xformOp:orient = (0.70710677, 0, 0, 0.70710677)
-                float3 xformOp:scale = (0.15923566, 0.15923566, 0.15923566)
-                float3 xformOp:translate = (-0.055732485, 0, 0)
-                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-            }
-
-            def Cone "GlobalY" (
-                active = true
-                prepend apiSchemas = ["MaterialBindingAPI"]
-                customData = {
-                    float3 rotationEulerHint = (1.5707964, 0, 0)
-                }
-            )
-            {
-                uniform token axis = "Y"
-                double height = 0.7000000000000001
-                rel material:binding = </Root/Materials/Green> (
-                    bindMaterialAs = "weakerThanDescendants"
-                )
-                double radius = 0.05
-                float2 ui:nodegraph:node:pos = (20, 20)
-                int ui:nodegraph:node:stackingOrder = 1
-                quatf xformOp:orient = (0.7071067, 0.70710677, 0, 0)
-                float3 xformOp:scale = (0.15923563, 0.15923563, 0.15923563)
-                float3 xformOp:translate = (0, 0, 0.055732477)
-                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-            }
-
-            def Cone "GlobalZ" (
-                active = true
-                prepend apiSchemas = ["MaterialBindingAPI"]
-                customData = {
-                    float3 rotationEulerHint = (0, 0, 0)
-                }
-            )
-            {
-                uniform token axis = "Y"
-                double height = 0.7000000000000001
-                rel material:binding = </Root/Materials/Blue> (
-                    bindMaterialAs = "weakerThanDescendants"
-                )
-                double radius = 0.05
-                float2 ui:nodegraph:node:pos = (40, 40)
-                int ui:nodegraph:node:stackingOrder = 2
-                quatf xformOp:orient = (1, 0, 0, 0)
-                float3 xformOp:scale = (0.15923563, 0.15923561, 0.15923561)
-                float3 xformOp:translate = (0, 0.05573248, 0)
-                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-            }
         }
 
         def Xform "ECEF" (
@@ -499,7 +435,7 @@ def Xform "Root"
             }
         )
         {
-            reorder nameChildren = ["Long", "SunAzimuth"]
+            reorder nameChildren = ["Long", "SunAzimuth", "GlobalX", "GlobalY", "GlobalZ"]
             quatf xformOp:orient = (-3.0908623e-8, 3.0908627e-8, 0.70710677, 0.70710677)
             float3 xformOp:scale = (0.9999999, 0.9999999, 0.9999999)
             float3 xformOp:translate = (0, 0, 0)
@@ -731,12 +667,76 @@ def Xform "Root"
                     }
                 }
             }
+
+            def Cone "GlobalX" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (-2.0162669e-7, 0, -1.5707964)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.7000000000000001
+                rel material:binding = </Root/Materials/Red> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.05
+                quatf xformOp:orient = (0.70710677, -7.12858e-8, 7.12858e-8, -0.70710677)
+                float3 xformOp:scale = (1, 1.0000001, 1.0000001)
+                float3 xformOp:translate = (0.35, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cone "GlobalY" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (1.5707964, 0.148353, 0)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.7000000000000001
+                rel material:binding = </Root/Materials/Green> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.05
+                float2 ui:nodegraph:node:pos = (20, 20)
+                int ui:nodegraph:node:stackingOrder = 1
+                quatf xformOp:orient = (1.5807473e-9, -1.3721686e-7, 1, -1.1404044e-8)
+                float3 xformOp:scale = (1, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (0, 0.35, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Cone "GlobalZ" (
+                active = true
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                customData = {
+                    float3 rotationEulerHint = (-1.5707955, 3.1415923, 0)
+                }
+            )
+            {
+                uniform token axis = "Y"
+                double height = 0.7000000000000001
+                rel material:binding = </Root/Materials/Blue> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+                double radius = 0.05
+                float2 ui:nodegraph:node:pos = (40, 40)
+                int ui:nodegraph:node:stackingOrder = 2
+                quatf xformOp:orient = (5.3385083e-8, -5.338507e-8, 0.7071069, 0.70710665)
+                float3 xformOp:scale = (1, 0.99999994, 0.99999994)
+                float3 xformOp:translate = (3.9359732e-15, 4.4408184e-9, 0.35000002)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
         }
     }
 
     def "SkySphere" (
         active = true
-        prepend references = @SkySphere.usdz@
+        references = @SkySphere.usdz@
     )
     {
         float3 xformOp:scale = (1, 1, 1)
