@@ -1,5 +1,5 @@
 //
-//  LatLongAngleControls.swift
+//  LatLongAngleIndicators.swift
 //  ER3D
 //
 //  Created by Eliott Radcliffe on 1/13/25.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct LatLongAngleControls: View {
+struct LatLongAngleIndicators: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-    @Binding var lat: Float
-    @Binding var long: Float
-    let onResetAction: () -> Void
+    let lat: Float
+    let long: Float
+    let onResetAction: (String) -> Void
     
     var body: some View {
         if isLandscape {
@@ -44,7 +44,7 @@ struct LatLongAngleControls: View {
     private var latLongMessage: some View {
         HStack {
             Button {
-                onResetAction()
+                onResetAction("All")
             } label: {
                 Image(systemName: "arrow.counterclockwise.circle.fill")
             }
@@ -61,20 +61,20 @@ struct LatLongAngleControls: View {
     /// Displays current numerical values for the latitude and longitude
     private var latLongState: some View {
         VStack(alignment: .leading) {
-            StateLabel(key: "Latitude", state: $lat)
-            StateLabel(key: "Longitude", state: $long)
+            StateLabel(key: "Latitude", state: lat)
+            StateLabel(key: "Longitude", state: long)
         }
         .frame(maxWidth: isLandscape ? 0.5 * Constants.latLongMenuWidthInLandscape : .infinity)
     }
     
-    private func StateLabel(key: String, state: Binding<Float>) -> some View {
+    private func StateLabel(key: String, state: Float) -> some View {
         HStack {
             Button {
-                state.wrappedValue = 0
+                onResetAction(key)
             } label: {
                 Image(systemName: "arrow.counterclockwise")
             }
-            Text("\(key) = \(String(format: "%.2f", state.wrappedValue)) deg")
+            Text("\(key) = \(String(format: "%.2f", state)) deg")
             Spacer()
             InfoButtonWithPopover(key: key)
         }
@@ -89,9 +89,7 @@ struct LatLongAngleControls: View {
 }
 
 #Preview {
-    @Previewable @State var lat: Float = 0
-    @Previewable @State var long: Float = 0
-    LatLongAngleControls(lat: $lat, long: $long) {
+    LatLongAngleIndicators(lat: 0, long: 0) { _ in
         print("Reset")
     }
 }

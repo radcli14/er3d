@@ -141,8 +141,12 @@ import UIKit
     }
     
     /// Resets the latitude and longitude angles to zero (off the cape of Africa)
-    func resetLatLong() {
-        setLatLong(lat: 0, long: 0)
+    func resetLatLong(_ stateToReset: String) {
+        switch stateToReset {
+        case "Latitude": lat = 0
+        case "Longitude": long = 0
+        default: setLatLong(lat: 0, long: 0)
+        }
     }
     
     // MARK: - Constants

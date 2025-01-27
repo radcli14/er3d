@@ -12,10 +12,10 @@ struct ER3DControls: View {
     @Binding var yaw: Float
     @Binding var pitch: Float
     @Binding var roll: Float
-    @Binding var lat: Float
-    @Binding var long: Float
+    let lat: Float
+    let long: Float
     let resetYawPitchRollAngles: () -> Void
-    let resetLatLong: () -> Void
+    let resetLatLong: (String) -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -25,8 +25,8 @@ struct ER3DControls: View {
                         resetYawPitchRollAngles()
                     }
             case .latLongControls:
-                LatLongAngleControls(lat: $lat, long: $long) {
-                    resetLatLong()
+                LatLongAngleIndicators(lat: lat, long: long) { stateToReset in
+                    resetLatLong(stateToReset)
                 }
             case .settings:
                 SettingsContent()
@@ -51,13 +51,11 @@ struct ER3DControls: View {
     @Previewable @State var yaw: Float = 0.0
     @Previewable @State var pitch: Float = 0.0
     @Previewable @State var roll: Float = 0.0
-    @Previewable @State var lat: Float = 0.0
-    @Previewable @State var long: Float = 0.0
     ER3DControls(
         controlVisibility: $controlVisibility,
-        yaw: $yaw, pitch: $pitch, roll: $roll, lat: $lat, long: $long,
+        yaw: $yaw, pitch: $pitch, roll: $roll, lat: 0, long: 0,
         resetYawPitchRollAngles: { print("Reset YPR") },
-        resetLatLong: { print("Reset Lat/Long") }
+        resetLatLong: { stateToReset in print("Reset \(stateToReset)") }
     )
     .environment(settings)
 }

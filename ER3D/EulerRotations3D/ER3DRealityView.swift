@@ -66,10 +66,10 @@ struct ER3DRealityView : View {
                 yaw: $viewModel.sequence.first.angle,
                 pitch: $viewModel.sequence.second.angle,
                 roll: $viewModel.sequence.third.angle,
-                lat: $viewModel.lat,
-                long: $viewModel.long,
+                lat: viewModel.lat,
+                long: viewModel.long,
                 resetYawPitchRollAngles: { viewModel.sequence.reset() },
-                resetLatLong: viewModel.resetLatLong
+                resetLatLong: { stateToReset in viewModel.resetLatLong(stateToReset) }
             )
         }
     }
