@@ -60,9 +60,6 @@ struct ER3DRealityView : View {
             ER3DControls(
                 controlVisibility: $viewModel.controlVisibility,
                 sequence: $viewModel.sequence,
-                lat: viewModel.latLongSequence?.lat.degrees ?? 0,
-                long: viewModel.latLongSequence?.long.degrees ?? 0,
-                resetYawPitchRollAngles: { viewModel.sequence.reset() },
                 resetLatLong: { stateToReset in viewModel.resetLatLong(stateToReset) }
             )
         }

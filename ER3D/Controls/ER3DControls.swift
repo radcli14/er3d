@@ -10,9 +10,6 @@ import SwiftUI
 struct ER3DControls: View {
     @Binding var controlVisibility: ControlVisibility
     @Binding var sequence: RotationSequence
-    let lat: Float
-    let long: Float
-    let resetYawPitchRollAngles: () -> Void
     let resetLatLong: (String) -> Void
     
     var body: some View {
@@ -21,7 +18,7 @@ struct ER3DControls: View {
             case .angleControls:
                 EulerAngleControls(sequence: $sequence)
             case .latLongControls:
-                LatLongAngleIndicators(lat: lat, long: long) { stateToReset in
+                LatLongAngleIndicators(sequence: sequence as? HasLatLong) { stateToReset in
                     resetLatLong(stateToReset)
                 }
             case .settings:
@@ -48,8 +45,6 @@ struct ER3DControls: View {
     ER3DControls(
         controlVisibility: $controlVisibility,
         sequence: $sequence,
-        lat: 0, long: 0,
-        resetYawPitchRollAngles: { print("Reset YPR") },
         resetLatLong: { stateToReset in print("Reset \(stateToReset)") }
     )
     .environment(settings)

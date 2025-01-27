@@ -9,8 +9,7 @@ import SwiftUI
 
 struct LatLongAngleIndicators: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-    let lat: Float
-    let long: Float
+    let sequence: HasLatLong?
     let onResetAction: (String) -> Void
     
     var body: some View {
@@ -61,8 +60,8 @@ struct LatLongAngleIndicators: View {
     /// Displays current numerical values for the latitude and longitude
     private var latLongState: some View {
         VStack(alignment: .leading) {
-            StateLabel(key: "Latitude", state: lat)
-            StateLabel(key: "Longitude", state: long)
+            StateLabel(key: "Latitude", state: sequence?.lat.degrees ?? 0)
+            StateLabel(key: "Longitude", state: sequence?.long.degrees ?? 0)
         }
         .frame(maxWidth: isLandscape ? 0.5 * Constants.latLongMenuWidthInLandscape : .infinity)
     }
@@ -88,7 +87,8 @@ struct LatLongAngleIndicators: View {
 }
 
 #Preview {
-    LatLongAngleIndicators(lat: 0, long: 0) { _ in
+    @Previewable @State var sequence: HasLatLong? = YawPitchRollSequence()
+    LatLongAngleIndicators(sequence: sequence) { _ in
         print("Reset")
     }
 }

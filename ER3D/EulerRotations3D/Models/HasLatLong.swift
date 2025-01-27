@@ -34,4 +34,12 @@ extension HasLatLong {
     mutating func resetLatLong() {
         setLatLong(lat: 0, long: 0)
     }
+    
+    mutating func resetLatLong(_ stateToReset: String) {
+        switch stateToReset {
+        case "Latitude": lat.radians = 0
+        case "Longitude": long.radians = 0
+        default: resetLatLong()
+        }
+    }
 }
