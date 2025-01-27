@@ -11,11 +11,8 @@ import SwiftUI
 struct EulerAngleControls: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     
-    @Binding var yaw: Float
-    @Binding var pitch: Float
-    @Binding var roll: Float
-    let onResetAction: () -> Void
-
+    @Binding var sequence: RotationSequence
+    
     var body: some View {
         VStack(spacing: 0) {
             headerLine
@@ -27,12 +24,12 @@ struct EulerAngleControls: View {
     private var headerLine: some View {
         HStack {
             Button {
-                onResetAction()
+                sequence.reset()
             } label: {
                 Image(systemName: "arrow.counterclockwise.circle.fill")
             }
-            Text("Yaw → Pitch → Roll Sequence").font(.headline)
-            InfoButtonWithPopover(key: "Yaw → Pitch → Roll", isFilled: true)
+            Text("\(sequence.name) Sequence").font(.headline)
+            InfoButtonWithPopover(key: sequence.name, isFilled: true)
         }
     }
     
@@ -52,9 +49,9 @@ struct EulerAngleControls: View {
     
     @ViewBuilder
     private var eulerAngleControlsList: some View {
-        AngleSlider(angle: $yaw, name: "Yaw", symbol: "ψ")
-        AngleSlider(angle: $pitch, name: "Pitch", symbol: "𝜃")
-        AngleSlider(angle: $roll, name: "Roll", symbol: "φ")
+        AngleSlider(angle: $sequence.first.radians, name: sequence.first.name, symbol: sequence.first.symbol)
+        AngleSlider(angle: $sequence.second.radians, name: sequence.second.name, symbol: sequence.second.symbol)
+        AngleSlider(angle: $sequence.third.radians, name: sequence.third.name, symbol: sequence.third.symbol)
     }
 
     private var sliderSpacing: CGFloat {
@@ -72,10 +69,6 @@ struct EulerAngleControls: View {
 }
 
 #Preview {
-    @Previewable @State var yaw: Float = 0.0
-    @Previewable @State var pitch: Float = 0.0
-    @Previewable @State var roll: Float = 0.0
-    EulerAngleControls(yaw: $yaw, pitch: $pitch, roll: $roll) {
-        print("Reset")
-    }
+    @Previewable @State var sequence: RotationSequence = ProcessionNutationSpinSequence()
+    EulerAngleControls(sequence: $sequence)
 }
