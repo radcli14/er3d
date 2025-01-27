@@ -12,19 +12,10 @@ import UIKit
 
 @Observable class ER3DRealityViewModel {
     var arView: ARView
-
-    var sequence: RotationSequence = YawPitchRollSequence()
-    
-    /// If the globe sequence is active, then provide it as a `HasLatLong` type
-    var latLongSequence: HasLatLong? {
-        sequence as? HasLatLong
-    }
-    
     var controlVisibility: ControlVisibility = .bottomButtons
     
-    /// The `testBox` is used for debugging the `.nonAR` view, to provide it with pre-existing content that doesn't require the globe to load
-    let testBox = ModelEntity(mesh: .generateBox(width: 1, height: 0.1, depth: 1, cornerRadius: 0.05), materials: [SimpleMaterial(color: .blue, isMetallic: true)])
-
+    // MARK: - Initialization
+    
     init(cameraMode: ARView.CameraMode = .nonAR) {
         // Set up the ARView
         arView = ARView(frame: .zero, cameraMode: cameraMode, automaticallyConfigureSession: true)
@@ -39,6 +30,35 @@ import UIKit
                 timer.invalidate()
             }
         }
+    }
+    
+    // MARK: - RotationSequence
+    
+    /// Specify the Euler sequence model that will be presented to the user
+    var selectedSequence: EulerSequence = .yawPitchRoll
+    private var yawPitchRollSequence = YawPitchRollSequence()
+    private var processionNutationSpinSequence = ProcessionNutationSpinSequence()
+    var sequence: RotationSequence {
+        get {
+            switch selectedSequence {
+            case .yawPitchRoll: yawPitchRollSequence
+            case .processionNutationSpin: processionNutationSpinSequence
+            }
+        }
+        set {
+            if newValue is YawPitchRollSequence {
+                selectedSequence = .yawPitchRoll
+            } else if newValue is ProcessionNutationSpinSequence {
+                selectedSequence = .processionNutationSpin
+            } else {
+                fatalError("Unsupported RotationSequence type")
+            }
+        }
+    }
+    
+    /// If the globe sequence is active, then provide it as a `HasLatLong` type
+    var latLongSequence: HasLatLong? {
+        sequence as? HasLatLong
     }
     
     // MARK: - AR View Modes
@@ -65,6 +85,9 @@ import UIKit
         
         sequence.animateEnteringScene()
     }
+    
+    /// The `testBox` is used for debugging the `.nonAR` view, to provide it with pre-existing content that doesn't require the globe to load
+    private let testBox = ModelEntity(mesh: .generateBox(width: 1, height: 0.1, depth: 1, cornerRadius: 0.05), materials: [SimpleMaterial(color: .blue, isMetallic: true)])
     
     private func toggleToStandardView(onStart: Bool = false) {
         print("ER3DRealityViewModel.toggleToStandardView(onStart: Bool = \(onStart))")
