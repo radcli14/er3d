@@ -61,6 +61,13 @@ import UIKit
         sequence as? HasLatLong
     }
     
+    func toggleTo(_ eulerSequence: EulerSequence) {
+        let oldRootEntity = sequence.rootEntity
+        oldRootEntity?.removeFromParent()
+        selectedSequence = eulerSequence
+        toggleTo(arView.cameraMode)
+    }
+    
     // MARK: - AR View Modes
     
     func toggleTo(_ cameraMode: ARView.CameraMode, onStart: Bool = false) {

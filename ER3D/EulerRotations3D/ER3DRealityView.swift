@@ -33,6 +33,9 @@ struct ER3DRealityView : View {
             .onChange(of: settings.cameraMode) {
                 viewModel.toggleTo(settings.cameraMode)
             }
+            .onChange(of: settings.sequence) {
+                viewModel.toggleTo(settings.sequence)
+            }
         .onTapGesture {
             withAnimation {
                 viewModel.controlVisibility = .bottomButtons
@@ -41,18 +44,6 @@ struct ER3DRealityView : View {
         .onChange(of: viewModel.controlVisibility) {
             viewModel.handleControlVisibilityChange()
         }
-        /*.latLongGesture(
-            isActive: viewModel.controlVisibility == .latLongControls,
-            initialLat: viewModel.latLongSequence?.lat.radians ?? 0,
-            initialLong: viewModel.latLongSequence?.long.radians ?? 0,
-            scale: viewModel.latLongSequence?.latLongScale ?? 0,
-            onUpdate: { (lat, long) in
-                if var sequence = viewModel.latLongSequence {
-                    print("gesture got lat = \(lat) long = \(long)")
-                    sequence.setLatLong(lat: lat, long: long)
-                }
-            }
-        )*/
         .latLongRaycastGesture { touchPoint in
             viewModel.handleDragGesture(at: touchPoint)
         }

@@ -21,7 +21,14 @@ class ProcessionNutationSpinSequence: RotationSequence {
     init() {
         Task {
             await rootEntity = try? Entity(named: "ProcessionNutationSpin", in: Globe.globeBundle)
+            attachFrames()
         }
+    }
+    
+    func attachFrames() {
+        first.frame = rootEntity?.findEntity(named: "Procession")
+        second.frame = rootEntity?.findEntity(named: "Nutation")
+        third.frame = rootEntity?.findEntity(named: "Spin")
     }
     
     func addGestures(to arView: ARView) {
