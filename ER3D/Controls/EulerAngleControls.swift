@@ -49,9 +49,9 @@ struct EulerAngleControls: View {
     
     @ViewBuilder
     private var eulerAngleControlsList: some View {
-        AngleSlider(angle: $sequence.first.radians, name: sequence.first.name, symbol: sequence.first.symbol)
-        AngleSlider(angle: $sequence.second.radians, name: sequence.second.name, symbol: sequence.second.symbol)
-        AngleSlider(angle: $sequence.third.radians, name: sequence.third.name, symbol: sequence.third.symbol)
+        AngleSlider(angle: $sequence.first)
+        AngleSlider(angle: $sequence.second)
+        AngleSlider(angle: $sequence.third)
     }
 
     private var sliderSpacing: CGFloat {

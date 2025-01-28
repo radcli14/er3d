@@ -28,6 +28,7 @@ struct EulerAngle {
             radians = newValue * Constants.deg2rad
         }
     }
+    var range = -Float.pi...Float.pi
     
     var frame: Entity? {
         didSet {
@@ -48,7 +49,7 @@ struct EulerAngle {
     // MARK: - Procession → Nutation → Spin
     
     static let procession = Self(name: "Procession", symbol: "φ", axis: SIMD3(0, 0, 1))
-    static let nutation = Self(name: "Nutation", symbol: "𝜃", axis: SIMD3(1, 0, 0))
+    static let nutation = Self(name: "Nutation", symbol: "𝜃", axis: SIMD3(1, 0, 0), range: -Float.pi/6...Float.pi/6)
     static let spin = Self(name: "Spin", symbol: "ψ", axis: SIMD3(0, 0, 1))
     
     // MARK: - Latitude and Longitude

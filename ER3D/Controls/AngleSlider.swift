@@ -9,30 +9,27 @@ import SwiftUI
 
 /// A custom slider using specified angle limits, steps, and labels
 struct AngleSlider: View {
-    @Binding var angle: Float
-    let name: String
-    let symbol: String
-    var angleRange = -Float.pi...Float.pi
+    @Binding var angle: EulerAngle
     
     var body: some View {
         VStack(spacing: Constants.sliderSpacing) {
             Slider(
-                value: $angle,
-                in: angleRange,
+                value: $angle.radians,
+                in: angle.range,
                 step: Constants.sliderStep,
-                label: { Text(name) }
+                label: { Text(angle.name) }
             )
             HStack {
                 Button {
-                    angle = 0
+                    angle.radians = 0
                 } label: {
                     Image(systemName: "arrow.counterclockwise")
                 }
-                Text("\(name) \(symbol) = \(String(format: "%.0f", angle * Constants.rad2deg)) deg")
+                Text("\(angle.name) \(angle.symbol) = \(String(format: "%.0f", angle.degrees)) deg")
                     .font(.callout)
                     .foregroundColor(.secondary)
                 Spacer()
-                InfoButtonWithPopover(key: name)
+                InfoButtonWithPopover(key: angle.name)
             }
         }
     }
@@ -40,11 +37,10 @@ struct AngleSlider: View {
     private struct Constants {
         static let sliderStep: Float = .pi / 180
         static let sliderSpacing: CGFloat = 0
-        static let rad2deg: Float = 180 / .pi
     }
 }
 
 #Preview {
-    @Previewable @State var angle = Float(0.0)
-    AngleSlider(angle: $angle, name: "Test", symbol: "😀")
+    @Previewable @State var angle: EulerAngle = .yaw
+    AngleSlider(angle: $angle)
 }
