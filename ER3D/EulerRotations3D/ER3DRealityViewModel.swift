@@ -74,8 +74,14 @@ import UIKit
     
     // MARK: - AR View Modes
     
+    private static let anchorSize: Float = 0.2
+    var anchorBounds = SIMD2<Float>(anchorSize, anchorSize)
+    
     /// The `floor` is used as a common base platform for the `rootEntity` of any rotation sequence, and where we attach gestures
-    private let floor = ModelEntity(mesh: .generateBox(width: 1, height: 0.01, depth: 1, cornerRadius: 0.005), materials: [SimpleMaterial(color: .blue, isMetallic: true)])
+    private let floor = ModelEntity(
+        mesh: .generateCylinder(height: 0, radius: 0.5 * anchorSize),
+        materials: [SimpleMaterial(color: .clear, isMetallic: true)]
+    )
     
     func toggleTo(_ cameraMode: ARView.CameraMode, onStart: Bool = false) {
         removeAllGestures()
@@ -94,7 +100,7 @@ import UIKit
         arView.cameraMode = .ar
         
         arView.scene.anchors.removeAll()
-        let arAnchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
+        let arAnchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: anchorBounds))
         floor.setParent(arAnchor)
         rootEntity.setParent(floor)
         rootEntity.transform = .identity
