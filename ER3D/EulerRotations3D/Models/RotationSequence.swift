@@ -16,6 +16,9 @@ protocol RotationSequence {
     var third: EulerAngle { get set }
     
     var rootEntity: Entity? { get }
+    
+    func animateEnteringScene()
+    func animateLeavingScene()
 }
 
 extension RotationSequence {
@@ -28,4 +31,16 @@ extension RotationSequence {
         second.radians = 0
         third.radians = 0
     }
+    
+    func animateEnteringScene() {
+        rootEntity?.transform = Transform(scale: .zero)
+        rootEntity?.move(to: Transform.identity, relativeTo: rootEntity?.parent, duration: animationDuration)
+    }
+    
+    func animateLeavingScene() {
+        let transform = Transform(scale: .zero)
+        rootEntity?.move(to: transform, relativeTo: rootEntity?.parent, duration: animationDuration)
+    }
+    
+    var animationDuration: Double { 2 }
 }

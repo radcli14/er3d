@@ -63,9 +63,13 @@ import UIKit
     
     func toggleTo(_ eulerSequence: EulerSequence) {
         let oldRootEntity = sequence.rootEntity
-        oldRootEntity?.removeFromParent()
-        selectedSequence = eulerSequence
-        toggleTo(arView.cameraMode)
+        sequence.animateLeavingScene()
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { timer in
+            oldRootEntity?.removeFromParent()
+            self.selectedSequence = eulerSequence
+            self.sequence.rootEntity?.setParent(self.floor)
+            self.sequence.animateEnteringScene()
+        }
     }
     
     // MARK: - AR View Modes
@@ -93,10 +97,12 @@ import UIKit
         let arAnchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: SIMD2<Float>(0.2, 0.2)))
         floor.setParent(arAnchor)
         rootEntity.setParent(floor)
+        rootEntity.transform = .identity
+        print("floor.children = \(floor.children.map { $0.name })")
 
         arView.scene.anchors.append(arAnchor)
         
-        //sequence.animateEnteringScene()
+        sequence.animateEnteringScene()
     }
     
     private func toggleToStandardView(onStart: Bool = false) {
@@ -108,8 +114,9 @@ import UIKit
         arView.scene.anchors.removeAll()
         let standardAnchor = AnchorEntity(world: .zero)
         floor.setParent(standardAnchor)
+        floor.transform = .identity
         rootEntity.setParent(floor)
-
+        
         arView.scene.anchors.append(standardAnchor)
         
         arView.scene.addAnchor(standardCameraAnchor)
@@ -119,7 +126,7 @@ import UIKit
         print("Globe parent: \(String(describing: rootEntity.parent?.name)) is anchor \(rootEntity.parent == standardAnchor)")
         print("Anchor children: \(standardAnchor.children.map { $0.name })")
         
-        //sequence.animateEnteringScene()
+        sequence.animateEnteringScene()
     }
     
     /// Camera anchor to be used when in `.nonAR` mode

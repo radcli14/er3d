@@ -26,9 +26,12 @@ import Globe
     /// Rotation angle about the north pole relative to GMT
     var long: EulerAngle = .longitude
     
-    /// The globe as the root entity
+    /// The sphere as the root entity
     var rootEntity: Entity?
 
+    /// The globe which can be referenced when searching for child entities
+    private var globe: Entity?
+    
     // MARK: - Initialization
     
     init() {
@@ -39,23 +42,18 @@ import Globe
     
     /// Load the globe model asynchronously, set up the sphere and ship with collisions, and add it to the arView
     private func loadGlobe() async {
-        rootEntity = try? await Entity(named: "globe", in: Globe.globeBundle)
+        globe = try? await Entity(named: "globe", in: Globe.globeBundle)
+        rootEntity = await globe?.findEntity(named: "Sphere") // I need to set the sphere as root because the root was acting as an anchor and ignoring its parent tranform. This is a fault in model construction, but usable for now.
         attachFrames()
         setSunLocation()
-        animateEnteringScene()
     }
     
     private func attachFrames() {
-        first.frame = rootEntity?.findEntity(named: "YawFrame")
-        second.frame = rootEntity?.findEntity(named: "PitchFrame")
-        third.frame = rootEntity?.findEntity(named: "RollFrame")
-        lat.frame = rootEntity?.findEntity(named: "Lat")
-        long.frame = rootEntity?.findEntity(named: "Long")
-    }
-    
-    /// The globe should initially be invisible (zero scale) before entering the scene
-    func setScaleToZero() {
-        rootEntity?.findEntity(named: "Sphere")?.transform.scale = SIMD3(0.0, 0.0, 0.0)
+        first.frame = globe?.findEntity(named: "YawFrame")
+        second.frame = globe?.findEntity(named: "PitchFrame")
+        third.frame = globe?.findEntity(named: "RollFrame")
+        lat.frame = globe?.findEntity(named: "Lat")
+        long.frame = globe?.findEntity(named: "Long")
     }
     
     /// Set the angular position of the sun based on the date and time of day
@@ -65,26 +63,25 @@ import Globe
         let elevation = Date.now.solarElevationAngleRadians
         let elRotation = simd_quatf(angle: elevation, axis: SIMD3(0, 1, 0))
         print("YawPitchRollSequence.setSunLocation(): azimuth = \(azimuth * 180 / .pi) deg, elevation = \(elevation * 180 / .pi) deg")
-        rootEntity?.findEntity(named: "SunAzimuth")?.transform.rotation = azRotation
-        rootEntity?.findEntity(named: "SunElevation")?.transform.rotation = elRotation
+        globe?.findEntity(named: "SunAzimuth")?.transform.rotation = azRotation
+        globe?.findEntity(named: "SunElevation")?.transform.rotation = elRotation
     }
     
     /// Animate the globe appearing and rotating to its initial longitude
     func animateEnteringScene() {
         print("YawPitchRollSequence.animateEnteringScene()")
-        guard let sphere = rootEntity?.findEntity(named: "Sphere") else { return }
+        guard let sphere = rootEntity else { return }
         print("  - Got sphere")
         // Get the default transform
         var transform = sphere.transform
+        sphere.transform.scale = .zero
         
         // Animate the globe appearing and rotating to its initial longitude
-        //rootEntity?.transform.translation = .zero
         transform.scale = .zero
         transform.translation = SIMD3(0, 0.7, 0)
         transform.rotation = simd_quatf(angle: -long.radians + 0.5 * .pi, axis: SIMD3(0, 1, 0))
         transform.scale = SIMD3<Float>(1.0, 1.0, 1.0)
-        //sphere.move(to: transform, relativeTo: sphere.parent, duration: 2.0)
-        sphere.transform = transform
+        sphere.move(to: transform, relativeTo: sphere.parent, duration: animationDuration)
         print("  - Moving to \(transform)")
     }
 }

@@ -32,7 +32,9 @@ struct EulerAngle {
     var frame: Entity? {
         didSet {
             if let frame {
-                radians = frame.transform.rotation.angle * frame.transform.rotation.axis.dot(axis)
+                if frame.transform.rotation.angle > 0 {
+                    radians = frame.transform.rotation.angle * frame.transform.rotation.axis.dot(axis)
+                }
             }
         }
     }
