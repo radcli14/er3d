@@ -35,6 +35,10 @@ struct ER3DRealityView : View {
             }
             .onChange(of: settings.sequence) {
                 viewModel.toggleTo(settings.sequence)
+                viewModel.toggleFrames(visible: settings.frameVisibility) // Toggle frames here to make sure they match the global setting
+            }
+            .onChange(of: settings.frameVisibility) {
+                viewModel.toggleFrames(visible: settings.frameVisibility)
             }
         .onTapGesture {
             withAnimation {

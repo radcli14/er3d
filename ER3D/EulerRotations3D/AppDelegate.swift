@@ -55,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let cameraModeKey = "cameraMode"
     private let sequenceKey = "sequence"
+    private let frameVisibilityKey = "frameVisibility"
     
     /// Save this session's state to `UserDefaults`
     private func saveState() {
@@ -63,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(cameraModeString, forKey: cameraModeKey)
             let sequenceString = String(describing: settings.sequence)
             UserDefaults.standard.set(sequenceString, forKey: sequenceKey)
+            UserDefaults.standard.set(settings.frameVisibility, forKey: frameVisibilityKey)
         }
     }
     
@@ -83,6 +85,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case "processionNutationSpin": settings.sequence = .processionNutationSpin
         default: break
         }
+        
+        // Frame Visibility
+        settings.frameVisibility = UserDefaults.standard.bool(forKey: frameVisibilityKey)
     }
 }
 
