@@ -231,23 +231,6 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.7, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        def Sphere "Globe" (
-            active = false
-            prepend apiSchemas = ["MaterialBindingAPI"]
-            customData = {
-                float3 rotationEulerHint = (0, 1.0658143e-14, 0)
-            }
-        )
-        {
-            reorder nameChildren = ["GlobalX", "GlobalY", "GlobalZ", "GlobalX", "GlobalY", "GlobalZ"]
-            rel material:binding = </Root/Materials/GlobeMaterial>
-            double radius = 0.6282
-            quatf xformOp:orient = (1, 0, 5.3290714e-15, 0)
-            float3 xformOp:scale = (1, 0.99999994, 0.99999994)
-            float3 xformOp:translate = (0, 0, 0)
-            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-        }
-
         def "Earth" (
             active = true
             customData = {
@@ -731,19 +714,6 @@ def Xform "Root"
                 float3 xformOp:translate = (3.9359732e-15, 4.4408184e-9, 0.35000002)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
             }
-        }
-    }
-
-    def "SkySphere" (
-        active = true
-        references = @SkySphere.usdz@
-    )
-    {
-        float3 xformOp:scale = (1, 1, 1)
-
-        over "SkySphere_mat"
-        {
-            asset inputs:SkySphere_Texture = @starmap_2020_4k.exr@
         }
     }
 }

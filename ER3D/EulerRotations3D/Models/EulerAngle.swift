@@ -29,7 +29,13 @@ struct EulerAngle {
         }
     }
     
-    var frame: Entity?
+    var frame: Entity? {
+        didSet {
+            if let frame {
+                radians = frame.transform.rotation.angle * frame.transform.rotation.axis.dot(axis)
+            }
+        }
+    }
 
     // MARK: - Yaw → Pitch → Roll
     
@@ -53,5 +59,11 @@ struct EulerAngle {
     private struct Constants {
         static let deg2rad: Float = .pi / 180
         static let rad2deg: Float = 180 / .pi
+    }
+}
+
+extension SIMD3 where Scalar: Numeric {
+    func dot(_ other: SIMD3) -> Scalar {
+        x * other.x + y * other.y + z * other.z
     }
 }

@@ -30,20 +30,4 @@ class ProcessionNutationSpinSequence: RotationSequence {
         second.frame = rootEntity?.findEntity(named: "Nutation")
         third.frame = rootEntity?.findEntity(named: "Spin")
     }
-    
-    func addGestures(to arView: ARView) {
-        // TODO: implement this
-    }
-    
-    func removeTranslationGesture(from arView: ARView) {
-        // TODO: implement this
-    }
-    
-    func animateEnteringScene() {
-        // TODO: implement this
-    }
-    
-    func setScaleToZero() {
-        // TODO: implement this
-    }
 }

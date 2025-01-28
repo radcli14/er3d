@@ -17,12 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // Initialize the settings, and get the saved camera mode
-        settings = SettingsContent.ViewModel()
-        let stateString = loadState() ?? ".nonAR"
-        settings?.cameraMode = stateString == "ar" ? .ar : .nonAR
-
-        let viewModel = ER3DRealityViewModel(cameraMode: settings!.cameraMode)
+        // Initialize with settings representing the saved state
+        loadState()
+        let viewModel = ER3DRealityViewModel(with: settings!)
         
         // Create the SwiftUI view that provides the window contents.
         let contentView = ER3DRealityView(viewModel: viewModel)
@@ -56,20 +53,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Save and Load State
 
-    let cameraModeKey = "cameraMode"
+    private let cameraModeKey = "cameraMode"
+    private let sequenceKey = "sequence"
     
-    func saveState() {
+    /// Save this session's state to `UserDefaults`
+    private func saveState() {
         if let settings {
             let cameraModeString = String(describing: settings.cameraMode)
             UserDefaults.standard.set(cameraModeString, forKey: cameraModeKey)
+            let sequenceString = String(describing: settings.sequence)
+            UserDefaults.standard.set(sequenceString, forKey: sequenceKey)
         }
     }
     
-    func loadState() -> String? {
+    /// Load the saved state from prior sessions from `UserDefaults`
+    private func loadState() {
+        // Initialize the settings with defaults
+        settings = SettingsContent.ViewModel()
+        guard let settings else { return }
+        
+        // Camera Mode
         if let cameraModeString = UserDefaults.standard.string(forKey: cameraModeKey) {
-            return cameraModeString
+            settings.cameraMode = cameraModeString == "ar" ? .ar : .nonAR
         }
-        return nil
+        
+        // Euler Sequence
+        switch UserDefaults.standard.string(forKey: sequenceKey) {
+        case "yawPitchRoll": settings.sequence = .yawPitchRoll
+        case "processionNutationSpin": settings.sequence = .processionNutationSpin
+        default: break
+        }
     }
 }
 

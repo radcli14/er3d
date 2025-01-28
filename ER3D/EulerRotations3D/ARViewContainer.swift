@@ -20,6 +20,6 @@ struct ARViewContainer: UIViewRepresentable {
 }
 
 #Preview {
-    @Previewable @State var viewModel = ER3DRealityViewModel(cameraMode: .nonAR)
+    @Previewable @State var viewModel = ER3DRealityViewModel()
     ARViewContainer(viewModel: viewModel)
 }
