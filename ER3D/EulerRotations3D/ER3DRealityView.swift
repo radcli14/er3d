@@ -40,6 +40,9 @@ struct ER3DRealityView : View {
             .onChange(of: settings.frameVisibility) {
                 viewModel.toggleFrames(visible: settings.frameVisibility)
             }
+            .onChange(of: settings.earthVisibility) {
+                viewModel.toggleEarth(visible: settings.earthVisibility)
+            }
         .onTapGesture {
             withAnimation {
                 viewModel.controlVisibility = .bottomButtons

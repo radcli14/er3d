@@ -23,6 +23,9 @@ import UIKit
         //arView.environment.lighting.resource = try! .load(named: "lighting")
         //arView.debugOptions = [.showFeaturePoints, .showWorldOrigin, .showAnchorOrigins, .showSceneUnderstanding, .showPhysics]
         
+        // Provide the initial Earth visibility to the YawPitchRollSequence
+        yawPitchRollSequence = YawPitchRollSequence(earthVisibility: settings.earthVisibility)
+
         // Toggle to the applicable camera mode once the sequence rootEntity is ready
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
             if self.sequence.rootEntity != nil {
@@ -37,7 +40,7 @@ import UIKit
     
     /// Specify the Euler sequence model that will be presented to the user
     var selectedSequence: EulerSequence
-    private var yawPitchRollSequence = YawPitchRollSequence()
+    private var yawPitchRollSequence: YawPitchRollSequence
     private var processionNutationSpinSequence = ProcessionNutationSpinSequence()
     private var availableSequences: [RotationSequence] { [yawPitchRollSequence, processionNutationSpinSequence] }
     var sequence: RotationSequence {
@@ -253,25 +256,14 @@ import UIKit
     
     func toggleFrames(visible: Bool) {
         availableSequences.forEach { sequence in
-            sequence.rootEntity?.visitChildren { child in
-                if ["X", "Y", "Z"].contains(child.name) {
-                    child.isEnabled = visible
-                }
-            }
+            sequence.toggleFrames(visible: visible)
         }
     }
     
     func toggleEarth(visible: Bool) {
-        
-    }
-}
-
-extension Entity {
-    // TODO: make this a function that specifically toggles the frames on and off, not general-purpose
-    func visitChildren(_ action: (Entity) -> Void) {
-        children.forEach { child in
-            action(child)
-            child.visitChildren(action)
+        switch visible {
+        case true: yawPitchRollSequence.addEarth(parent: floor)
+        case false: yawPitchRollSequence.removeEarth(parent: floor)
         }
     }
 }

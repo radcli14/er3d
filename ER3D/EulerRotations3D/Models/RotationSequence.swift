@@ -43,4 +43,12 @@ extension RotationSequence {
     }
     
     var animationDuration: Double { 2 }
+    
+    func toggleFrames(visible: Bool) {
+        rootEntity?.visitChildren { child in
+            if ["X", "Y", "Z"].contains(child.name) {
+                child.fade(to: visible)
+            }
+        }
+    }
 }

@@ -12,6 +12,9 @@ import RealityKit
 protocol HasLatLong: RotationSequence {
     var lat: EulerAngle { get set }
     var long: EulerAngle { get set }
+    
+    func addEarth(parent: Entity)
+    func removeEarth(parent: Entity)
 }
 
 

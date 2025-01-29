@@ -19,11 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Initialize with settings representing the saved state
         loadState()
-        let viewModel = ER3DRealityViewModel(with: settings!)
+        guard let settings else { return false }
+        let viewModel = ER3DRealityViewModel(with: settings)
         
         // Create the SwiftUI view that provides the window contents.
         let contentView = ER3DRealityView(viewModel: viewModel)
-            .environment(settings!)
+            .environment(settings)
 
         // Use a UIHostingController as window root view controller.
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -56,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let cameraModeKey = "cameraMode"
     private let sequenceKey = "sequence"
     private let frameVisibilityKey = "frameVisibility"
+    private let earthVisibilityKey = "earthVisibility"
     
     /// Save this session's state to `UserDefaults`
     private func saveState() {
@@ -65,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let sequenceString = String(describing: settings.sequence)
             UserDefaults.standard.set(sequenceString, forKey: sequenceKey)
             UserDefaults.standard.set(settings.frameVisibility, forKey: frameVisibilityKey)
+            UserDefaults.standard.set(settings.earthVisibility, forKey: earthVisibilityKey)
         }
     }
     
@@ -86,8 +89,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         default: break
         }
         
-        // Frame Visibility
+        // Frame and Earth Visibility
         settings.frameVisibility = UserDefaults.standard.bool(forKey: frameVisibilityKey)
+        settings.earthVisibility = UserDefaults.standard.bool(forKey: earthVisibilityKey)
     }
 }
 
