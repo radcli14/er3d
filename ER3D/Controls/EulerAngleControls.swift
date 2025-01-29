@@ -28,7 +28,9 @@ struct EulerAngleControls: View {
             } label: {
                 Image(systemName: "arrow.counterclockwise.circle.fill")
             }
-            Text("\(sequence.name) Sequence").font(.headline)
+            Text("\(sequence.name) Sequence")
+                .font(.headline)
+                .multilineTextAlignment(.center)
             InfoButtonWithPopover(key: sequence.name, isFilled: true)
         }
     }

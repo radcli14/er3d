@@ -13,7 +13,8 @@ struct PopoverContent: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text(key).font(.title)
+                Text(key).font(.title2)
+                Divider()
                 if let description = variableDescriptions[key] {
                     Text(description)
                 }
