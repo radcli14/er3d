@@ -12,14 +12,14 @@ enum ControlVisibility {
 }
 
 struct BottomButtons: View {
+    @Environment(SettingsContent.ViewModel.self) var settings
     @Binding var controlVisibility: ControlVisibility
-    var latLongAreAvailable = true
     var settingsAreAvailable = false
     
     var body: some View {
         HStack(spacing: Constants.spacing) {
             bottomButton("rotate.3d.circle", visibility: .angleControls)
-            if latLongAreAvailable {
+            if settings.sequence == .yawPitchRoll {
                 bottomButton("globe", visibility: .latLongControls)
             }
             if settingsAreAvailable {

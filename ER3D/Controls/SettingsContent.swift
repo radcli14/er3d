@@ -63,7 +63,9 @@ struct SettingsContent: View {
     private var visibilitySection: some View {
         @Bindable var viewModel = settings
         Section("Visibility") {
-            Toggle(isOn: $viewModel.earthVisibility) { Text("Earth") }
+            if viewModel.sequence == .yawPitchRoll {
+                Toggle(isOn: $viewModel.earthVisibility) { Text("Earth") }
+            }
             Toggle(isOn: $viewModel.frameVisibility) { Text("Frames") }
         }
     }
