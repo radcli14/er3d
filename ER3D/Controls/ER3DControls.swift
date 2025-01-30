@@ -11,6 +11,7 @@ struct ER3DControls: View {
     @Binding var controlVisibility: ControlVisibility
     @Binding var sequence: RotationSequence
     let resetLatLong: (String) -> Void
+    let resetScene: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -24,7 +25,9 @@ struct ER3DControls: View {
             case .settings:
                 SettingsContent()
             case .bottomButtons:
-                BottomButtons(controlVisibility: $controlVisibility, settingsAreAvailable: true)
+                BottomButtons(controlVisibility: $controlVisibility) {
+                    resetScene()
+                }
             }
         }
         .background(.background)
@@ -45,7 +48,8 @@ struct ER3DControls: View {
     ER3DControls(
         controlVisibility: $controlVisibility,
         sequence: $sequence,
-        resetLatLong: { stateToReset in print("Reset \(stateToReset)") }
+        resetLatLong: { stateToReset in print("Reset \(stateToReset)") },
+        resetScene: {}
     )
     .environment(settings)
 }

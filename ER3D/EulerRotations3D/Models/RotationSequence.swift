@@ -22,6 +22,7 @@ protocol RotationSequence {
     var cameraTranslation: SIMD3<Float> { get }
     
     func animateEnteringScene()
+    func resetRootEntityPosition()
     func animateLeavingScene()
 }
 
@@ -53,7 +54,11 @@ extension RotationSequence {
     
     func animateEnteringScene() {
         rootEntity?.transform = Transform(scale: .zero)
-        rootEntity?.move(to: Transform.identity, relativeTo: rootEntity?.parent, duration: animationDuration)
+        resetRootEntityPosition()
+    }
+    
+    func resetRootEntityPosition() {
+        rootEntity?.move(to: .identity, relativeTo: rootEntity?.parent, duration: animationDuration)
     }
     
     func animateLeavingScene() {

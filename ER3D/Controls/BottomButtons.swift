@@ -14,7 +14,8 @@ enum ControlVisibility {
 struct BottomButtons: View {
     @Environment(SettingsContent.ViewModel.self) var settings
     @Binding var controlVisibility: ControlVisibility
-    var settingsAreAvailable = false
+    var settingsAreAvailable = true
+    var resetAction: () -> Void = {}
     
     var body: some View {
         HStack(spacing: Constants.spacing) {
@@ -24,6 +25,11 @@ struct BottomButtons: View {
             }
             if settingsAreAvailable {
                 bottomButton("gear", visibility: .settings)
+            }
+            Button {
+                resetAction()
+            } label: {
+                Image(systemName: "arrow.counterclockwise")
             }
         }
         .font(.largeTitle)

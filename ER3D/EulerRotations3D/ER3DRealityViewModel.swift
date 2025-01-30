@@ -83,16 +83,14 @@ import Globe
     func toggleTo(_ eulerSequence: EulerSequence) {
         let oldRootEntity = sequence.rootEntity
         sequence.animateLeavingScene()
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { timer in
+        Timer.scheduledTimer(withTimeInterval: sequence.animationDuration, repeats: false) { timer in
             oldRootEntity?.removeFromParent()
             self.selectedSequence = eulerSequence
-            self.sequence.rootEntity?.setParent(self.floor)
+            self.parentRootEntityToFloor()
             self.sequence.animateEnteringScene()
             self.repositionStandardCamera()
         }
-        if arView.cameraMode == .nonAR {
-            resetFloorPosition()
-        }
+        resetFloorPosition()
     }
     
     // MARK: - AR View Modes
@@ -107,7 +105,21 @@ import Globe
     )
     
     private func resetFloorPosition() {
-        floor.move(to: .identity, relativeTo: nil, duration: sequence.animationDuration)
+        floor.move(to: .identity, relativeTo: floor.parent, duration: sequence.animationDuration)
+    }
+    
+    /// Re-anchor the floor, and animate from its old position to a new position
+    private func setAnchor(to newAnchor: AnchorEntity) {
+        floor.removeFromParent(preservingWorldTransform: true)
+        arView.scene.anchors.removeAll()
+        arView.scene.anchors.append(newAnchor)
+        floor.setParent(newAnchor, preservingWorldTransform: true)
+        resetFloorPosition()
+    }
+    
+    private func parentRootEntityToFloor() {
+        sequence.rootEntity?.setParent(floor, preservingWorldTransform: true)
+        sequence.resetRootEntityPosition()
     }
     
     func toggleTo(_ cameraMode: ARView.CameraMode, onStart: Bool = false) {
@@ -120,19 +132,29 @@ import Globe
         addGestures()
     }
     
+    private var arAnchor: AnchorEntity {
+        guard let raycastResult = arView.raycast(
+                from: arView.center,
+                allowing: .estimatedPlane,
+                alignment: .horizontal
+        ).first else {
+            print("Getting arAnchor position using standard plane detection method")
+            return AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: anchorBounds))
+        }
+        
+        let hitPosition = raycastResult.worldTransform
+        print("Getting arAnchor using raycast at \(hitPosition)")
+        return AnchorEntity(world: hitPosition)
+    }
+    
     private func toggleToArView(onStart: Bool = false) {
         print("ER3DRealityViewModel.toggleToArView(onStart: Bool = \(onStart))")
         addSceneUnderstanding()
         arView.cameraMode = .ar
         
-        arView.scene.anchors.removeAll()
-        let arAnchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: anchorBounds))
-        floor.setParent(arAnchor)
-        sequence.rootEntity?.setParent(floor)
-        sequence.rootEntity?.move(to: .identity, relativeTo: floor, duration: sequence.animationDuration)
+        setAnchor(to: arAnchor)
+        parentRootEntityToFloor()
 
-        arView.scene.anchors.append(arAnchor)
-        
         sequence.animateEnteringScene()
     }
     
@@ -157,17 +179,23 @@ import Globe
         removeSceneUnderstanding()
         arView.cameraMode = .nonAR
         
-        arView.scene.anchors.removeAll()
-        floor.setParent(standardAnchor, preservingWorldTransform: true)
-        sequence.rootEntity?.setParent(floor, preservingWorldTransform: true)
-        sequence.rootEntity?.move(to: .identity, relativeTo: floor, duration: sequence.animationDuration)
-        
-        arView.scene.anchors.append(standardAnchor)
+        setAnchor(to: standardAnchor)
+        parentRootEntityToFloor()
 
-        resetFloorPosition()
         repositionStandardCamera()
 
         sequence.animateEnteringScene()
+    }
+    
+    // MARK: - Scene
+    
+    /// Action when the user taps the reset button from the `BottomButtons`
+    func resetScene() {
+        if arView.cameraMode == .ar {
+            setAnchor(to: arAnchor)
+        }
+        resetFloorPosition()
+        sequence.resetRootEntityPosition()
     }
     
     private let sceneUnderstandingOptions: [ARView.Environment.SceneUnderstanding.Options] = [

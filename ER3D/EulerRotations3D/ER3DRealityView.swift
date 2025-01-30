@@ -67,7 +67,8 @@ struct ER3DRealityView : View {
             ER3DControls(
                 controlVisibility: $viewModel.controlVisibility,
                 sequence: $viewModel.sequence,
-                resetLatLong: { stateToReset in viewModel.resetLatLong(stateToReset) }
+                resetLatLong: { stateToReset in viewModel.resetLatLong(stateToReset) },
+                resetScene: { viewModel.resetScene() }
             )
         }
     }

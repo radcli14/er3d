@@ -124,11 +124,29 @@ import Globe
         }
     }
     
+    func resetRootEntityPosition() {
+        //var transform: Transform
+        let transform = switch rootEntity {
+        case geodetic: baseFrameTransformWhenEarthRemoved
+        default: earthTransformWhenEntering
+        }
+        rootEntity?.move(to: transform, relativeTo: rootEntity?.parent, duration: animationDuration)
+    }
+    
+    var earthTransformWhenEntering: Transform {
+        Transform(
+            scale: .one,
+            rotation: simd_quatf(angle: -long.radians + 0.5 * .pi, axis: SIMD3(0, 1, 0)),
+            translation: SIMD3(0, 0.7, 0)
+        )
+    }
+    
     /// Animate the globe appearing and rotating to its initial longitude
     func animateEarthEnteringScene() {
         print("YawPitchRollSequence.animateEnteringScene()")
-        guard let sphere else { return }
-        print("  - Got sphere")
+        sphere?.transform.scale = .zero
+        //guard let sphere else { return }
+        /*print("  - Got sphere")
         // Get the default transform
         var transform = sphere.transform
         sphere.transform.scale = .zero
@@ -137,9 +155,9 @@ import Globe
         transform.scale = .zero
         transform.translation = SIMD3(0, 0.7, 0)
         transform.rotation = simd_quatf(angle: -long.radians + 0.5 * .pi, axis: SIMD3(0, 1, 0))
-        transform.scale = SIMD3<Float>(1.0, 1.0, 1.0)
-        sphere.move(to: transform, relativeTo: sphere.parent, duration: animationDuration)
-        print("  - Moving to \(transform)")
+        transform.scale = SIMD3<Float>(1.0, 1.0, 1.0)*/
+        sphere?.move(to: earthTransformWhenEntering, relativeTo: sphere?.parent, duration: animationDuration)
+        print("  - Moving to \(earthTransformWhenEntering)")
     }
     
     func animateEarthLeavingScene() {
