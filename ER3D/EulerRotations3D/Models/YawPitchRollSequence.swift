@@ -172,9 +172,9 @@ import Globe
         // This must be on some delay, because initially the globe scale is zero.
         // If the animation starts instantly, a divide-by-zero occurs, and the ship disappears.
         // The time interval I selected was through trial and error to get a smooth transition.
-        Timer.scheduledTimer(withTimeInterval: 0.3 * animationDuration, repeats: false) { timer in
+        Timer.scheduledTimer(withTimeInterval: 0.25 * animationDuration, repeats: false) { timer in
             self.geodetic?.setParent(self.earthRadius, preservingWorldTransform: true)
-            self.geodetic?.move(to: self.baseTransformWhenEarthIsVisible, relativeTo: self.earthRadius, duration: 0.7 * self.animationDuration)
+            self.geodetic?.move(to: self.baseTransformWhenEarthIsVisible, relativeTo: self.earthRadius, duration: 0.75 * self.animationDuration)
         }
         
         rootEntity = sphere

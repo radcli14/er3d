@@ -34,11 +34,11 @@ class ProcessionNutationSpinSequence: RotationSequence {
     // MARK: - Camera
     
     /// Tilt angle of the camera, negative pitch is tilting downward toward the subject
-    let cameraPitch: Float = -0.4
+    let cameraPitch: Float = -0.45
     
     /// Rotation angle of the camera about the vertical axis
-    let cameraYaw: Float = 0.61
+    let cameraYaw: Float = 0.607
     
     /// Position of the camera relative to the subject at the world origin, positive-y is vertical, positive-z is backward
-    let cameraTranslation = SIMD3<Float>(2.0, 1.75, 2.9)
+    let cameraTranslation = SIMD3<Float>(2.0, 2.2, 3.0)
 }

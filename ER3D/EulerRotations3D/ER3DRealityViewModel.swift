@@ -9,10 +9,12 @@ import Foundation
 import RealityKit
 import SwiftUI
 import UIKit
+import Globe
 
 @Observable class ER3DRealityViewModel {
     var arView: ARView
     var controlVisibility: ControlVisibility = .bottomButtons
+    var grid: Entity?
     
     // MARK: - Initialization
     
@@ -28,10 +30,15 @@ import UIKit
 
         // Setup the camera with initial position
         standardCamera.camera.fieldOfViewInDegrees = 60
+        standardCamera.camera.near = 0.1
+        standardCamera.camera.far = 50
         standardCamera.setParent(standardAnchor)
-        //let light = SpotLight()
-        //light.setParent(standardCamera)
         repositionStandardCamera()
+        
+        Task {
+            await grid = try? Entity(named: "Grid", in: Globe.globeBundle)
+            await grid?.setParent(standardAnchor)
+        }
         
         // Toggle to the applicable camera mode once the sequence rootEntity is ready
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
@@ -83,6 +90,9 @@ import UIKit
             self.sequence.animateEnteringScene()
             self.repositionStandardCamera()
         }
+        if arView.cameraMode == .nonAR {
+            resetFloorPosition()
+        }
     }
     
     // MARK: - AR View Modes
@@ -95,6 +105,10 @@ import UIKit
         mesh: .generateCylinder(height: 0, radius: 0.5 * anchorSize),
         materials: [SimpleMaterial(color: .clear, isMetallic: true)]
     )
+    
+    private func resetFloorPosition() {
+        floor.move(to: .identity, relativeTo: nil, duration: sequence.animationDuration)
+    }
     
     func toggleTo(_ cameraMode: ARView.CameraMode, onStart: Bool = false) {
         removeAllGestures()
@@ -147,11 +161,10 @@ import UIKit
         floor.setParent(standardAnchor, preservingWorldTransform: true)
         sequence.rootEntity?.setParent(floor, preservingWorldTransform: true)
         sequence.rootEntity?.move(to: .identity, relativeTo: floor, duration: sequence.animationDuration)
-        floor.move(to: .identity, relativeTo: floor.parent, duration: sequence.animationDuration)
         
         arView.scene.anchors.append(standardAnchor)
-        //arView.scene.addAnchor(standardCameraAnchor)
-        
+
+        resetFloorPosition()
         repositionStandardCamera()
 
         sequence.animateEnteringScene()
@@ -270,6 +283,9 @@ import UIKit
         switch visible {
         case true: yawPitchRollSequence.addEarth(parent: floor)
         case false: yawPitchRollSequence.removeEarth(parent: floor)
+        }
+        if arView.cameraMode == .nonAR {
+            resetFloorPosition()
         }
         repositionStandardCamera()
     }

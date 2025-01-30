@@ -467,59 +467,12 @@
         "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
         "Root",
         "Sphere",
-        "ZUp",
-        "RefFrame"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Sphere",
         "gyro",
         "Frame"
       ],
       {
         "disallowsFraming" : false,
         "isExpanded" : false,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Materials"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Sphere",
-        "ZUp"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Sphere"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
         "isLocked" : false
       },
       [
@@ -532,13 +485,41 @@
         "disallowsFraming" : false,
         "isExpanded" : false,
         "isLocked" : false
+      }
+    ]
+  },
+  "CC06D34D-5B70-4018-AB85-C0B6F154471B" : {
+    "objectMetadataList" : [
+      [
+        "CC06D34D-5B70-4018-AB85-C0B6F154471B",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
       },
       [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
+        "CC06D34D-5B70-4018-AB85-C0B6F154471B",
         "Root",
-        "Sphere",
-        "ZUp",
-        "Procession"
+        "GridMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "CC06D34D-5B70-4018-AB85-C0B6F154471B",
+        "Root",
+        "Capsule"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "CC06D34D-5B70-4018-AB85-C0B6F154471B",
+        "Root",
+        "Cube"
       ],
       {
         "isExpanded" : true,
