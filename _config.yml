@@ -36,7 +36,7 @@ mastodon_link                             :
 features                                  :
 
   - title                                 : Augmented Reality
-    description                           : Enhance your comprehension of complex math by rendering in the real-world.
+    description                           : Enhance your comprehension by rendering in the real-world.
     fontawesome_icon_name                 : magic
 
   - title                                 : Euler Angle Controls
@@ -48,7 +48,7 @@ features                                  :
     fontawesome_icon_name                 : info-circle
 
   - title                                 : Globe Earth
-    description                           : May be rotated to visualize locations at different latitudes and longitudes.
+    description                           : Rotate to visualize locations at different latitudes and longitudes.
     fontawesome_icon_name                 : star
 
   - title                                 : Gyroscope
