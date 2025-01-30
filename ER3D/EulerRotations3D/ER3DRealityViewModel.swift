@@ -26,6 +26,13 @@ import UIKit
         // Provide the initial Earth visibility to the YawPitchRollSequence
         yawPitchRollSequence = YawPitchRollSequence(earthVisibility: settings.earthVisibility)
 
+        // Setup the camera with initial position
+        standardCamera.camera.fieldOfViewInDegrees = 60
+        standardCamera.setParent(standardAnchor)
+        //let light = SpotLight()
+        //light.setParent(standardCamera)
+        repositionStandardCamera()
+        
         // Toggle to the applicable camera mode once the sequence rootEntity is ready
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
             if self.sequence.rootEntity != nil {
@@ -74,6 +81,7 @@ import UIKit
             self.selectedSequence = eulerSequence
             self.sequence.rootEntity?.setParent(self.floor)
             self.sequence.animateEnteringScene()
+            self.repositionStandardCamera()
         }
     }
     
@@ -100,55 +108,53 @@ import UIKit
     
     private func toggleToArView(onStart: Bool = false) {
         print("ER3DRealityViewModel.toggleToArView(onStart: Bool = \(onStart))")
-        guard let rootEntity = sequence.rootEntity else { return }
         addSceneUnderstanding()
         arView.cameraMode = .ar
         
         arView.scene.anchors.removeAll()
         let arAnchor = AnchorEntity(.plane(.horizontal, classification: .any, minimumBounds: anchorBounds))
         floor.setParent(arAnchor)
-        rootEntity.setParent(floor)
-        rootEntity.transform = .identity
-        print("floor.children = \(floor.children.map { $0.name })")
+        sequence.rootEntity?.setParent(floor)
+        sequence.rootEntity?.move(to: .identity, relativeTo: floor, duration: sequence.animationDuration)
 
         arView.scene.anchors.append(arAnchor)
         
         sequence.animateEnteringScene()
     }
     
+    /// Anchor
+    private let standardAnchor = AnchorEntity(world: .zero)
+    
+    /// Perspective camera with specified field of view
+    var standardCamera = PerspectiveCamera()
+    
+    private func repositionStandardCamera() {
+        print("repositionStandardCamera to \(sequence.cameraTransform) with sequence \(sequence)")
+        standardCamera.move(
+            to: sequence.cameraTransform,
+            relativeTo: standardAnchor,
+            duration: sequence.animationDuration
+        )
+    }
+    
+    
     private func toggleToStandardView(onStart: Bool = false) {
         print("ER3DRealityViewModel.toggleToStandardView(onStart: Bool = \(onStart))")
-        guard let rootEntity = sequence.rootEntity else { return }
         removeSceneUnderstanding()
         arView.cameraMode = .nonAR
         
         arView.scene.anchors.removeAll()
-        let standardAnchor = AnchorEntity(world: .zero)
-        floor.setParent(standardAnchor)
-        floor.transform = .identity
-        rootEntity.setParent(floor)
+        floor.setParent(standardAnchor, preservingWorldTransform: true)
+        sequence.rootEntity?.setParent(floor, preservingWorldTransform: true)
+        sequence.rootEntity?.move(to: .identity, relativeTo: floor, duration: sequence.animationDuration)
+        floor.move(to: .identity, relativeTo: floor.parent, duration: sequence.animationDuration)
         
         arView.scene.anchors.append(standardAnchor)
+        //arView.scene.addAnchor(standardCameraAnchor)
         
-        arView.scene.addAnchor(standardCameraAnchor)
-        
-        print("anchor = \(standardAnchor)\nglobe.transform = \(rootEntity.transform)\n\nsphere.transform = \(rootEntity.findEntity(named: "Sphere")!.transform)\n\ntestBox.transform = \(floor.transform)\n")
-        print("Globe is enabled: \(rootEntity.isEnabled)")
-        print("Globe parent: \(String(describing: rootEntity.parent?.name)) is anchor \(rootEntity.parent == standardAnchor)")
-        print("Anchor children: \(standardAnchor.children.map { $0.name })")
-        
+        repositionStandardCamera()
+
         sequence.animateEnteringScene()
-    }
-    
-    /// Camera anchor to be used when in `.nonAR` mode
-    private var standardCameraAnchor: AnchorEntity {
-        let cameraEntity = PerspectiveCamera()
-        cameraEntity.camera.fieldOfViewInDegrees = 60
-        var cameraTransform = Transform(pitch: -0.1)
-        cameraTransform.translation = SIMD3<Float>(0, 1.2, 1)
-        let standardCameraAnchor = AnchorEntity(world: cameraTransform.matrix)
-        standardCameraAnchor.addChild(cameraEntity)
-        return standardCameraAnchor
     }
     
     private let sceneUnderstandingOptions: [ARView.Environment.SceneUnderstanding.Options] = [
@@ -265,5 +271,6 @@ import UIKit
         case true: yawPitchRollSequence.addEarth(parent: floor)
         case false: yawPitchRollSequence.removeEarth(parent: floor)
         }
+        repositionStandardCamera()
     }
 }

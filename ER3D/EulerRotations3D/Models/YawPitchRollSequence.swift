@@ -88,6 +88,32 @@ import Globe
         globe?.findEntity(named: "SunElevation")?.transform.rotation = elRotation
     }
     
+    // MARK: - Camera
+    
+    /// Tilt angle of the camera, negative pitch is tilting downward toward the subject
+    var cameraPitch: Float {
+        switch rootEntity {
+        case geodetic: return -0.7
+        default: return -0.1
+        }
+    }
+    
+    /// Rotation angle of the camera about the vertical axis
+    var cameraYaw: Float {
+        switch rootEntity {
+        case geodetic: return 0.47
+        default: return 0
+        }
+    }
+    
+    /// Position of the camera relative to the subject at the world origin, positive-y is vertical, positive-z is backward
+    var cameraTranslation: SIMD3<Float> {
+        switch rootEntity {
+        case geodetic: return SIMD3<Float>(0.4, 1.3, 0.8)
+        default: return SIMD3<Float>(0, 1.2, 1)
+        }
+    }
+    
     // MARK: - Animation
     
     func animateEnteringScene() {

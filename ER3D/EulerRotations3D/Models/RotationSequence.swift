@@ -17,6 +17,10 @@ protocol RotationSequence {
     
     var rootEntity: Entity? { get }
     
+    var cameraPitch: Float { get }
+    var cameraYaw: Float { get }
+    var cameraTranslation: SIMD3<Float> { get }
+    
     func animateEnteringScene()
     func animateLeavingScene()
 }
@@ -32,6 +36,21 @@ extension RotationSequence {
         third.radians = 0
     }
     
+    // MARK: - Camera
+    
+    var cameraRotation: simd_quatf {
+        Transform(pitch: cameraPitch, yaw: cameraYaw).rotation
+    }
+    
+    /// Camera transform after applying rotation and translation of the camera relative to the subject at the world origin
+    var cameraTransform: Transform {
+        return Transform(rotation: cameraRotation, translation: cameraTranslation)
+    }
+
+    // MARK: - Animation
+    
+    var animationDuration: Double { 2 }
+    
     func animateEnteringScene() {
         rootEntity?.transform = Transform(scale: .zero)
         rootEntity?.move(to: Transform.identity, relativeTo: rootEntity?.parent, duration: animationDuration)
@@ -41,8 +60,6 @@ extension RotationSequence {
         let transform = Transform(scale: .zero)
         rootEntity?.move(to: transform, relativeTo: rootEntity?.parent, duration: animationDuration)
     }
-    
-    var animationDuration: Double { 2 }
     
     func toggleFrames(visible: Bool) {
         rootEntity?.visitChildren { child in

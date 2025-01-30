@@ -3,7 +3,30 @@
     "objectMetadataList" : [
       [
         "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
-        "Root"
+        "Root",
+        "YawFrame",
+        "PitchFrame",
+        "RollFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
+        "Root",
+        "YawFrame",
+        "frame90pct"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
+        "Root",
+        "YawFrame",
+        "PitchFrame"
       ],
       {
         "isExpanded" : true,
@@ -20,10 +43,7 @@
       },
       [
         "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
-        "Root",
-        "YawFrame",
-        "PitchFrame",
-        "RollFrame"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -33,16 +53,6 @@
         "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
         "Root",
         "YawFrame"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "4D79A6BE-1907-488C-AA0F-04CEB8D2157E",
-        "Root",
-        "YawFrame",
-        "PitchFrame"
       ],
       {
         "isExpanded" : true,
@@ -55,110 +65,9 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Sphere",
-        "ECEF",
-        "Long",
-        "Lat",
-        "EarthRadius",
-        "LocalGeodeticFrame",
-        "YawFrame"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Cylinder"
-      ],
-      {
-        "disallowsFraming" : false,
-        "isExpanded" : false,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "TouchCylinder"
-      ],
-      {
-        "disallowsFraming" : false,
-        "isExpanded" : false,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "Long",
-        "Lat",
-        "EarthRadius"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "SunAzimuth"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "SkySphere"
-      ],
-      {
-        "disallowsFraming" : true,
-        "isExpanded" : false,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "Long",
-        "Lat",
-        "EarthRadius",
-        "LocalGeodeticFrame",
-        "YawFrame",
-        "PitchFrame"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere"
+        "Earth",
+        "geom",
+        "realistic"
       ],
       {
         "isExpanded" : true,
@@ -177,10 +86,7 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Sphere",
-        "ECEF",
-        "SunAzimuth",
-        "SunElevation"
+        "Sphere"
       ],
       {
         "isExpanded" : true,
@@ -196,156 +102,7 @@
         "EarthRadius",
         "LocalGeodeticFrame",
         "YawFrame",
-        "PitchFrame",
-        "RollFrame"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "geom",
-        "realistic",
-        "geo"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "SunAzimuth",
-        "SunElevation",
-        "Sun"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "SunMidnightEquinox",
-        "SunAzimuth",
-        "SunElevation"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "SunMidnightEquinox",
-        "SunAzimuth",
-        "SunElevation",
-        "Sun"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "geom"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "geom",
-        "realistic",
-        "materials",
-        "usdpreviewsurface7sg"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "Long",
-        "Lat",
-        "EarthRadius",
-        "LocalGeodeticFrame"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "ECEF",
-        "Long",
-        "Lat",
-        "EarthRadius",
-        "LocalGeodeticFrame",
-        "frame"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Sphere",
-        "Long",
-        "Lat"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "ECEF"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "ECEF",
-        "SunAzimuth"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
-        "Root",
-        "Earth",
-        "ECEF",
-        "SunAzimuth",
-        "SunElevation"
+        "PitchFrame"
       ],
       {
         "isExpanded" : true,
@@ -368,7 +125,11 @@
         "Root",
         "Sphere",
         "ECEF",
-        "Long"
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame",
+        "YawFrame"
       ],
       {
         "isExpanded" : true,
@@ -379,7 +140,111 @@
         "Root",
         "Earth",
         "geom",
-        "realistic"
+        "realistic",
+        "geo",
+        "lod0"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "TouchCylinder"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Cylinder"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "ECEF",
+        "SunAzimuth",
+        "SunElevation"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "SunAzimuth",
+        "SunElevation"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "SunAzimuth",
+        "SunElevation",
+        "Sun"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "ECEF",
+        "SunAzimuth"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "materials",
+        "usdpreviewsurface8sg"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long"
       ],
       {
         "isExpanded" : true,
@@ -398,11 +263,116 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
+        "Sphere",
+        "Long",
+        "Lat"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "SunMidnightEquinox",
+        "SunAzimuth",
+        "SunElevation",
+        "Sun"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "SkySphere"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "SunAzimuth"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "ECEF"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
         "Earth",
         "geom",
         "realistic",
-        "geo",
-        "lod0"
+        "geo"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Earth",
+        "geom",
+        "realistic",
+        "materials",
+        "usdpreviewsurface7sg"
       ],
       {
         "isExpanded" : true,
@@ -427,11 +397,34 @@
       [
         "7AE4F243-F936-4614-B941-5EECC72DB0A0",
         "Root",
-        "Earth",
-        "geom",
-        "realistic",
-        "materials",
-        "usdpreviewsurface8sg"
+        "Sphere",
+        "ECEF",
+        "SunMidnightEquinox",
+        "SunAzimuth",
+        "SunElevation"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame",
+        "frame"
       ],
       {
         "isExpanded" : true,
@@ -448,6 +441,23 @@
       {
         "isExpanded" : true,
         "isLocked" : false
+      },
+      [
+        "7AE4F243-F936-4614-B941-5EECC72DB0A0",
+        "Root",
+        "Sphere",
+        "ECEF",
+        "Long",
+        "Lat",
+        "EarthRadius",
+        "LocalGeodeticFrame",
+        "YawFrame",
+        "PitchFrame",
+        "RollFrame"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
       }
     ]
   },
@@ -457,27 +467,8 @@
         "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
         "Root",
         "Sphere",
-        "ZUp"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Sphere"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
-        "Root",
-        "Sphere",
         "ZUp",
-        "Procession"
+        "RefFrame"
       ],
       {
         "isExpanded" : true,
@@ -508,8 +499,16 @@
         "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
         "Root",
         "Sphere",
-        "ZUp",
-        "RefFrame"
+        "ZUp"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
+        "Root",
+        "Sphere"
       ],
       {
         "isExpanded" : true,
@@ -532,6 +531,17 @@
       {
         "disallowsFraming" : false,
         "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "453F3219-C131-41E0-BBD9-9DEB0766C0D7",
+        "Root",
+        "Sphere",
+        "ZUp",
+        "Procession"
+      ],
+      {
+        "isExpanded" : true,
         "isLocked" : false
       }
     ]

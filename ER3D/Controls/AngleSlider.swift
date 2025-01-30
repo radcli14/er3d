@@ -9,6 +9,8 @@ import SwiftUI
 
 /// A custom slider using specified angle limits, steps, and labels
 struct AngleSlider: View {
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+    
     @Binding var angle: EulerAngle
     
     var body: some View {
@@ -26,7 +28,7 @@ struct AngleSlider: View {
                     Image(systemName: "arrow.counterclockwise")
                 }
                 Text("\(angle.name) \(angle.symbol) = \(String(format: "%.0f", angle.degrees)) deg")
-                    .font(.callout)
+                    .font(verticalSizeClass == .compact ? .footnote : .callout)
                     .foregroundColor(.secondary)
                 Spacer()
                 InfoButtonWithPopover(key: angle.name)
