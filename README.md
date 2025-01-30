@@ -1,100 +1,113 @@
-<p align="center">
-  <img src="/docs/animation/animation.gif" width="150">
-</p>
-<h1 align="center">Mobile App Landing Page Template</h1>
-<p>
-  <a href="/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="MIT"></a>
-  <a href="https://medium.com/@sandoche" target="_blank"><img src="https://badgen.net/badge/icon/medium?icon=medium&label" alt="medium: sandoche"></a>
-  <a href="https://twitter.com/sandochee">
-    <img alt="Twitter: sandochee" src="https://img.shields.io/twitter/follow/sandochee.svg?style=social" target="_blank" />
-  </a>
-</p>
+# Automatic App Landing Page
+**Create and deploy an iOS app landing page on GitHub Pages in only five minutes.**
 
-📱 Free to use static generated landing page template for your mobile app
+Designed for GitHub Pages for super easy set up. 
 
-## 💡 Features
-Mobile App Landing Page Template comes with pre-installed features and options:
-- Display app icon
-- Show unlimited app screenshots
-- Link to Google Play
-- Link to the AppStore
-- Link to the Web App
-- Press mention section
-- Product Hunt floating prompt
-- Privacy policy Page
-- Google Analytics
-- Cookie Consent
-- Automatic dark theme
-- Doorbell widget
-- Github forking banner
+🔧 Fork this repo
 
-## ✨ Demo
-Check out websites using the Mobile App Template:
-- https://mobileapplandingpage.learn.uno (demo website)
-- https://gitnews.learn.uno
-- https://textblast.learn.uno
-- https://infinideas.learn.uno
-- https://www.therandominion.com/
+🗝 Enter iOS App ID in `_config.yml`
 
-## 📖 How to use
+📲 Upload video preview or screenshot
 
-### The normal way
+🎨 Customise site in `_config.yml` (no HTML/CSS)
 
-1. Fork this project
-2. Edit `_config.yml`, feel free to commut/uncomment what you need (google analtytics, or github for example)
-3. Edit `_data/app.yml` with your app data
-4. Update the text from `_data/strings.yml`, you can customize there the footer's links
-5. Edit icons and screenshots inside the `_images` folder and `icon.png` in the root
-6. Edit `_src/index.js` to update the product hunt modal (or to remove it) and to remove the darkmode plugin if you don't want it
-7. Deploy (on netlify, gitpages or surge, they are all free)
+📝 Write Privacy Policy as markdown in `privacypolicy.md`
 
-### The no-code way
+🕒 Keep a changelog in `CHANGELOG.md`
 
-1. Go to https://t3mpl.n4no.com/editor/#manifest=../templates/mobile-app-landing-page/template.yaml
-2. Edit the settings on the left part
-3. Click on the `Publish` button then `Save Webpage as .zip`
-4. Unzip and upload the folder to your server (you can drag'n'drop it in Netlify to host it there for free)
+✅ Site becomes live at GitHub Pages repository URL, e.g. `https://your-username.github.io/your-repo-name/`.
 
-## ⚙️ How to run
+<img src="https://emilbaehr.com/files/jayson1.png" width="440"> <img src="https://emilbaehr.com/files/slor1.png" width="440">
 
-### Pre-requisites
-- NodeJS
-- Ruby, Bundler
 
-### Install
-```
-npm install
-bundler install
-```
 
-### Development
-```
-npm start
-```
 
-### Build
-```
-npm run build
-```
+## Quick Start
 
-### Deploy to netlify (for free)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/sandoche/Mobile-app-landingpage-template)
+### Step 1: Fork this repo.
+After forking the repo, your site will be live immediately on your personal Github Pages account, e.g. `https://yourusername.github.io/your-repo-name/`.
 
-### More documentation
-This templates uses [Jekyll-webpack-boilerplate](https://github.com/sandoche/Jekyll-webpack-boilerplate), read more documentation there.
+*Make sure GitHub Pages is enabled for your repo. It might take some time for the site to propagate entirely.*
 
-## 🤝 Contributing
-Contributions, issues and feature requests are welcome!
 
-## ⭐️ Show your support
-Please ⭐️ this repository if this project helped you!
 
-<a href="https://www.patreon.com/sandoche">[![patreon.png](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/sandoche)</a>
+### Step 2: Enter iOS App ID in `_config.yml`
+Enter your iOS app ID in the `ios_app_id` field and commit your changes. Your site will automatically rebuild with your app icon, name, price and link to App Store.
 
-## 🍺 Buy me a beer 
-If you like this project, feel free to donate:
-* PayPal: https://www.paypal.me/kanbanote
-* Bitcoin: 19JiNZ1LkMaz57tewqJaTg2hQWH4RgW4Yp
-* Ethereum: 0xded81fa4624e05339924355fe3504ba9587d5419
-* Monero: 43jqzMquW2q989UKSrB2YbeffhmJhbYb2Yxu289bv7pLRh4xVgMKj5yTd52iL6x1dvCYs9ERg5biHYxMjGkpSTs6S2jMyJn
-* Motive: MOTIV-25T5-SD65-V7LJ-BBWRD (Get Motive Now: https://motive.network)
+You can go on with customising almost anything in the `_config.yml` file. 
+
+Things you can customise in `_config.yml`:
+- App Name
+- App Icon
+- App Description
+- App Price
+- App Store Link
+- Play Store Link
+- Press Kit Download Link
+- Cover Image
+- Cover Overlay Color
+- Background Color
+- Text Colors
+- iPhone Device Color
+- Your Name / Company Name
+- Link to Website
+- Social Links and Contact Info
+- Feature List (Title, text, icon)
+
+
+
+### Step 3: Add screenshot or video
+
+#### Adding a screenshot
+Upload a `.png` or `.jpg` of your app to the folder `assets/screenshot/`. The name does not matter. Be sure to delete the placeholder `yourscreenshot.png`.
+
+#### Adding video
+Upload your video to the folder `assets/videos/`. To have support for most browsers, you need to upload two files – one for Safari and one for Chrome/Firefox.
+
+Video formats supported by Chrome and Firefox:
+- `.webm`
+- `.ogg`
+
+Video formats supported by Safari:
+- `.mp4`
+- `.mov`
+
+#### Resolutions
+The videos and screenshots must have one of the following resolutions:
+- 828x1792
+- 1125x2436
+- 1242x2688
+
+
+
+### Step 4: Edit (or remove) Privacy Policy and Changelog
+Your site automatically includes pages for a Privacy Policy and a Changelog. Change the content of these pages by editing the `privacypolicy.md` and `CHANGELOG.md` files in the `_pages` directory.
+
+In each of the markdown files, you can set the `include_in_header:` value to either `true` or `false`. This determines if the page is included in the top navigation.
+By default, only the Changelog is included in the top navigation. The title of the navigation item can also be edited, by editing the `title:` in each markdown file.
+
+If you need to, you can create additional markdown based pages just by creating an `.md` file like the `privacypolicy.md` and `CHANGELOG.md` files in the `_pages` directory.
+
+**Please note:** The Privacy Policy and Changelog provided are written using dummy text, so please adapt each of them for your own app.
+You can also choose not to include these pages, by simple deleting the `privacypolicy.md` and `CHANGELOG.md` files.
+
+
+
+
+## Feedback
+If you have feedback regarding bugs or improvements, open an issue, @ me on Twitter or write me an email. You can find my contact info on my website.
+
+I'd love to see the sites you create using this little tool.
+
+## Credits
+- [Jekyll](https://github.com/jekyll/jekyll)
+- [FontAwesome](https://fontawesome.github.io/Font-Awesome/)
+
+## Donations
+[Donations are welcome](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S8ZZT3JXJPN92&currency_code=USD&source=url)
+
+## Author
+[Emil Baehr](https://emilbaehr.com/)
+
+## License
+[MIT License](LICENSE)
