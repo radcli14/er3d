@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import TipKit
 
 /// The stack of three sliders representing the yaw, pitch, and roll angles
 struct EulerAngleControls: View {
@@ -34,7 +33,6 @@ struct EulerAngleControls: View {
                 .multilineTextAlignment(.center)
             InfoButtonWithPopover(key: sequence.name, isFilled: true)
         }
-        .popoverTip(tips.currentTip)
     }
     
     @ViewBuilder
@@ -64,12 +62,6 @@ struct EulerAngleControls: View {
     
     var isLandscape: Bool {
         verticalSizeClass == .compact
-    }
-    
-    // MARK: - Tips
-    
-    @State var tips = TipGroup(.firstAvailable) {
-        [AngleTips.info, .reset]
     }
     
     // MARK: - Constants

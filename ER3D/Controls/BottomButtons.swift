@@ -23,6 +23,7 @@ struct BottomButtons: View {
             bottomButton("rotate.3d.circle", visibility: .angleControls)
             if settings.sequence == .yawPitchRoll && settings.earthVisibility {
                 bottomButton("globe", visibility: .latLongControls)
+                    .popoverTip(ControlTips.latLong)
             }
             
             if settingsAreAvailable {
@@ -37,7 +38,6 @@ struct BottomButtons: View {
         }
         .font(.largeTitle)
         .padding(Constants.padding)
-        .popoverTip(tips.currentTip)
     }
     
     /// A button with a system icon that sets the `controlVisibility` to a specified value when tapped
@@ -49,12 +49,6 @@ struct BottomButtons: View {
         } label: {
             Image(systemName: systemName)
         }
-    }
-    
-    // MARK: - Tips
-
-    @State var tips = TipGroup(.firstAvailable) {
-        [ControlTips.bottomButtons, .eulerAngles, .latLong, .settings, .reset, .translation, .rotation, .scale]
     }
     
     // MARK: Constants

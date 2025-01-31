@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 struct ER3DControls: View {
     @Binding var controlVisibility: ControlVisibility
@@ -18,22 +19,36 @@ struct ER3DControls: View {
             switch controlVisibility {
             case .angleControls:
                 EulerAngleControls(sequence: $sequence)
+                    .popoverTip(angleTips.currentTip)
             case .latLongControls:
                 LatLongAngleIndicators(sequence: sequence as? HasLatLong) { stateToReset in
                     resetLatLong(stateToReset)
                 }
+                .popoverTip(angleTips.currentTip)
             case .settings:
                 SettingsContent()
             case .bottomButtons:
                 BottomButtons(controlVisibility: $controlVisibility) {
                     resetScene()
                 }
+                .popoverTip(controlTips.currentTip)
             }
         }
         .background(.background)
         .cornerRadius(Constants.controlOverlayRadius)
         .padding(Constants.controlOverlayRadius)
     }
+    
+    // MARK: - Tips
+    
+    @State var controlTips = TipGroup(.firstAvailable) {
+        [ControlTips.bottomButtons, .eulerAngles, .settings, .reset, .translation, .rotation, .scale]
+    }
+    @State var angleTips = TipGroup(.firstAvailable) {
+        [AngleTips.info, .reset]
+    }
+    
+    // MARK: - Constants
     
     private struct Constants {
         static let controlOverlayPadding = CGFloat(4)

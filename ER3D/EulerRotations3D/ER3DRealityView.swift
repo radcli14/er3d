@@ -70,9 +70,9 @@ struct ER3DRealityView : View {
         .task {
             // Configure and load your tips at app launch.
             do {
-                try Tips.configure()/*[
+                try Tips.configure([
                     .displayFrequency(.hourly)
-                ])*/
+                ])
             }
             catch {
                 // Handle TipKit errors
