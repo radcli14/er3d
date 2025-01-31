@@ -20,7 +20,7 @@ struct BottomButtons: View {
     var body: some View {
         HStack(spacing: Constants.spacing) {
             bottomButton("rotate.3d.circle", visibility: .angleControls)
-            if settings.sequence == .yawPitchRoll {
+            if settings.sequence == .yawPitchRoll && settings.earthVisibility {
                 bottomButton("globe", visibility: .latLongControls)
             }
             if settingsAreAvailable {

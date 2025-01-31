@@ -81,6 +81,7 @@ import Globe
     }
     
     func toggleTo(_ eulerSequence: EulerSequence) {
+        removeAllGestures()
         let oldRootEntity = sequence.rootEntity
         sequence.animateLeavingScene()
         Timer.scheduledTimer(withTimeInterval: sequence.animationDuration, repeats: false) { timer in
@@ -89,6 +90,7 @@ import Globe
             self.parentRootEntityToFloor()
             self.sequence.animateEnteringScene()
             self.repositionStandardCamera()
+            self.addGestures()
         }
         resetFloorPosition()
     }

@@ -31,6 +31,8 @@
 		8AE7E2522D3E7CF400EE4315 /* Globe in Frameworks */ = {isa = PBXBuildFile; productRef = 8AE7E2512D3E7CF400EE4315 /* Globe */; };
 		8AF556732D4AB19900E7E42B /* Entity+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF556722D4AB19900E7E42B /* Entity+Extensions.swift */; };
 		8AF556742D4AB19900E7E42B /* Entity+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF556722D4AB19900E7E42B /* Entity+Extensions.swift */; };
+		8AF556792D4CFC6100E7E42B /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF556782D4CFC6100E7E42B /* Tips.swift */; };
+		8AF5567A2D4CFC6100E7E42B /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF556782D4CFC6100E7E42B /* Tips.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,7 @@
 		8A66F7EA2C0A313D001DFB0B /* Planets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
 		8AD2ECCA2C18A98000491255 /* VariableDescriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableDescriptions.swift; sourceTree = "<group>"; };
 		8AF556722D4AB19900E7E42B /* Entity+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+Extensions.swift"; sourceTree = "<group>"; };
+		8AF556782D4CFC6100E7E42B /* Tips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -231,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				8AD2ECCA2C18A98000491255 /* VariableDescriptions.swift */,
+				8AF556782D4CFC6100E7E42B /* Tips.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -412,6 +416,7 @@
 				8AD2ECCB2C18A98000491255 /* VariableDescriptions.swift in Sources */,
 				8A66F7E72C0A2B5D001DFB0B /* SceneKit+Extensions.swift in Sources */,
 				8A66F7EB2C0A313D001DFB0B /* Planets.swift in Sources */,
+				8AF556792D4CFC6100E7E42B /* Tips.swift in Sources */,
 				8AF556732D4AB19900E7E42B /* Entity+Extensions.swift in Sources */,
 				8A45100328E65D46009BD378 /* ER3DView.swift in Sources */,
 				8A45102B28E65DCA009BD378 /* ER3DViewModel.swift in Sources */,
@@ -447,6 +452,7 @@
 				8A35A7FF2D417D8B006C752A /* Date+Extensions.swift in Sources */,
 				8A4E82FB2D35871900173D0B /* VariableDescriptions.swift in Sources */,
 				8AF556742D4AB19900E7E42B /* Entity+Extensions.swift in Sources */,
+				8AF5567A2D4CFC6100E7E42B /* Tips.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
