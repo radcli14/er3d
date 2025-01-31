@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 struct LatLongAngleIndicators: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
@@ -77,7 +78,16 @@ struct LatLongAngleIndicators: View {
             Spacer()
             InfoButtonWithPopover(key: key)
         }
+        .popoverTip(tips.currentTip)
     }
+    
+    // MARK: - Tips
+    
+    @State var tips = TipGroup(.firstAvailable) {
+        [AngleTips.info, .reset]
+    }
+    
+    // MARK: - Constants
     
     private struct Constants {
         static let padding: CGFloat = 12

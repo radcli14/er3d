@@ -7,9 +7,16 @@
 
 import SwiftUI
 import RealityKit
+import StoreKit
+import TipKit
 
 struct ER3DRealityView : View {
     @Environment(SettingsContent.ViewModel.self) var settings
+    
+    /// Handles requesting a review once the user has spent enough time in the app
+    @Environment(\.requestReview) var requestReview
+    @AppStorage("lastReviewRequestDate") var lastReviewRequestDate: String?
+        
     @State var viewModel = ER3DRealityViewModel()
     
     var body: some View {
@@ -45,7 +52,9 @@ struct ER3DRealityView : View {
             }
         .onTapGesture {
             withAnimation {
+                viewModel.actionCount += 1
                 viewModel.controlVisibility = .bottomButtons
+                attemptReviewRequest()
             }
         }
         .onChange(of: viewModel.controlVisibility) {
@@ -58,6 +67,18 @@ struct ER3DRealityView : View {
             overlayControls
         }
         .edgesIgnoringSafeArea(.all)
+        .task {
+            // Configure and load your tips at app launch.
+            do {
+                try Tips.configure()/*[
+                    .displayFrequency(.hourly)
+                ])*/
+            }
+            catch {
+                // Handle TipKit errors
+                print("Error initializing TipKit \(error.localizedDescription)")
+            }
+        }
     }
     
     private var overlayControls: some View {
@@ -70,6 +91,29 @@ struct ER3DRealityView : View {
                 resetLatLong: { stateToReset in viewModel.resetLatLong(stateToReset) },
                 resetScene: { viewModel.resetScene() }
             )
+        }
+    }
+    
+    // MARK: - Reviews
+    
+    /// Request a review if the user has taken enough action in the app that they might like it
+    func attemptReviewRequest() {
+        // Make sure a review hasn't been requested too recently
+        let dateFormatter = ISO8601DateFormatter()
+        if let lastRequestDateString = lastReviewRequestDate, let lastRequestDate = dateFormatter.date(from: lastRequestDateString) {
+            let secondsSinceLastRequest = Date.now.timeIntervalSince(lastRequestDate)
+            let secondsInOneDay = Double(24 * 60 * 60)
+            if secondsSinceLastRequest < secondsInOneDay {
+                return
+            }
+        }
+
+        // Make sure there is a meaningful amount of user actions
+        if viewModel.actionCount > 20 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                requestReview()
+                lastReviewRequestDate = dateFormatter.string(from: .now)
+            }
         }
     }
 }

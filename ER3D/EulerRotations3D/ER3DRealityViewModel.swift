@@ -16,6 +16,9 @@ import Globe
     var controlVisibility: ControlVisibility = .bottomButtons
     var grid: Entity?
     
+    /// Number of actions the user has taken in the app, used to control when a review gets requesed
+    var actionCount = 0
+    
     // MARK: - Initialization
     
     init(with settings: SettingsContent.ViewModel = SettingsContent.ViewModel()) {
@@ -81,6 +84,7 @@ import Globe
     }
     
     func toggleTo(_ eulerSequence: EulerSequence) {
+        actionCount += 1
         removeAllGestures()
         let oldRootEntity = sequence.rootEntity
         sequence.animateLeavingScene()
@@ -125,6 +129,7 @@ import Globe
     }
     
     func toggleTo(_ cameraMode: ARView.CameraMode, onStart: Bool = false) {
+        actionCount += 1
         removeAllGestures()
         switch cameraMode {
         case .ar: toggleToArView(onStart: onStart)
@@ -193,6 +198,7 @@ import Globe
     
     /// Action when the user taps the reset button from the `BottomButtons`
     func resetScene() {
+        actionCount += 1
         if arView.cameraMode == .ar {
             setAnchor(to: arAnchor)
         }
@@ -274,6 +280,7 @@ import Globe
     
     /// When the user toggles to lat/long control, remove the ARView gestures, or add them back in when toggling away
     func handleControlVisibilityChange() {
+        actionCount += 1
         if controlVisibility == .latLongControls {
             removeTranslationGesture()
         } else {
@@ -292,6 +299,7 @@ import Globe
     
     /// Resets the latitude and longitude angles to zero (off the cape of Africa)
     func resetLatLong(_ stateToReset: String) {
+        actionCount += 1
         if var latLongSequence {
             switch stateToReset {
             case "Latitude": latLongSequence.lat.radians = 0
@@ -304,12 +312,14 @@ import Globe
     // MARK: - Visibility
     
     func toggleFrames(visible: Bool) {
+        actionCount += 1
         availableSequences.forEach { sequence in
             sequence.toggleFrames(visible: visible)
         }
     }
     
     func toggleEarth(visible: Bool) {
+        actionCount += 1
         switch visible {
         case true: yawPitchRollSequence.addEarth(parent: floor)
         case false: yawPitchRollSequence.removeEarth(parent: floor)
