@@ -8,10 +8,11 @@ Three-dimensional (3D) rotational kinematics are one of the most important, and 
 The ER3D mobile app aims to be a teaching aid for students and interested learners who want to understand these fundamental kinematics in an interactive and visually appealing setting, including in Augmented Reality.
 
 Features of the app include:
-- Sliders to update yaw, pitch, and roll angles in a 3-2-1 sequence
-- Context menus with text description of the kinematic properties
+- Space Shuttle model for teaching a 3-2-1 rotation sequencee
+- Gyroscope model for teaching a 3-1-3 rotation sequence
+- Sliders to update 3-2-1 (yaw, pitch, and roll) or 3-1-3 (procession, nutation, and spin) angles
 - Globe Earth that may be rotated to visualize locations at different latitudes and longitudes
-- Gyroscope model for teaching 3-1-3 rotation sequence
+- Context menus with text descriptions of the kinematic properties
 
 | Yaw                      | Pitch                        | Roll                       | Yaw → Pitch → Roll                               |
 |--------------------------|------------------------------|----------------------------|--------------------------------------------------|
